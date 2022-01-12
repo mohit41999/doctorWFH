@@ -429,16 +429,17 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
                                           user_id: patientdetails
                                               .data.patientPersonal.patientId)
                                       .then((value) {
-                                    if (!value[1]['status']) {
+                                    if (!value['status']) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(
                                               content: value['message']));
                                     } else {
                                       Push(
                                           context,
-                                          VideoCall(
-                                              channelName: value[1]['data']
-                                                  ['Channel Name']));
+                                          VideoCallPage(
+                                            channelName: value['data']
+                                                ['Channel Name'],
+                                          ));
                                     }
                                   });
                                 },

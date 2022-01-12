@@ -13,18 +13,26 @@ Future PostData({required String PARAM_URL, required Map params}) async {
   return Response;
 }
 
-Future PostDatawithimage(
+Future PostDataWithImage(
     {required String PARAM_URL,
     required Map<String, String> params,
-    required String image_path,
-    required image_param_name}) async {
-  var request = http.MultipartRequest("POST", Uri.parse(PARAM_URL));
+    required String imagePath,
+    required String imageparamName}) async {
+  var request =
+      await http.MultipartRequest('POST', Uri.parse(BASE_URL + PARAM_URL));
   request.fields.addAll(params);
-  var pic = await http.MultipartFile.fromPath("image_param_name", image_path);
+  var pic = await http.MultipartFile.fromPath(imageparamName, imagePath);
   request.files.add(pic);
-  request.send().then((response) {
-    if (response.statusCode == 200) print("Uploaded!");
-  });
+  var responseData = await request.send();
+  // post(Uri.parse(BASE_URL + PARAM_URL), body: params);
+  var response = await responseData.stream.toBytes();
+  var responseString = String.fromCharCodes(response);
+  // print(response.body);
+  // var Response = jsonDecode(response.body);
+  print('----------->' + responseString.toString());
+  var finalresponse = jsonDecode(responseString);
+
+  return finalresponse;
 }
 
 Future Getdata({required String PARAM_URL}) async {
