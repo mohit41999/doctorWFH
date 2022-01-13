@@ -47,17 +47,19 @@ class Data {
     required this.languageSpoken,
     required this.address,
     required this.profileImage,
+    required this.About_me,
   });
 
   String doctorId;
   String firstName;
   String lastName;
-  String specialist;
+  dynamic specialist;
   String education;
   String experience;
   String languageSpoken;
   String address;
   String profileImage;
+  String About_me;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         doctorId: json["doctor_id"],
@@ -69,6 +71,7 @@ class Data {
         languageSpoken: json["language_spoken"],
         address: json["Address"],
         profileImage: json["profile_image"],
+        About_me: json["About_me"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -81,5 +84,6 @@ class Data {
         "language_spoken": languageSpoken,
         "Address": address,
         "profile_image": profileImage,
+        "About_me": About_me,
       };
 }

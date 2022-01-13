@@ -4,24 +4,15 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5df1842f-62ef-4e5c-92f9-ac8abe19c301" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/Screens/AGORA/voice_call.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins" afterDir="false" />
+    <list default="true" id="5df1842f-62ef-4e5c-92f9-ac8abe19c301" name="Default Changelist" comment="Home">
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_04-01-2022_10_49_[Default_Changelist]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_04-01-2022_10_49__Default_Changelist_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/profile/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/profile/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/API/api_constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/API/api_constants.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/AGORA/video_call.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/AGORA/video_call.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/patient_booking_details.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/patient_booking_details.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/MYScreens/my_online_consultants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/MYScreens/my_online_consultants.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/ProfileSettings/clinical_tab.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/ProfileSettings/clinical_tab.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/ProfileSettings/personal_tab.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/ProfileSettings/personal_tab.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/controller/doctor_profile_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/controller/doctor_profile_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/doctor_personal_profile_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/doctor_personal_profile_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/my_online_consultants_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/my_online_consultants_model.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +45,7 @@
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Ghantawal_notion" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../PatientWFH" />
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -91,7 +82,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641307325165</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Home">
+      <created>1641998727455</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1641998727455</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

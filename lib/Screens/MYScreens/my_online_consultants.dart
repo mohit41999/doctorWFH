@@ -121,7 +121,8 @@ class _MyOnlineConsultantsState extends State<MyOnlineConsultants> {
                                                     title: 'Patient Name',
                                                   ),
                                                   titleColumn(
-                                                    value: Consultant.location,
+                                                    value: Consultant.location
+                                                        .toString(),
                                                     title: 'Location',
                                                   ),
                                                 ],

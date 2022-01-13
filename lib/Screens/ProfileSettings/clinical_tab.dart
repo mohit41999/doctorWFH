@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:doctor/API/api_constants.dart';
 import 'package:doctor/Utils/progress_view.dart';
 import 'package:doctor/controller/doctor_profile_controller.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:doctor/Utils/colorsandstyles.dart';
 import 'package:doctor/widgets/common_button.dart';
 import 'package:doctor/widgets/title_enter_field.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Clinical extends StatefulWidget {
@@ -36,6 +39,8 @@ class _ClinicalState extends State<Clinical> {
     }
   }
 
+  List<String> images = [];
+
   _selectCloseTime(BuildContext context) async {
     final TimeOfDay? timeOfDay = await showTimePicker(
       context: context,
@@ -49,6 +54,74 @@ class _ClinicalState extends State<Clinical> {
     }
   }
 
+  Future<void> _showPicker(context) async {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: Wrap(
+                children: <Widget>[
+                  ListTile(
+                      leading: Icon(Icons.photo_library),
+                      title: Text('Photo Library'),
+                      onTap: () {
+                        setState(() {
+                          _imgFromGallery();
+                        });
+
+                        Navigator.of(context).pop();
+                      }),
+                  ListTile(
+                    leading: Icon(Icons.photo_camera),
+                    title: Text('Camera'),
+                    onTap: () {
+                      setState(() {
+                        _imgFromCamera();
+                      });
+
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  Future _imgFromCamera() async {
+    var image = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 50);
+
+    setState(() {
+      images.add(image!.path);
+    });
+  }
+
+  Future _imgFromGallery() async {
+    var image = await ImagePicker()
+        .pickImage(source: ImageSource.gallery, imageQuality: 50);
+
+    setState(() {
+      images.add(image!.path);
+    });
+  }
+
+  Future upload_images(String imagePath) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var response = await PostDataWithImage(
+        PARAM_URL: 'upload_clinic_images.php',
+        params: {
+          ''
+              'token': Token,
+          'doctor_id': prefs.getString('user_id')!,
+        },
+        imagePath: imagePath,
+        imageparamName: 'image');
+    return response;
+  }
+
   initialize() {
     _con.getDocClinicProfile().then((value) {
       setState(() {
@@ -56,6 +129,7 @@ class _ClinicalState extends State<Clinical> {
         _clinic_location.text = value.data.clinicLocation;
         _offlineConsultancyFees.text = value.data.oflineConsultancyFees;
         availablestatus.text = value.data.doctorAvailabilityStatus;
+        selectedOpenTime = value.data.openTime as TimeOfDay;
       });
     });
   }
@@ -192,8 +266,43 @@ class _ClinicalState extends State<Clinical> {
             availablestatus,
           ),
           const SizedBox(
-            height: 15,
+            height: 10,
           ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: commonBtn(
+              s: 'Add Clinic photo',
+              bgcolor: Color(0xffB2B1B1),
+              textColor: Colors.black,
+              onPressed: () {
+                _showPicker(context);
+              },
+              width: 187,
+              height: 50,
+              borderRadius: 4,
+              textSize: 12,
+            ),
+          ),
+          (images.length == 0)
+              ? Container()
+              : Container(
+                  height: 120,
+                  child: ListView.builder(
+                      itemCount: images.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: FileImage(File(images[index])),
+                                    fit: BoxFit.cover)),
+                          ),
+                        );
+                      })),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: commonBtn(
@@ -201,7 +310,11 @@ class _ClinicalState extends State<Clinical> {
               bgcolor: appblueColor,
               textColor: Colors.white,
               onPressed: () {
-                submit();
+                submit().then((value) {
+                  for (int i = 0; i < images.length; i++) {
+                    upload_images(images[i]);
+                  }
+                });
               },
               borderRadius: 8,
               textSize: 20,

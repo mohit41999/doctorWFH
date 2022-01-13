@@ -26,7 +26,8 @@ class MyOnlineConsultantsModel {
       MyOnlineConsultantsModel(
         status: json["status"],
         message: json["message"],
-        data: List<MyOnlineConsultantsModelData>.from(json["data"].map((x) => MyOnlineConsultantsModelData.fromJson(x))),
+        data: List<MyOnlineConsultantsModelData>.from(
+            json["data"].map((x) => MyOnlineConsultantsModelData.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -52,10 +53,11 @@ class MyOnlineConsultantsModelData {
   String bookingTime;
   String bookingDate;
   String fees;
-  String location;
+  dynamic location;
   String status;
 
-  factory MyOnlineConsultantsModelData.fromJson(Map<String, dynamic> json) => MyOnlineConsultantsModelData(
+  factory MyOnlineConsultantsModelData.fromJson(Map<String, dynamic> json) =>
+      MyOnlineConsultantsModelData(
         bookingId: json["Booking ID"],
         patientName: json["Patient Name"],
         bookingTime: json["booking Time"],
