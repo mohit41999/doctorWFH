@@ -2,7 +2,6 @@
 //
 //     final doctorPersonalProfile = doctorPersonalProfileFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 DoctorPersonalProfile doctorPersonalProfileFromJson(String str) =>
@@ -46,6 +45,7 @@ class Data {
     required this.experience,
     required this.languageSpoken,
     required this.address,
+    required this.specialistid,
     required this.profileImage,
     required this.About_me,
   });
@@ -59,6 +59,7 @@ class Data {
   String languageSpoken;
   String address;
   String profileImage;
+  String specialistid;
   String About_me;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -70,6 +71,7 @@ class Data {
         experience: json["experience"],
         languageSpoken: json["language_spoken"],
         address: json["Address"],
+        specialistid: json["specialistid"],
         profileImage: json["profile_image"],
         About_me: json["About_me"],
       );
@@ -79,6 +81,7 @@ class Data {
         "first_name": firstName,
         "last_name": lastName,
         "specialist": specialist,
+        "specialistid": specialistid,
         "education": education,
         "experience": experience,
         "language_spoken": languageSpoken,

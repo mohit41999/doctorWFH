@@ -1,13 +1,12 @@
 import 'dart:io';
 
 import 'package:doctor/API/api_constants.dart';
-import 'package:doctor/Utils/progress_view.dart';
-import 'package:doctor/controller/doctor_profile_controller.dart';
-import 'package:flutter/material.dart';
 import 'package:doctor/Utils/colorsandstyles.dart';
+import 'package:doctor/controller/doctor_profile_controller.dart';
 import 'package:doctor/widgets/common_button.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:doctor/widgets/title_enter_field.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,7 +21,19 @@ class _PersonalState extends State<Personal> {
   DoctorProfileController _con = DoctorProfileController();
   bool loading = true;
 
-  initialize() {
+  List Data = [];
+  initialize() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    PostData(
+            PARAM_URL: 'specialist_doctors_list.php',
+            params: {'doctor_id': prefs.getString('user_id'), 'token': Token})
+        .then((value) {
+      setState(() {
+        Data = value['data'];
+        print(Data);
+      });
+    });
+
     _con.getDocPersonalProfile().then((value) {
       setState(() {
         _con.firstname.text = value.data.firstName;
@@ -33,6 +44,7 @@ class _PersonalState extends State<Personal> {
         _con.address.text = value.data.address;
         _con.profileImage = value.data.profileImage;
         _con.about_me.text = value.data.About_me;
+        _con.speciality_id = value.data.specialistid;
         loading = false;
       });
     });
@@ -56,6 +68,23 @@ class _PersonalState extends State<Personal> {
             TitleEnterField('Firstname', 'Firstname', _con.firstname),
             TitleEnterField('Lastname', 'Lastname', _con.lastname),
             // TitleEnterField('Specialty', 'Specialty', ),
+            Center(
+              child: DropdownButton(
+                items: Data.map((item) {
+                  return DropdownMenuItem(
+                    child: Text(item['specialist_name']),
+                    value: item['specialist_id'].toString(),
+                  );
+                }).toList(),
+                onChanged: (String? newVal) {
+                  setState(() {
+                    _con.speciality_id = newVal!;
+                    print(newVal);
+                  });
+                },
+                value: _con.speciality_id,
+              ),
+            ),
             TitleEnterField('Education', 'Education', _con.education),
             TitleEnterField('Language Spoken, Language Spoken',
                 'Language Spoken', _con.languageSpoken),

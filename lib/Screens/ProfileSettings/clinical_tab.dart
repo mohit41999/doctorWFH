@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:doctor/API/api_constants.dart';
+import 'package:doctor/Utils/colorsandstyles.dart';
 import 'package:doctor/Utils/progress_view.dart';
 import 'package:doctor/controller/doctor_profile_controller.dart';
-import 'package:flutter/material.dart';
-import 'package:doctor/Utils/colorsandstyles.dart';
 import 'package:doctor/widgets/common_button.dart';
 import 'package:doctor/widgets/title_enter_field.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,7 +23,11 @@ class _ClinicalState extends State<Clinical> {
   TextEditingController _clinic_location = TextEditingController();
   TextEditingController _offlineConsultancyFees = TextEditingController();
   TextEditingController availablestatus = TextEditingController();
+  TextEditingController _fromtoTodays = TextEditingController();
   String from_to_days = 'monday to friday';
+  String openTime = '';
+  String closeTime = '';
+  bool loading = true;
   TimeOfDay selectedOpenTime = TimeOfDay.now();
   TimeOfDay selectedCloseTime = TimeOfDay.now();
   _selectOpenTime(BuildContext context) async {
@@ -35,6 +39,10 @@ class _ClinicalState extends State<Clinical> {
     if (timeOfDay != null && timeOfDay != selectedOpenTime) {
       setState(() {
         selectedOpenTime = timeOfDay;
+        openTime = timeOfDay.hour.toString() +
+            ':' +
+            timeOfDay.minute.toString() +
+            "     ";
       });
     }
   }
@@ -50,6 +58,10 @@ class _ClinicalState extends State<Clinical> {
     if (timeOfDay != null && timeOfDay != selectedCloseTime) {
       setState(() {
         selectedCloseTime = timeOfDay;
+        closeTime = timeOfDay.hour.toString() +
+            ':' +
+            timeOfDay.minute.toString() +
+            "     ";
       });
     }
   }
@@ -129,7 +141,10 @@ class _ClinicalState extends State<Clinical> {
         _clinic_location.text = value.data.clinicLocation;
         _offlineConsultancyFees.text = value.data.oflineConsultancyFees;
         availablestatus.text = value.data.doctorAvailabilityStatus;
-        selectedOpenTime = value.data.openTime as TimeOfDay;
+        openTime = value.data.openTime;
+        closeTime = value.data.closeTime;
+        _fromtoTodays.text = value.data.fromToDays;
+        loading = false;
       });
     });
   }
@@ -193,57 +208,55 @@ class _ClinicalState extends State<Clinical> {
           // ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+            child: (loading)
+                ? Center(child: CircularProgressIndicator())
+                : Row(
                     children: [
-                      Text('Open Time'),
-                      Material(
-                        color: Colors.white,
-                        elevation: 2,
-                        borderRadius: BorderRadius.circular(15),
-                        child: TextButton(
-                            onPressed: () {
-                              setState(() {
-                                _selectOpenTime(context);
-                              });
-                            },
-                            child: Text(selectedOpenTime.hour.toString() +
-                                ':' +
-                                selectedOpenTime.minute.toString())),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text('Open Time'),
+                            Material(
+                              color: Colors.white,
+                              elevation: 2,
+                              borderRadius: BorderRadius.circular(15),
+                              child: TextButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      _selectOpenTime(context);
+                                    });
+                                  },
+                                  child: Text(openTime.substring(0, 5))),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text('Close Time'),
+                            Material(
+                              color: Colors.white,
+                              elevation: 2,
+                              borderRadius: BorderRadius.circular(15),
+                              child: TextButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      _selectCloseTime(context);
+                                    });
+                                  },
+                                  child: Text(closeTime.substring(0, 5))),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text('Close Time'),
-                      Material(
-                        color: Colors.white,
-                        elevation: 2,
-                        borderRadius: BorderRadius.circular(15),
-                        child: TextButton(
-                            onPressed: () {
-                              setState(() {
-                                _selectCloseTime(context);
-                              });
-                            },
-                            child: Text(selectedCloseTime.hour.toString() +
-                                ':' +
-                                selectedCloseTime.minute.toString())),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
           ),
           // TitleEnterField(
           //   'Open Time',
@@ -259,6 +272,11 @@ class _ClinicalState extends State<Clinical> {
             'Offline Consultancy Fees',
             'Offline Consultancy Fees',
             _offlineConsultancyFees,
+          ),
+          TitleEnterField(
+            'From to To days',
+            'From to To days',
+            _fromtoTodays,
           ),
           TitleEnterField(
             'Doctor’s availability status',

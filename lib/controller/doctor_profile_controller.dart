@@ -11,7 +11,7 @@ class DoctorProfileController {
   late String profileImage;
   TextEditingController firstname = TextEditingController();
   TextEditingController lastname = TextEditingController();
-  int speciality_id = 0;
+  late String speciality_id;
   TextEditingController education = TextEditingController();
   TextEditingController languageSpoken = TextEditingController();
   TextEditingController totalexp = TextEditingController();
@@ -29,7 +29,7 @@ class DoctorProfileController {
       'doctor_id': user_id!,
       'first_name': firstname.text,
       'last_name': lastname.text,
-      'specialistid': '1',
+      'specialistid': speciality_id,
       'education': education.text,
       'language_spoken': languageSpoken.text,
       'experience': totalexp.text,

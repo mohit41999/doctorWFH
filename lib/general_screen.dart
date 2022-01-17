@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:doctor/Screens/MYScreens/my_revenue.dart';
+import 'package:doctor/Screens/my_booking_request.dart';
 import 'package:doctor/Screens/search_screen.dart';
 import 'package:doctor/widgets/bottombar.dart';
 import 'package:flutter/material.dart';
@@ -120,7 +121,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
                   //isExtended: true,
                   backgroundColor: Colors.transparent,
                   onPressed: () {
-                    Push(context, MyRevenue());
+                    Push(context, MyBookingRequest());
                   },
                   child: Icon(
                     Icons.date_range_outlined,
