@@ -68,21 +68,35 @@ class _PersonalState extends State<Personal> {
             TitleEnterField('Firstname', 'Firstname', _con.firstname),
             TitleEnterField('Lastname', 'Lastname', _con.lastname),
             // TitleEnterField('Specialty', 'Specialty', ),
-            Center(
-              child: DropdownButton(
-                items: Data.map((item) {
-                  return DropdownMenuItem(
-                    child: Text(item['specialist_name']),
-                    value: item['specialist_id'].toString(),
-                  );
-                }).toList(),
-                onChanged: (String? newVal) {
-                  setState(() {
-                    _con.speciality_id = newVal!;
-                    print(newVal);
-                  });
-                },
-                value: _con.speciality_id,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: Material(
+                  elevation: 2.0,
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  child: DropdownButton(
+                    underline: Container(),
+                    isExpanded: true,
+                    items: Data.map((item) {
+                      return DropdownMenuItem(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(item['specialist_name']),
+                        ),
+                        value: item['specialist_id'].toString(),
+                      );
+                    }).toList(),
+                    hint: Text('Select Speciality'),
+                    onChanged: (String? newVal) {
+                      setState(() {
+                        _con.speciality_id = newVal!;
+                        print(newVal);
+                      });
+                    },
+                    value: _con.speciality_id,
+                  ),
+                ),
               ),
             ),
             TitleEnterField('Education', 'Education', _con.education),

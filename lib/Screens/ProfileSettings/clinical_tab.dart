@@ -227,7 +227,7 @@ class _ClinicalState extends State<Clinical> {
                                       _selectOpenTime(context);
                                     });
                                   },
-                                  child: Text(openTime.substring(0, 5))),
+                                  child: Text(openTime)),
                             ),
                           ],
                         ),
@@ -250,7 +250,7 @@ class _ClinicalState extends State<Clinical> {
                                       _selectCloseTime(context);
                                     });
                                   },
-                                  child: Text(closeTime.substring(0, 5))),
+                                  child: Text(closeTime)),
                             ),
                           ],
                         ),
