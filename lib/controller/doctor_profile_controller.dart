@@ -11,7 +11,7 @@ class DoctorProfileController {
   late String profileImage;
   TextEditingController firstname = TextEditingController();
   TextEditingController lastname = TextEditingController();
-  late String speciality_id;
+  var speciality_id;
   TextEditingController education = TextEditingController();
   TextEditingController languageSpoken = TextEditingController();
   TextEditingController totalexp = TextEditingController();

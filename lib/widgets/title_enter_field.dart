@@ -50,6 +50,7 @@ class TitleEnterField extends StatelessWidget {
                 elevation: 5,
                 borderRadius: BorderRadius.circular(10),
                 child: TextFormField(
+                  style: TextStyle(fontWeight: FontWeight.bold),
                   maxLines: maxLines,
 
                   // autovalidateMode: AutovalidateMode.onUserInteraction,

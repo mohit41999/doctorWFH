@@ -1,8 +1,10 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:doctor/API/api_constants.dart';
 import 'package:doctor/Utils/colorsandstyles.dart';
 import 'package:doctor/controller/doctor_profile_controller.dart';
+import 'package:doctor/model/specialist_model.dart';
 import 'package:doctor/widgets/common_button.dart';
 import 'package:doctor/widgets/title_enter_field.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +23,7 @@ class _PersonalState extends State<Personal> {
   DoctorProfileController _con = DoctorProfileController();
   bool loading = true;
 
-  List Data = [];
+  late SpecialistModel Data;
   initialize() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     PostData(
@@ -29,8 +31,7 @@ class _PersonalState extends State<Personal> {
             params: {'doctor_id': prefs.getString('user_id'), 'token': Token})
         .then((value) {
       setState(() {
-        Data = value['data'];
-        print(Data);
+        Data = SpecialistModel.fromJson(value);
       });
     });
 
@@ -44,7 +45,10 @@ class _PersonalState extends State<Personal> {
         _con.address.text = value.data.address;
         _con.profileImage = value.data.profileImage;
         _con.about_me.text = value.data.About_me;
-        _con.speciality_id = value.data.specialistid;
+        // _con.speciality_id = null;
+        (value.data.specialistid) == '0'
+            ? _con.speciality_id = null
+            : _con.speciality_id = value.data.specialistid;
         loading = false;
       });
     });
@@ -63,129 +67,146 @@ class _PersonalState extends State<Personal> {
       backgroundColor: Colors.transparent,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: ListView(
-          children: [
-            TitleEnterField('Firstname', 'Firstname', _con.firstname),
-            TitleEnterField('Lastname', 'Lastname', _con.lastname),
-            // TitleEnterField('Specialty', 'Specialty', ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Center(
-                child: Material(
-                  elevation: 2.0,
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  child: DropdownButton(
-                    underline: Container(),
-                    isExpanded: true,
-                    items: Data.map((item) {
-                      return DropdownMenuItem(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(item['specialist_name']),
-                        ),
-                        value: item['specialist_id'].toString(),
-                      );
-                    }).toList(),
-                    hint: Text('Select Speciality'),
-                    onChanged: (String? newVal) {
-                      setState(() {
-                        _con.speciality_id = newVal!;
-                        print(newVal);
-                      });
-                    },
-                    value: _con.speciality_id,
+        child: (loading)
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : ListView(
+                children: [
+                  TitleEnterField('Firstname', 'Firstname', _con.firstname),
+                  TitleEnterField('Lastname', 'Lastname', _con.lastname),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('Speciality',
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black.withOpacity(0.6))),
                   ),
-                ),
-              ),
-            ),
-            TitleEnterField('Education', 'Education', _con.education),
-            TitleEnterField('Language Spoken, Language Spoken',
-                'Language Spoken', _con.languageSpoken),
-            TitleEnterField('Total years of experience',
-                'Total years of experience', _con.totalexp),
-            TitleEnterField(
-              'Address',
-              'Address',
-              _con.address,
-              maxLines: 10,
-            ),
-            TitleEnterField(
-              'About Me',
-              'About Me',
-              _con.about_me,
-              maxLines: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                height: 130,
-                child: Row(
-                  children: [
-                    (loading)
-                        ? Container()
-                        : Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: (_con.mediaFile != null)
-                                          ? FileImage(
-                                              File(_con.mediaFile!.path))
-                                          : NetworkImage(_con.profileImage)
-                                              as ImageProvider,
-                                      fit: BoxFit.cover)),
-                            ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: Material(
+                        elevation: 2.0,
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                        child: DropdownButton(
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.black),
+                          underline: Container(),
+                          isExpanded: true,
+                          items: Data.data.map<DropdownMenuItem<String>>(
+                              (SpecialistModelData item) {
+                            return DropdownMenuItem(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(item.specialistName),
+                              ),
+                              value: item.specialistId,
+                            );
+                          }).toList(),
+                          hint: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('Select Speciality'),
                           ),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          value: _con.speciality_id,
+                          onChanged: (newVal) {
+                            setState(() {
+                              _con.speciality_id = newVal.toString();
+                              print(newVal);
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                  TitleEnterField('Education', 'Education', _con.education),
+                  TitleEnterField('Language Spoken, Language Spoken',
+                      'Language Spoken', _con.languageSpoken),
+                  TitleEnterField('Total years of experience',
+                      'Total years of experience', _con.totalexp),
+                  TitleEnterField(
+                    'Address',
+                    'Address',
+                    _con.address,
+                    maxLines: 10,
+                  ),
+                  TitleEnterField(
+                    'About Me',
+                    'About Me',
+                    _con.about_me,
+                    maxLines: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: 130,
+                      child: Row(
                         children: [
-                          Text(
-                            'Update Profile',
-                            style: GoogleFonts.montserrat(
-                                color: Color(0xff161616).withOpacity(0.6),
-                                fontSize: 15),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: commonBtn(
-                              s: 'Choose new photo',
-                              bgcolor: Color(0xffB2B1B1),
-                              textColor: Colors.black,
-                              onPressed: () {
-                                _showPicker(context);
-                              },
-                              width: 187,
-                              height: 30,
-                              borderRadius: 4,
-                              textSize: 12,
+                          (loading)
+                              ? Container()
+                              : Expanded(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: (_con.mediaFile != null)
+                                                ? FileImage(
+                                                    File(_con.mediaFile!.path))
+                                                : NetworkImage(
+                                                        _con.profileImage)
+                                                    as ImageProvider,
+                                            fit: BoxFit.cover)),
+                                  ),
+                                ),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(
+                                  'Update Profile',
+                                  style: GoogleFonts.montserrat(
+                                      color: Color(0xff161616).withOpacity(0.6),
+                                      fontSize: 15),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: commonBtn(
+                                    s: 'Choose new photo',
+                                    bgcolor: Color(0xffB2B1B1),
+                                    textColor: Colors.black,
+                                    onPressed: () {
+                                      _showPicker(context);
+                                    },
+                                    width: 187,
+                                    height: 30,
+                                    borderRadius: 4,
+                                    textSize: 12,
+                                  ),
+                                )
+                              ],
                             ),
                           )
                         ],
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: commonBtn(
+                      s: 'Submit',
+                      bgcolor: appblueColor,
+                      textColor: Colors.white,
+                      onPressed: () {
+                        _con.submit(context);
+                      },
+                      borderRadius: 8,
+                      textSize: 20,
+                    ),
+                  )
+                ],
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: commonBtn(
-                s: 'Submit',
-                bgcolor: appblueColor,
-                textColor: Colors.white,
-                onPressed: () {
-                  _con.submit(context);
-                },
-                borderRadius: 8,
-                textSize: 20,
-              ),
-            )
-          ],
-        ),
       ),
     );
   }

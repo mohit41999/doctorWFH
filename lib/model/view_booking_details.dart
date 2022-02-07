@@ -20,13 +20,13 @@ class ViewBookingDetails {
 
   bool status;
   String message;
-  Data data;
+  ViewBookingDetailsData data;
 
   factory ViewBookingDetails.fromJson(Map<String, dynamic> json) =>
       ViewBookingDetails(
         status: json["status"],
         message: json["message"],
-        data: Data.fromJson(json["data"]),
+        data: ViewBookingDetailsData.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -36,24 +36,29 @@ class ViewBookingDetails {
       };
 }
 
-class Data {
-  Data({
+class ViewBookingDetailsData {
+  ViewBookingDetailsData({
     required this.bookingDetails,
     required this.patientPersonal,
     required this.patientMedical,
     required this.patientLifestyle,
+    required this.relativeInformatoin,
   });
 
   BookingDetails bookingDetails;
   PatientPersonal patientPersonal;
   PatientMedical patientMedical;
   PatientLifestyle patientLifestyle;
+  RelativeInformatoin relativeInformatoin;
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory ViewBookingDetailsData.fromJson(Map<String, dynamic> json) =>
+      ViewBookingDetailsData(
         bookingDetails: BookingDetails.fromJson(json["Booking Details"]),
         patientPersonal: PatientPersonal.fromJson(json["Patient Personal"]),
         patientMedical: PatientMedical.fromJson(json["Patient Medical"]),
         patientLifestyle: PatientLifestyle.fromJson(json["Patient Lifestyle"]),
+        relativeInformatoin:
+            RelativeInformatoin.fromJson(json["Relative Informatoin"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -61,6 +66,7 @@ class Data {
         "Patient Personal": patientPersonal.toJson(),
         "Patient Medical": patientMedical.toJson(),
         "Patient Lifestyle": patientLifestyle.toJson(),
+        "Relative Informatoin": relativeInformatoin.toJson(),
       };
 }
 
@@ -68,16 +74,22 @@ class BookingDetails {
   BookingDetails({
     required this.bookingId,
     required this.bookingTime,
+    required this.appointmentDate,
+    required this.appointmentTime,
     required this.bookingDate,
     required this.bookingStatus,
+    required this.bookingFor,
     required this.paymentStatus,
     required this.fees,
   });
 
   String bookingId;
   String bookingTime;
+  String appointmentTime;
+  String appointmentDate;
   String bookingDate;
   String bookingStatus;
+  String bookingFor;
   String paymentStatus;
   String fees;
 
@@ -85,7 +97,10 @@ class BookingDetails {
         bookingId: json["Booking ID"],
         bookingTime: json["Booking Time"],
         bookingDate: json["Booking Date"],
+        appointmentDate: json["Appointment Date"],
+        appointmentTime: json["Appointment Time"],
         bookingStatus: json["Booking Status"],
+        bookingFor: json["Booking For"],
         paymentStatus: json["Payment Status"],
         fees: json["Fees"],
       );
@@ -94,7 +109,10 @@ class BookingDetails {
         "Booking ID": bookingId,
         "Booking Time": bookingTime,
         "Booking Date": bookingDate,
+        "Appointment Date": appointmentDate,
+        "Appointment Time": appointmentTime,
         "Booking Status": bookingStatus,
+        "Booking For": bookingFor,
         "Payment Status": paymentStatus,
         "Fees": fees,
       };
@@ -168,11 +186,13 @@ class PatientPersonal {
     required this.patientAddress,
     required this.patientBloodGroup,
     required this.patientMaritalStatus,
+    required this.patientComments,
+    required this.patientDocument,
     required this.patientImage,
   });
 
-  String patientName;
   String patientId;
+  String patientName;
   String patientEmail;
   String patientNo;
   String patientAge;
@@ -180,12 +200,14 @@ class PatientPersonal {
   String patientAddress;
   String patientBloodGroup;
   String patientMaritalStatus;
+  String patientComments;
+  String patientDocument;
   String patientImage;
 
   factory PatientPersonal.fromJson(Map<String, dynamic> json) =>
       PatientPersonal(
-        patientName: json["Patient Name"],
         patientId: json["Patient Id"],
+        patientName: json["Patient Name"],
         patientEmail: json["Patient Email"],
         patientNo: json["Patient No"],
         patientAge: json["Patient Age"],
@@ -193,19 +215,60 @@ class PatientPersonal {
         patientAddress: json["Patient Address"],
         patientBloodGroup: json["Patient Blood group"],
         patientMaritalStatus: json["Patient Marital Status"],
+        patientComments: json["Patient Comments"],
+        patientDocument: json["Patient Document"],
         patientImage: json["Patient Image"],
       );
 
   Map<String, dynamic> toJson() => {
+        "Patient Id": patientId,
         "Patient Name": patientName,
         "Patient Email": patientEmail,
-        "Patient Id": patientId,
         "Patient No": patientNo,
         "Patient Age": patientAge,
         "Patient Gender": patientGender,
         "Patient Address": patientAddress,
         "Patient Blood group": patientBloodGroup,
         "Patient Marital Status": patientMaritalStatus,
+        "Patient Comments": patientComments,
+        "Patient Document": patientDocument,
         "Patient Image": patientImage,
+      };
+}
+
+class RelativeInformatoin {
+  RelativeInformatoin({
+    required this.relativeName,
+    required this.relativeAge,
+    required this.relativeGender,
+    required this.relativeBloodGroup,
+    required this.relativeMaritalStatus,
+    required this.relation,
+  });
+
+  String relativeName;
+  String relativeAge;
+  String relativeGender;
+  String relativeBloodGroup;
+  String relativeMaritalStatus;
+  String relation;
+
+  factory RelativeInformatoin.fromJson(Map<String, dynamic> json) =>
+      RelativeInformatoin(
+        relativeName: json["Relative Name"],
+        relativeAge: json["Relative Age"],
+        relativeGender: json["Relative Gender"],
+        relativeBloodGroup: json["Relative Blood group"],
+        relativeMaritalStatus: json["Relative Marital Status"],
+        relation: json["Relation"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "Relative Name": relativeName,
+        "Relative Age": relativeAge,
+        "Relative Gender": relativeGender,
+        "Relative Blood group": relativeBloodGroup,
+        "Relative Marital Status": relativeMaritalStatus,
+        "Relation": relation,
       };
 }

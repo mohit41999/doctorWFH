@@ -48,6 +48,13 @@ dependencies:
   agora_rtc_engine: ^4.0.7
   permission_handler: ^8.3.0
   agora_uikit: ^0.0.4
+  file_utils: any
+  open_file:
+  intl: ^0.17.0
+  dio: ^4.0.4
+  flutter_downloader: ^1.7.1
+  path_provider: ^2.0.8
+  flutter_local_notifications:
 
 
 dev_dependencies:
