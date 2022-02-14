@@ -55,6 +55,7 @@ dependencies:
   flutter_downloader: ^1.7.1
   path_provider: ^2.0.8
   flutter_local_notifications:
+  geolocator: ^8.2.0
 
 
 dev_dependencies:

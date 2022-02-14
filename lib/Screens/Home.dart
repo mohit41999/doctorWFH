@@ -13,8 +13,8 @@ import 'package:doctor/widgets/common_app_bar_title.dart';
 import 'package:doctor/widgets/common_button.dart';
 import 'package:doctor/widgets/navigation_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:carousel_slider/carousel_slider.dart';
 
 final List<String> imgList = [

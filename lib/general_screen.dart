@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:doctor/Screens/MYScreens/my_revenue.dart';
 import 'package:doctor/Screens/my_booking_request.dart';
 import 'package:doctor/Screens/search_screen.dart';
+import 'package:doctor/firebase/notification_handling.dart';
 import 'package:doctor/widgets/bottombar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -29,6 +30,14 @@ class _GeneralScreenState extends State<GeneralScreen> {
   }
 
   int _selected_index = 0;
+
+  @override
+  void initState() {
+    FirebaseNotificationHandling()
+        .setupFirebase(context); // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
