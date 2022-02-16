@@ -41,6 +41,9 @@
       <root url="file://$USER_HOME$/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-2.1.5" />
       <root url="file://$USER_HOME$/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications-9.3.1" />
       <root url="file://$USER_HOME$/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_messaging_web-2.2.7" />
+      <root url="file://$USER_HOME$/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_pdfviewer-19.4.52-beta" />
+      <root url="file://$USER_HOME$/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_pdfviewer_web-19.4.52-beta" />
+      <root url="file://$USER_HOME$/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/file_picker-4.4.0" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

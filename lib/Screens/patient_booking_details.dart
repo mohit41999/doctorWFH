@@ -4,7 +4,10 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:doctor/API/api_constants.dart';
 import 'package:doctor/Screens/AGORA/video_call.dart';
+import 'package:doctor/Screens/pdf.dart';
+import 'package:doctor/Utils/APIIDS.dart';
 import 'package:doctor/Utils/colorsandstyles.dart';
+import 'package:doctor/Utils/progress_view.dart';
 import 'package:doctor/controller/NavigationController.dart';
 import 'package:doctor/firebase/notification_handling.dart';
 import 'package:doctor/model/view_booking_details.dart';
@@ -22,6 +25,7 @@ import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:file_picker/file_picker.dart';
 
 class PatientBookingDetails extends StatefulWidget {
   final String booking_id;
@@ -34,21 +38,10 @@ class PatientBookingDetails extends StatefulWidget {
 
 class _PatientBookingDetailsState extends State<PatientBookingDetails> {
   Color textColor = Color(0xff161616);
+  List patientReports = [];
   bool loading = true;
   TextEditingController _controller = TextEditingController();
   late ViewBookingDetails patientdetails;
-  Future<ViewBookingDetails> getDetails() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var response = await PostData(
-        PARAM_URL: 'get_patient_view_booking_details.php',
-        params: {
-          'token': Token,
-          'doctor_id': prefs.getString('user_id'),
-          'booking_id': widget.booking_id
-        });
-
-    return ViewBookingDetails.fromJson(response);
-  }
 
   late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   bool downloading = false;
@@ -95,15 +88,15 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
     if (status.isGranted) {
       String dirloc = "";
       if (Platform.isAndroid) {
-        dirloc = "/storage/emulated/0/download/";
+        dirloc = "/sdcard/download/";
       } else {
         dirloc = (await getApplicationDocumentsDirectory()).path;
       }
+      var savepath = dirloc + convertCurrentDateTimeToString() + ".pdf";
 
       try {
         FileUtils.mkdir([dirloc]);
-        var response = await dio.download(
-            pdfUrl, dirloc + convertCurrentDateTimeToString() + ".png",
+        var response = await dio.download(pdfUrl, savepath,
             onReceiveProgress: (receivedBytes, totalBytes) {
           print('here 1');
           setState(() {
@@ -115,7 +108,7 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
           print('here 2');
         });
         result['isSuccess'] = response.statusCode == 200;
-        result['filePath'] = dirloc + convertCurrentDateTimeToString() + ".png";
+        result['filePath'] = savepath;
       } catch (e) {
         print('catch catch catch');
         result['error'] = e.toString();
@@ -127,7 +120,7 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
       setState(() {
         downloading = false;
         progress = "Download Completed.";
-        path = dirloc + convertCurrentDateTimeToString() + ".png";
+        path = savepath;
       });
       print(path);
       showDialog(
@@ -135,13 +128,34 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
           builder: (context) => AlertDialog(
                 title: Text('Download Complete'),
                 actions: [
-                  commonBtn(
-                      s: 'OK',
-                      bgcolor: apptealColor,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        Pop(context);
-                      })
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      commonBtn(
+                          height: 40,
+                          borderRadius: 5,
+                          width: 90,
+                          textSize: 12,
+                          s: 'Close',
+                          bgcolor: apptealColor,
+                          textColor: Colors.white,
+                          onPressed: () {
+                            Pop(context);
+                          }),
+                      commonBtn(
+                          height: 40,
+                          textSize: 12,
+                          borderRadius: 5,
+                          width: 90,
+                          s: 'Open',
+                          bgcolor: appblueColor,
+                          textColor: Colors.white,
+                          onPressed: () {
+                            Navigator.pop(context);
+                            Push(context, OpenPdf(url: path));
+                          })
+                    ],
+                  ),
                 ],
               ));
       print('here give alert-->completed');
@@ -182,6 +196,13 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
 
     flutterLocalNotificationsPlugin.initialize(initSettings,
         onSelectNotification: _onSelectNotification);
+    getPatientReports().then((value) {
+      setState(() {
+        (value['data'] == null)
+            ? patientReports = []
+            : patientReports = value['data'];
+      });
+    });
     getDetails().then((value) {
       setState(() {
         patientdetails = value;
@@ -193,6 +214,11 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
 
   @override
   Widget build(BuildContext context) {
+    // patientReports.forEach((element) {
+    //   if (element['reportfile'].toString() == '') {
+    //     patientReports.remove(element);
+    //   }
+    // });
     return Scaffold(
       body: (loading)
           ? Center(child: CircularProgressIndicator())
@@ -474,122 +500,164 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
                               ),
                             ),
                           ),
-                          SizedBox(
-                            height: (patientdetails.data.patientPersonal
-                                    .patientDocument.isEmpty)
-                                ? 0
-                                : 12,
-                          ),
-                          (patientdetails.data.patientPersonal.patientDocument
-                                      .isEmpty &&
-                                  patientdetails.data.patientPersonal
-                                      .patientComments.isEmpty)
-                              ? Container()
-                              : Container(
-                                  height: 200,
-                                  color: Colors.white,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20.0),
-                                    child: Column(
+
+                          Container(
+                            height: 200,
+                            color: Colors.white,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    'Patient Document And Comments',
+                                    style: GoogleFonts.montserrat(
+                                        fontSize: 18,
+                                        color: textColor,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Divider(
+                                    color: textColor.withOpacity(0.4),
+                                    thickness: 1,
+                                  ),
+                                  Container(
+                                    color: Colors.white,
+                                    child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        Text(
-                                          'Patient Document And Comments',
-                                          style: GoogleFonts.montserrat(
-                                              fontSize: 18,
-                                              color: textColor,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Divider(
-                                          color: textColor.withOpacity(0.4),
-                                          thickness: 1,
-                                        ),
-                                        Container(
-                                          color: Colors.white,
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Expanded(
-                                                flex: 1,
-                                                // width: MediaQuery.of(context).size.width / 5,
-                                                child: Text(
-                                                  'Download Documnent File',
-                                                  style: GoogleFonts.montserrat(
-                                                      fontSize: 12,
-                                                      color: Color(0xff161616)
-                                                          .withOpacity(0.6)),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: 15,
-                                              ),
-                                              Expanded(
-                                                flex: 2,
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    print('ggg');
-                                                    downloadFile(patientdetails
-                                                        .data
-                                                        .patientPersonal
-                                                        .patientDocument);
-                                                  },
-                                                  child: Row(
-                                                    children: [
-                                                      Text('-'),
-                                                      SizedBox(
-                                                        width: 10,
-                                                      ),
-                                                      Container(
-                                                        // width: MediaQuery.of(context).size.width / 1.65,
-                                                        child: Row(
-                                                          children: [
-                                                            Text(
-                                                              'Document',
-                                                              style: GoogleFonts.montserrat(
-                                                                  fontSize: 12,
-                                                                  color:
-                                                                      apptealColor,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                            ),
-                                                            const SizedBox(
-                                                              width: 10,
-                                                            ),
-                                                            Image.asset(
-                                                                'assets/pngs/Icon feather-download.png')
-                                                          ],
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Text('Comments :-',
+                                        Expanded(
+                                          flex: 1,
+                                          // width: MediaQuery.of(context).size.width / 5,
+                                          child: Text(
+                                            'Download Documnent File',
                                             style: GoogleFonts.montserrat(
                                                 fontSize: 12,
                                                 color: Color(0xff161616)
-                                                    .withOpacity(0.6))),
-                                        Text(
-                                          patientdetails.data.patientPersonal
-                                              .patientComments,
-                                          style: GoogleFonts.montserrat(
-                                              fontSize: 12,
-                                              color: Color(0xff161616),
-                                              fontWeight: FontWeight.bold),
+                                                    .withOpacity(0.6)),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 15,
+                                        ),
+                                        Expanded(
+                                          flex: 2,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              (patientReports.length == 0)
+                                                  ? ScaffoldMessenger.of(
+                                                          context)
+                                                      .showSnackBar(SnackBar(
+                                                      content: Text(
+                                                          'No reports available'),
+                                                      backgroundColor:
+                                                          appblueColor,
+                                                    ))
+                                                  : showDialog(
+                                                      context: context,
+                                                      builder:
+                                                          (context) =>
+                                                              AlertDialog(
+                                                                content:
+                                                                    Container(
+                                                                  height:
+                                                                      250.0, // Change as per your requirement
+                                                                  width: 300.0,
+                                                                  child: ListView
+                                                                      .builder(
+                                                                          itemCount: patientReports
+                                                                              .length,
+                                                                          shrinkWrap:
+                                                                              true,
+                                                                          itemBuilder:
+                                                                              (context, index) {
+                                                                            return (patientReports[index]['reportfile'].toString() == '')
+                                                                                ? Container()
+                                                                                : Padding(
+                                                                                    padding: const EdgeInsets.all(8.0),
+                                                                                    child: Row(
+                                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                      children: [
+                                                                                        Expanded(
+                                                                                          child: Text(
+                                                                                            patientReports[index]['reportfile'].toString().replaceAll("http://ciam.notionprojects.tech/assets/uploaded/", ""),
+                                                                                            style: GoogleFonts.montserrat(fontSize: 10),
+                                                                                          ),
+                                                                                        ),
+                                                                                        GestureDetector(
+                                                                                            onTap: () {
+                                                                                              Pop(context);
+                                                                                              downloadFile(patientReports[index]['reportfile']);
+                                                                                            },
+                                                                                            child: Image.asset('assets/pngs/Icon feather-download.png'))
+                                                                                      ],
+                                                                                    ),
+                                                                                  );
+                                                                          }),
+                                                                ),
+                                                              ));
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Text('-'),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Container(
+                                                  // width: MediaQuery.of(context).size.width / 1.65,
+                                                  child: Row(
+                                                    children: [
+                                                      Text(
+                                                        'Document',
+                                                        style: GoogleFonts
+                                                            .montserrat(
+                                                                fontSize: 12,
+                                                                color:
+                                                                    apptealColor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Image.asset(
+                                                          'assets/pngs/Icon feather-download.png')
+                                                    ],
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
                                         ),
                                       ],
                                     ),
                                   ),
-                                ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Push(context, OpenPdf(url: path));
+                                    },
+                                    child: Text('Comments :-',
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 12,
+                                            color: Color(0xff161616)
+                                                .withOpacity(0.6))),
+                                  ),
+                                  Text(
+                                    patientdetails
+                                        .data.patientPersonal.patientComments,
+                                    style: GoogleFonts.montserrat(
+                                        fontSize: 12,
+                                        color: Color(0xff161616),
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
 
                           SizedBox(
                             height: 12,
@@ -649,26 +717,30 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
                                         doctorProfileRow(
                                           title: 'Allergies',
                                           value: patientdetails.data
-                                              .patientMedical.patientAllergies,
+                                              .patientMedical.patientAllergies
+                                              .toString(),
                                         ),
                                         doctorProfileRow(
                                           title: 'Chronic Diseases',
                                           value: patientdetails
                                               .data
                                               .patientMedical
-                                              .patientChronicDisease,
+                                              .patientChronicDisease
+                                              .toString(),
                                         ),
                                         doctorProfileRow(
                                           title: 'Medication',
                                           value: patientdetails.data
-                                              .patientMedical.patientMedication,
+                                              .patientMedical.patientMedication
+                                              .toString(),
                                         ),
                                         doctorProfileRow(
                                           title: 'Injury',
                                           value: patientdetails
                                               .data
                                               .patientMedical
-                                              .patientSurgeryInjury,
+                                              .patientSurgeryInjury
+                                              .toString(),
                                         ),
 
                                         // Row(
@@ -815,7 +887,7 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
                                 ),
                           Container(
                             color: Colors.white,
-                            height: 150,
+                            height: reportList.isEmpty ? 200 : 350,
                             child: Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 20.0),
@@ -823,6 +895,50 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
+                                  commonBtn(
+                                    borderColor: apptealColor,
+                                    borderWidth: 2,
+                                    s: 'Add Report',
+                                    bgcolor: Colors.white,
+                                    textColor: apptealColor,
+                                    onPressed: () {
+                                      pickFile();
+                                    },
+                                    textSize: 12,
+                                    borderRadius: 10,
+                                  ),
+                                  (reportList.length == 0)
+                                      ? Container()
+                                      : Column(
+                                          children: [
+                                            Container(
+                                              height: 100,
+                                              child: ListView.builder(
+                                                  itemCount: reportList.length,
+                                                  shrinkWrap: true,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return Text('Report ' +
+                                                        index.toString());
+                                                  }),
+                                            ),
+                                            commonBtn(
+                                                borderColor: appblueColor,
+                                                borderWidth: 2,
+                                                borderRadius: 10,
+                                                s: 'Upload',
+                                                bgcolor: Colors.white,
+                                                textColor: appblueColor,
+                                                onPressed: () {
+                                                  submitmultiple()
+                                                      .then((value) {
+                                                    setState(() {
+                                                      reportList = [];
+                                                    });
+                                                  });
+                                                })
+                                          ],
+                                        ),
                                   commonBtn(
                                     s: 'Chat',
                                     bgcolor: Colors.white,
@@ -833,33 +949,50 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
                                     borderColor: apptealColor,
                                     borderWidth: 2,
                                   ),
-                                  commonBtn(
-                                    s: 'Start Video',
-                                    bgcolor: appblueColor,
-                                    textColor: Colors.white,
-                                    onPressed: () {
-                                      FirebaseNotificationHandling()
-                                          .sendNotification(
-                                              user_id: patientdetails.data
-                                                  .patientPersonal.patientId)
-                                          .then((value) {
-                                        if (!value['status']) {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(SnackBar(
-                                                  content: value['message']));
-                                        } else {
-                                          Push(
-                                              context,
-                                              VideoCallPage(
-                                                channelName: value['data']
-                                                    ['Channel Name'],
-                                              ));
-                                        }
-                                      });
-                                    },
-                                    height: 45,
-                                    borderRadius: 8,
-                                  ),
+                                  (channelName.isEmpty)
+                                      ? commonBtn(
+                                          s: 'Start Video',
+                                          bgcolor: appblueColor,
+                                          textColor: Colors.white,
+                                          onPressed: () {
+                                            FirebaseNotificationHandling()
+                                                .sendNotification(
+                                                    user_id: patientdetails
+                                                        .data
+                                                        .patientPersonal
+                                                        .patientId)
+                                                .then((value) {
+                                              if (!value['status']) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(SnackBar(
+                                                        content:
+                                                            value['message']));
+                                              } else {
+                                                Push(
+                                                    context,
+                                                    VideoCallPage(
+                                                      channelName: value['data']
+                                                          ['Channel Name'],
+                                                    ));
+                                              }
+                                            });
+                                          },
+                                          height: 45,
+                                          borderRadius: 8,
+                                        )
+                                      : commonBtn(
+                                          s: 'Join Call',
+                                          bgcolor: appblueColor,
+                                          textColor: Colors.white,
+                                          height: 45,
+                                          borderRadius: 8,
+                                          onPressed: () {
+                                            Push(
+                                                context,
+                                                VideoCallPage(
+                                                  channelName: channelName,
+                                                ));
+                                          }),
                                 ],
                               ),
                             ),
@@ -907,5 +1040,83 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
                   ],
                 ),
     );
+  }
+
+  Future<ViewBookingDetails> getDetails() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var response = await PostData(
+        PARAM_URL: 'get_patient_view_booking_details.php',
+        params: {
+          'token': Token,
+          'doctor_id': prefs.getString('user_id'),
+          'booking_id': widget.booking_id
+        });
+
+    return ViewBookingDetails.fromJson(response);
+  }
+
+  Future getPatientReports() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var response =
+        await PostData(PARAM_URL: 'get_patient_reports.php', params: {
+      'token': Token,
+      'doctor_id': prefs.getString('user_id'),
+      'booking_id': widget.booking_id
+    });
+
+    return response;
+  }
+
+  Future submitmultiple() async {
+    for (int i = 0; i < reportList.length; i++) {
+      uploadMultiple(i);
+    }
+  }
+
+  Future uploadMultiple(int i) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var loader = ProgressView(context);
+    loader.show();
+    // if user don't pick any thi
+    await PostDataWithImage(
+            PARAM_URL: 'upload_patient_report.php',
+            params: {
+              'token': Token,
+              'doctor_id': prefs.getString('user_id')!,
+              'patient_id': patientdetails.data.patientPersonal.patientId,
+              'booking_id': widget.booking_id,
+            },
+            imagePath: reportList[i].path.toString(),
+            imageparamName: 'doctor_report')
+        .then((value) {
+      loader.dismiss();
+      value['status']
+          ? ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('Report uploaded successfully'),
+              backgroundColor: apptealColor,
+            ))
+          : ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('Report was not uploaded, try again later'),
+              backgroundColor: Colors.red,
+            ));
+    });
+  }
+
+  List<File> reportList = [];
+  Future pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        allowMultiple: true,
+        type: FileType.custom,
+        allowedExtensions: [
+          'pdf',
+        ]);
+    if (result == null) {
+      return;
+    } else {
+      setState(() {
+        reportList = result.paths.map((path) => File(path!)).toList();
+      });
+    }
+    // ng then do nothing just return.
   }
 }

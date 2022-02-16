@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:doctor/API/api_constants.dart';
 import 'package:doctor/Screens/AGORA/video_call.dart';
+import 'package:doctor/Screens/accept_reject_call.dart';
+import 'package:doctor/Utils/APIIDS.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,15 +23,19 @@ class FirebaseNotificationHandling {
   void setupFirebase(BuildContext context) {
     FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
     FirebaseMessaging.onMessage.listen((event) {
+      channelName = event.data['chanel_name'];
       String? channel_name = event.notification!.title.toString();
       print('onMessage ' + event.toString());
       print(event.data);
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) =>
-              VideoCallPage(channelName: event.data['chanel_name'])));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  AcceptReject(channel_name: event.data['chanel_name'])));
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
+      channelName = event.data['chanel_name'];
       // String? channel_name = event.notification!.title.toString();
 
       print('onMessageOpenedApp');
@@ -37,11 +43,20 @@ class FirebaseNotificationHandling {
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  VideoCallPage(channelName: event.data['chanel_name'])));
+                  AcceptReject(channel_name: event.data['chanel_name'])));
       // Navigator.of(context).push(
       //     context,
       //     );
       // Push(context, );
+    });
+    FirebaseMessaging.onBackgroundMessage((message) async {
+      channelName = message.data['chanel_name'];
+      print(message.data);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  AcceptReject(channel_name: message.data['chanel_name'])));
     });
 
     // notificationhandler(context);

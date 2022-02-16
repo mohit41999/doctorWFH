@@ -20,13 +20,13 @@ class ViewBookingDetails {
 
   bool status;
   String message;
-  ViewBookingDetailsData data;
+  Data data;
 
   factory ViewBookingDetails.fromJson(Map<String, dynamic> json) =>
       ViewBookingDetails(
         status: json["status"],
         message: json["message"],
-        data: ViewBookingDetailsData.fromJson(json["data"]),
+        data: Data.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -36,8 +36,8 @@ class ViewBookingDetails {
       };
 }
 
-class ViewBookingDetailsData {
-  ViewBookingDetailsData({
+class Data {
+  Data({
     required this.bookingDetails,
     required this.patientPersonal,
     required this.patientMedical,
@@ -51,8 +51,7 @@ class ViewBookingDetailsData {
   PatientLifestyle patientLifestyle;
   RelativeInformatoin relativeInformatoin;
 
-  factory ViewBookingDetailsData.fromJson(Map<String, dynamic> json) =>
-      ViewBookingDetailsData(
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
         bookingDetails: BookingDetails.fromJson(json["Booking Details"]),
         patientPersonal: PatientPersonal.fromJson(json["Patient Personal"]),
         patientMedical: PatientMedical.fromJson(json["Patient Medical"]),
@@ -73,9 +72,9 @@ class ViewBookingDetailsData {
 class BookingDetails {
   BookingDetails({
     required this.bookingId,
-    required this.bookingTime,
-    required this.appointmentDate,
     required this.appointmentTime,
+    required this.appointmentDate,
+    required this.bookingTime,
     required this.bookingDate,
     required this.bookingStatus,
     required this.bookingFor,
@@ -84,9 +83,9 @@ class BookingDetails {
   });
 
   String bookingId;
-  String bookingTime;
   String appointmentTime;
   String appointmentDate;
+  String bookingTime;
   String bookingDate;
   String bookingStatus;
   String bookingFor;
@@ -95,10 +94,10 @@ class BookingDetails {
 
   factory BookingDetails.fromJson(Map<String, dynamic> json) => BookingDetails(
         bookingId: json["Booking ID"],
+        appointmentTime: json["Appointment Time"],
+        appointmentDate: json["Appointment Date"],
         bookingTime: json["Booking Time"],
         bookingDate: json["Booking Date"],
-        appointmentDate: json["Appointment Date"],
-        appointmentTime: json["Appointment Time"],
         bookingStatus: json["Booking Status"],
         bookingFor: json["Booking For"],
         paymentStatus: json["Payment Status"],
@@ -107,10 +106,10 @@ class BookingDetails {
 
   Map<String, dynamic> toJson() => {
         "Booking ID": bookingId,
+        "Appointment Time": appointmentTime,
+        "Appointment Date": appointmentDate,
         "Booking Time": bookingTime,
         "Booking Date": bookingDate,
-        "Appointment Date": appointmentDate,
-        "Appointment Time": appointmentTime,
         "Booking Status": bookingStatus,
         "Booking For": bookingFor,
         "Payment Status": paymentStatus,
@@ -155,10 +154,10 @@ class PatientMedical {
     required this.patientChronicDisease,
   });
 
-  String patientAllergies;
-  String patientMedication;
-  String patientSurgeryInjury;
-  String patientChronicDisease;
+  dynamic patientAllergies;
+  dynamic patientMedication;
+  dynamic patientSurgeryInjury;
+  dynamic patientChronicDisease;
 
   factory PatientMedical.fromJson(Map<String, dynamic> json) => PatientMedical(
         patientAllergies: json["Patient Allergies"],
@@ -187,7 +186,6 @@ class PatientPersonal {
     required this.patientBloodGroup,
     required this.patientMaritalStatus,
     required this.patientComments,
-    required this.patientDocument,
     required this.patientImage,
   });
 
@@ -201,7 +199,6 @@ class PatientPersonal {
   String patientBloodGroup;
   String patientMaritalStatus;
   String patientComments;
-  String patientDocument;
   String patientImage;
 
   factory PatientPersonal.fromJson(Map<String, dynamic> json) =>
@@ -216,7 +213,6 @@ class PatientPersonal {
         patientBloodGroup: json["Patient Blood group"],
         patientMaritalStatus: json["Patient Marital Status"],
         patientComments: json["Patient Comments"],
-        patientDocument: json["Patient Document"],
         patientImage: json["Patient Image"],
       );
 
@@ -231,7 +227,6 @@ class PatientPersonal {
         "Patient Blood group": patientBloodGroup,
         "Patient Marital Status": patientMaritalStatus,
         "Patient Comments": patientComments,
-        "Patient Document": patientDocument,
         "Patient Image": patientImage,
       };
 }
