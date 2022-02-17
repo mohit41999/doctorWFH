@@ -10,7 +10,11 @@ import 'package:doctor/Utils/colorsandstyles.dart';
 import 'package:doctor/Utils/progress_view.dart';
 import 'package:doctor/controller/NavigationController.dart';
 import 'package:doctor/firebase/notification_handling.dart';
+import 'package:doctor/helper/constants.dart';
+import 'package:doctor/helper/helperfunctions.dart';
 import 'package:doctor/model/view_booking_details.dart';
+import 'package:doctor/services/database.dart';
+import 'package:doctor/views/chat.dart';
 import 'package:doctor/widgets/common_button.dart';
 import 'package:doctor/widgets/doctor_profile_row.dart';
 import 'package:file_utils/file_utils.dart';
@@ -49,6 +53,37 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
   var path = "No Data";
   var platformVersion = "Unknown";
   var _onPressed;
+  getChatRoomId(String a, String b) {
+    if (a.substring(0, 1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)) {
+      return "$b\_$a";
+    } else {
+      return "$a\_$b";
+    }
+  }
+
+  DatabaseMethods databaseMethods = DatabaseMethods();
+
+  sendMessage(String userName) async {
+    Constants.myName = (await HelperFunctions.getUserNameSharedPreference())!;
+    List<String> users = [Constants.myName, userName];
+    print('oo');
+    print(Constants.myName);
+    String chatRoomId = getChatRoomId(Constants.myName, userName);
+    print('aa');
+    Map<String, dynamic> chatRoom = {
+      "users": users,
+      "chatRoomId": chatRoomId,
+    };
+
+    databaseMethods.addChatRoom(chatRoom, chatRoomId);
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Chat(
+                  chatRoomId: chatRoomId,
+                )));
+  }
 
   Future<void> _showNotification(Map<String, dynamic> downloadStatus) async {
     final android = AndroidNotificationDetails('channel id', 'channel name',
@@ -940,10 +975,14 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
                                           ],
                                         ),
                                   commonBtn(
-                                    s: 'Chat',
+                                    s: patientdetails
+                                        .data.patientPersonal.patientName,
                                     bgcolor: Colors.white,
                                     textColor: apptealColor,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      sendMessage(patientdetails
+                                          .data.patientPersonal.patientName);
+                                    },
                                     height: 45,
                                     borderRadius: 8,
                                     borderColor: apptealColor,

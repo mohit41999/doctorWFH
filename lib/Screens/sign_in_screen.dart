@@ -1,5 +1,6 @@
 import 'package:doctor/Screens/biometric_authenticate.dart';
 import 'package:doctor/controller/sign_in_controller.dart';
+import 'package:doctor/firebase/AuthenticatioHelper.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -130,7 +131,27 @@ class _SignInScreenState extends State<SignInScreen> {
                   textColor: Colors.white,
                   onPressed: () {
                     //Push(context, GeneralScreen2());
-                    _con.SignIn(context);
+                    {
+                      AuthenticationHelper()
+                          .signIn(
+                              email: _con.email.text,
+                              password: _con.password.text)
+                          .then((result) {
+                        if (result == null) {
+                          _con.SignIn(context);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                              result,
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ));
+                        }
+                      });
+
+                      //Push(context, GeneralScreen2());
+                      // Push(context, GeneralScreen());
+                    }
                     // _con.SignIn(context);
                   }),
               SizedBox(

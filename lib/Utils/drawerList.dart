@@ -8,6 +8,7 @@ import 'package:doctor/Screens/MYScreens/MyWalletTabs/my_wallet_pg.dart';
 import 'package:doctor/Screens/ProfileSettings/profile_setting.dart';
 import 'package:doctor/Screens/account_settings.dart';
 import 'package:doctor/Screens/my_booking_request.dart';
+import 'package:doctor/views/chatrooms.dart';
 
 List<Map<dynamic, dynamic>> drawerList = [
   {
@@ -46,10 +47,10 @@ List<Map<dynamic, dynamic>> drawerList = [
     'label': 'Billing Segment',
     'Screen': MyWalletPage(),
   },
-  // {
-  //   'label': 'My Prescriptions',
-  //   'Screen': MyPrescriptionsScreen(),
-  // },
+  {
+    'label': 'My Chats',
+    'Screen': ChatRoom(),
+  },
   {
     'label': 'Account Setting',
     'Screen': AccountSetting(),

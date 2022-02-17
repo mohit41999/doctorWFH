@@ -1,10 +1,13 @@
+import 'package:doctor/Screens/sign_in_screen.dart';
 import 'package:doctor/Utils/drawerList.dart';
 import 'package:doctor/controller/NavigationController.dart';
+import 'package:doctor/firebase/AuthenticatioHelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../Utils/colorsandstyles.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'commonAppBarLeading.dart';
 
@@ -18,6 +21,38 @@ class commonDrawer extends StatefulWidget {
 }
 
 class _commonDrawerState extends State<commonDrawer> {
+  Future<void> _ackAlert(BuildContext context) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Logout!'),
+          content: const Text('Are you sure want to logout'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                AuthenticationHelper().signOut();
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: () {
+                preferences.clear();
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignInScreen()),
+                    (route) => false);
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -42,19 +77,31 @@ class _commonDrawerState extends State<commonDrawer> {
                         return Padding(
                           padding: const EdgeInsets.symmetric(
                               vertical: 15.0, horizontal: 20),
-                          child: GestureDetector(
-                            child: Text(
-                              drawerList[index]['label'],
-                              style: GoogleFonts.montserrat(
-                                  color: appblueColor,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            onTap: () {
-                              (drawerList[index]['Screen'].toString() == 'null')
-                                  ? {print('blablabla')}
-                                  : Push(context, drawerList[index]['Screen']);
-                            },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              GestureDetector(
+                                child: Text(
+                                  drawerList[index]['label'],
+                                  style: GoogleFonts.montserrat(
+                                      color: appblueColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                onTap: () {
+                                  (drawerList[index]['label'].toString() ==
+                                          'Logout')
+                                      ? _ackAlert(context)
+                                      : Push(
+                                          context, drawerList[index]['Screen']);
+                                },
+                              ),
+                              (index == drawerList.length - 1)
+                                  ? SizedBox(
+                                      height: 100,
+                                    )
+                                  : Container()
+                            ],
                           ),
                         );
                       }),

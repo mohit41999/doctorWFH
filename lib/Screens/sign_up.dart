@@ -1,5 +1,6 @@
 import 'package:doctor/controller/NavigationController.dart';
 import 'package:doctor/controller/signup_controller.dart';
+import 'package:doctor/firebase/AuthenticatioHelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -160,7 +161,23 @@ class _SignUpPageState extends State<SignUpPage> {
                   bgcolor: appblueColor,
                   textColor: Colors.white,
                   onPressed: () {
-                    _con.Signup(context);
+                    AuthenticationHelper()
+                        .signUp(
+                            email: _con.email_Id.text,
+                            password: _con.password.text,
+                            username: _con.firstname.text + _con.lastname.text)
+                        .then((result) {
+                      if (result == null) {
+                        _con.Signup(context);
+                      } else {
+                        Scaffold.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                            result,
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ));
+                      }
+                    });
                   })
             ],
           ),

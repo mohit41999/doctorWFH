@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:doctor/Screens/biometric_authenticate.dart';
+import 'package:doctor/Screens/biometric_authenticate2.dart';
 import 'package:doctor/Screens/sign_in_screen.dart';
 import 'package:doctor/controller/NavigationController.dart';
 import 'package:doctor/firebase/fcm.dart';
@@ -32,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 ? Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => BiometricAuthenticate()))
+                        builder: (context) => BiometricAuthenticate2()))
                 : Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => GeneralScreen())));
   }
