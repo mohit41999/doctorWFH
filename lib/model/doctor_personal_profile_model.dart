@@ -45,6 +45,7 @@ class Data {
     required this.experience,
     required this.languageSpoken,
     required this.address,
+    required this.email,
     required this.specialistid,
     required this.profileImage,
     required this.About_me,
@@ -54,6 +55,7 @@ class Data {
   String firstName;
   String lastName;
   dynamic specialist;
+  dynamic email;
   String education;
   String experience;
   String languageSpoken;
@@ -67,6 +69,7 @@ class Data {
         firstName: json["first_name"],
         lastName: json["last_name"],
         specialist: json["specialist"],
+        email: json["email"],
         education: json["education"],
         experience: json["experience"],
         languageSpoken: json["language_spoken"],
@@ -80,6 +83,7 @@ class Data {
         "doctor_id": doctorId,
         "first_name": firstName,
         "last_name": lastName,
+        "email": email,
         "specialist": specialist,
         "specialistid": specialistid,
         "education": education,

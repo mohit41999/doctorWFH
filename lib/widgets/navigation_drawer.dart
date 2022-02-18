@@ -1,6 +1,7 @@
 import 'package:doctor/Screens/sign_in_screen.dart';
 import 'package:doctor/Utils/drawerList.dart';
 import 'package:doctor/controller/NavigationController.dart';
+import 'package:doctor/controller/doctor_profile_controller.dart';
 import 'package:doctor/firebase/AuthenticatioHelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +54,24 @@ class _commonDrawerState extends State<commonDrawer> {
     );
   }
 
+  late String profilepic;
+  bool loading = true;
+  Future initialize() async {
+    DoctorProfileController().getDocPersonalProfile().then((value) {
+      setState(() {
+        profilepic = value.data.profileImage;
+        loading = false;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initialize();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -62,13 +81,17 @@ class _commonDrawerState extends State<commonDrawer> {
           children: [
             Column(
               children: [
-                Container(
-                  height: 250,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage('assets/pngs/Rectangle 51.png'),
-                          fit: BoxFit.cover)),
-                ),
+                (loading)
+                    ? Container(
+                        height: 250,
+                        child: Center(child: CircularProgressIndicator()))
+                    : Container(
+                        height: 250,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: NetworkImage(profilepic),
+                                fit: BoxFit.cover)),
+                      ),
                 Expanded(
                   child: ListView.builder(
                       physics: BouncingScrollPhysics(),
@@ -89,11 +112,13 @@ class _commonDrawerState extends State<commonDrawer> {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 onTap: () {
-                                  (drawerList[index]['label'].toString() ==
-                                          'Logout')
-                                      ? _ackAlert(context)
-                                      : Push(
-                                          context, drawerList[index]['Screen']);
+                                  if (drawerList[index]['label'].toString() ==
+                                      'Logout') {
+                                    _ackAlert(context);
+                                  } else {
+                                    Navigator.pop(context);
+                                    Push(context, drawerList[index]['Screen']);
+                                  }
                                 },
                               ),
                               (index == drawerList.length - 1)

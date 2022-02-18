@@ -37,6 +37,8 @@ class _PersonalState extends State<Personal> {
 
     _con.getDocPersonalProfile().then((value) {
       setState(() {
+        _con.oldname = value.data.firstName + ' ' + value.data.lastName;
+        _con.email = value.data.email;
         _con.firstname.text = value.data.firstName;
         _con.lastname.text = value.data.lastName;
         _con.education.text = value.data.education;

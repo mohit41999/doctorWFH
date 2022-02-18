@@ -82,13 +82,6 @@ class _ChatRoomState extends State<ChatRoom> {
       body: Container(
         child: (loading) ? CircularProgressIndicator() : chatRoomsList(),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.search),
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Search()));
-        },
-      ),
     );
   }
 }

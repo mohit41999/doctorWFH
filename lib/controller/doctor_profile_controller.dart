@@ -1,13 +1,18 @@
 import 'package:doctor/API/api_constants.dart';
 import 'package:doctor/Utils/progress_view.dart';
+import 'package:doctor/controller/NavigationController.dart';
+import 'package:doctor/helper/helperfunctions.dart';
 import 'package:doctor/model/doctor_clinic_profile.dart';
 import 'package:doctor/model/doctor_personal_profile_model.dart';
+import 'package:doctor/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DoctorProfileController {
   XFile? mediaFile = null;
+  late String email;
+  late String oldname;
   late String profileImage;
   TextEditingController firstname = TextEditingController();
   TextEditingController lastname = TextEditingController();
@@ -37,6 +42,17 @@ class DoctorProfileController {
       "about_me": about_me.text,
     };
 
+    HelperFunctions.saveUserNameSharedPreference(
+        firstname.text + ' ' + lastname.text);
+    // await DatabaseMethods()
+    //     .updatechatroomId(oldname, firstname.text + ' ' + lastname.text);
+    //
+    // // QuerySnapshot userInfoSnapshot = await DatabaseMethods()
+    // //     .getUserChatsforUpdate(firstname.text + ' ' + lastname.text);
+    //
+    // DatabaseMethods()
+    //     .updateusername(email, firstname.text + ' ' + lastname.text);
+
     var response = (mediaFile == null)
         ? await PostData(
             PARAM_URL: 'update_doctor_personal_details.php', params: bodyparams)
@@ -50,9 +66,11 @@ class DoctorProfileController {
     if (response['status']) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(response['message'])));
+      Pop(context);
     } else {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(response['message'])));
+      Pop(context);
     }
   }
 

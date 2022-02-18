@@ -71,7 +71,7 @@ class _AcceptRejectState extends State<AcceptReject> {
                       textColor: Colors.white,
                       onPressed: () {
                         Pop(context);
-                        channelName = widget.channel_name;
+
                       }),
                   commonBtn(
                       width: 100,

@@ -939,7 +939,6 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
                                     onPressed: () {
                                       pickFile();
                                     },
-                                    textSize: 12,
                                     borderRadius: 10,
                                   ),
                                   (reportList.length == 0)
@@ -975,8 +974,7 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
                                           ],
                                         ),
                                   commonBtn(
-                                    s: patientdetails
-                                        .data.patientPersonal.patientName,
+                                    s: 'Chat',
                                     bgcolor: Colors.white,
                                     textColor: apptealColor,
                                     onPressed: () {
@@ -988,50 +986,47 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
                                     borderColor: apptealColor,
                                     borderWidth: 2,
                                   ),
-                                  (channelName.isEmpty)
-                                      ? commonBtn(
-                                          s: 'Start Video',
-                                          bgcolor: appblueColor,
-                                          textColor: Colors.white,
-                                          onPressed: () {
-                                            FirebaseNotificationHandling()
-                                                .sendNotification(
-                                                    user_id: patientdetails
-                                                        .data
-                                                        .patientPersonal
-                                                        .patientId)
-                                                .then((value) {
-                                              if (!value['status']) {
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(SnackBar(
-                                                        content:
-                                                            value['message']));
-                                              } else {
-                                                Push(
-                                                    context,
-                                                    VideoCallPage(
-                                                      channelName: value['data']
-                                                          ['Channel Name'],
-                                                    ));
-                                              }
-                                            });
-                                          },
-                                          height: 45,
-                                          borderRadius: 8,
-                                        )
-                                      : commonBtn(
-                                          s: 'Join Call',
-                                          bgcolor: appblueColor,
-                                          textColor: Colors.white,
-                                          height: 45,
-                                          borderRadius: 8,
-                                          onPressed: () {
-                                            Push(
-                                                context,
-                                                VideoCallPage(
-                                                  channelName: channelName,
-                                                ));
-                                          }),
+
+                                  commonBtn(
+                                    s: 'Start Video',
+                                    bgcolor: appblueColor,
+                                    textColor: Colors.white,
+                                    onPressed: () {
+                                      FirebaseNotificationHandling()
+                                          .sendNotification(
+                                              user_id: patientdetails.data
+                                                  .patientPersonal.patientId)
+                                          .then((value) {
+                                        if (!value['status']) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                                  content: value['message']));
+                                        } else {
+                                          Push(
+                                              context,
+                                              VideoCallPage(
+                                                channelName: value['data']
+                                                    ['Channel Name'],
+                                              ));
+                                        }
+                                      });
+                                    },
+                                    height: 45,
+                                    borderRadius: 8,
+                                  )
+                                  // : commonBtn(
+                                  //     s: 'Join Call',
+                                  //     bgcolor: appblueColor,
+                                  //     textColor: Colors.white,
+                                  //     height: 45,
+                                  //     borderRadius: 8,
+                                  //     onPressed: () {
+                                  //       Push(
+                                  //           context,
+                                  //           VideoCallPage(
+                                  //             channelName: channelName,
+                                  //           ));
+                                  //     }),
                                 ],
                               ),
                             ),
