@@ -159,8 +159,8 @@ class _ClinicalState extends State<Clinical> {
       'doctor_id': prefs.getString('user_id'),
       'clinic_name': _clinic_name.text,
       'clinic_location': _clinic_location.text,
-      'open_time': '${selectedOpenTime.hour}:${selectedOpenTime.minute}:00',
-      'close_time': '${selectedCloseTime.hour}:${selectedCloseTime.minute}:00',
+      'open_time': openTime,
+      'close_time': closeTime,
       'ofline_consultancy_fees': _offlineConsultancyFees.text.toString(),
       'from_to_days': 'monday to friday',
       'doctor_availability_status': availablestatus.text.toString()
@@ -227,7 +227,7 @@ class _ClinicalState extends State<Clinical> {
                                       _selectOpenTime(context);
                                     });
                                   },
-                                  child: Text(openTime.substring(0, 5))),
+                                  child: Text(openTime)),
                             ),
                           ],
                         ),
@@ -250,7 +250,7 @@ class _ClinicalState extends State<Clinical> {
                                       _selectCloseTime(context);
                                     });
                                   },
-                                  child: Text(closeTime.substring(0, 5))),
+                                  child: Text(closeTime)),
                             ),
                           ],
                         ),

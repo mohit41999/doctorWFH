@@ -1,12 +1,13 @@
-import 'package:doctor/Screens/MYScreens/manage_calendar.dart';
-import 'package:doctor/Screens/MYScreens/my_booked_appointment.dart';
-import 'package:doctor/Screens/MYScreens/my_online_consultants.dart';
-import 'package:doctor/Screens/completed_assignment.dart';
 import 'package:doctor/Screens/MYScreens/MyQuestionsScreen.dart';
 import 'package:doctor/Screens/MYScreens/MyReviewRating.dart';
 import 'package:doctor/Screens/MYScreens/MyWalletTabs/my_wallet_pg.dart';
+import 'package:doctor/Screens/MYScreens/manage_calendar.dart';
+import 'package:doctor/Screens/MYScreens/my_booked_appointment.dart';
+import 'package:doctor/Screens/MYScreens/my_online_consultants.dart';
 import 'package:doctor/Screens/ProfileSettings/profile_setting.dart';
 import 'package:doctor/Screens/account_settings.dart';
+import 'package:doctor/Screens/chats_screen.dart';
+import 'package:doctor/Screens/completed_assignment.dart';
 import 'package:doctor/Screens/my_booking_request.dart';
 
 List<Map<dynamic, dynamic>> drawerList = [
@@ -17,6 +18,10 @@ List<Map<dynamic, dynamic>> drawerList = [
   {
     'label': 'Manage Calendar',
     'Screen': ManageCalendar(),
+  },
+  {
+    'label': 'My Chats',
+    'Screen': ChatsScreen(),
   },
   {
     'label': 'My Booking Request',
@@ -46,10 +51,6 @@ List<Map<dynamic, dynamic>> drawerList = [
     'label': 'Billing Segment',
     'Screen': MyWalletPage(),
   },
-  // {
-  //   'label': 'My Prescriptions',
-  //   'Screen': MyPrescriptionsScreen(),
-  // },
   {
     'label': 'Account Setting',
     'Screen': AccountSetting(),

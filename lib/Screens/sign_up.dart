@@ -1,16 +1,13 @@
-import 'package:doctor/controller/NavigationController.dart';
-import 'package:doctor/controller/signup_controller.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:doctor/Screens/sign_in_screen.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:doctor/Utils/colorsandstyles.dart';
-
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:doctor/controller/signup_controller.dart';
 import 'package:doctor/widgets/common_app_bar_title.dart';
 import 'package:doctor/widgets/common_button.dart';
 import 'package:doctor/widgets/enter_field.dart';
-import 'package:country_code_picker/country_code_picker.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -161,6 +158,22 @@ class _SignUpPageState extends State<SignUpPage> {
                   textColor: Colors.white,
                   onPressed: () {
                     _con.Signup(context);
+                    // AuthenticationHelper()
+                    //     .signUp(
+                    //         email: _con.email_Id.text,
+                    //         password: _con.password.text,
+                    //         username: _con.firstname.text + _con.lastname.text)
+                    //     .then((result) {
+                    //   if (result == null) {
+                    //   } else {
+                    //     Scaffold.of(context).showSnackBar(SnackBar(
+                    //       content: Text(
+                    //         result,
+                    //         style: TextStyle(fontSize: 16),
+                    //       ),
+                    //     ));
+                    //   }
+                    // });
                   })
             ],
           ),

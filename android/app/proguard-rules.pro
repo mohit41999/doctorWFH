@@ -1,0 +1,6 @@
+
+   -keep class io.grpc.** {*;}
+
+
+
+
