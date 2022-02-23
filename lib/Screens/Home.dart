@@ -1,73 +1,26 @@
+import 'package:doctor/API/api_constants.dart';
 import 'package:doctor/Screens/MYScreens/MyQuestionsScreen.dart';
 import 'package:doctor/Screens/MYScreens/MyReviewRating.dart';
-import 'package:doctor/Screens/MYScreens/MyWalletTabs/wallet_transaction_history.dart';
 import 'package:doctor/Screens/MYScreens/my_online_consultants.dart';
-import 'package:doctor/Screens/ProfileSettings/profile_setting.dart';
-import 'package:doctor/Screens/account_settings.dart';
 import 'package:doctor/Screens/completed_assignment.dart';
-import 'package:doctor/Screens/search_screen.dart';
+import 'package:doctor/Screens/patient_booking_details.dart';
+
 import 'package:doctor/Utils/colorsandstyles.dart';
 import 'package:doctor/controller/NavigationController.dart';
+import 'package:doctor/model/Upcoming%20Appointments.dart';
+import 'package:doctor/model/completed_assignment_model.dart';
+import 'package:doctor/model/doctor_rating_model.dart';
 import 'package:doctor/widgets/commonAppBarLeading.dart';
 import 'package:doctor/widgets/common_app_bar_title.dart';
 import 'package:doctor/widgets/common_button.dart';
 import 'package:doctor/widgets/navigation_drawer.dart';
+import 'package:doctor/widgets/title_column.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-
-final List<String> imgList = [
-  'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
-  'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
-  'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
-  'https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89719a0d55dd05e2deae4120227e6efc&auto=format&fit=crop&w=1953&q=80',
-  'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
-  'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
-];
-final List<Map<dynamic, dynamic>> hometile = [
-  {
-    'label': 'My Online Consultants',
-    'Screen': MyOnlineConsultants(),
-    'profile': 'Rectangle 69.png'
-  },
-  {
-    'label': 'Completed Assignments',
-    // 'Screen': 'null',
-    'Screen': CompletedAssignment(),
-    'profile': 'Rectangle -7.png'
-  },
-  {
-    'label': 'My Reviews',
-    // 'Screen': 'null',
-    'Screen': MyReviewRatingsScreen(),
-    'profile': 'Rectangle -1.png'
-  },
-  {
-    'label': 'My Questions',
-    'Screen': MyQuestionsScreen(),
-    'profile': 'Rectangle -6.png'
-  },
-  {
-    'label': 'Billing Segment',
-    // 'Screen': 'null',
-    'Screen': WalletTransactionHistory(),
-    'profile': 'Rectangle -4.png'
-  },
-  {
-    'label': 'Account Settings',
-    'Screen': AccountSetting(),
-    'profile': 'Rectangle 69.png'
-  },
-  {
-    'label': 'Profile Setting',
-    // 'Screen': 'null',
-    'Screen': ProfileSetting(),
-    'profile': 'Rectangle 69.png'
-  },
-  {'label': 'Knowledge Forum', 'Screen': 'null', 'profile': 'Rectangle -2.png'},
-];
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -76,84 +29,24 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  int _current = 0;
-  final CarouselController _controller = CarouselController();
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  ScrollController _controller = ScrollController();
 
-  List<Widget> widgetSliders(BuildContext context) => hometile
-      .map((item) => Container(
-          color: Colors.white,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Color(0xffF6F6F6),
-              borderRadius: BorderRadius.circular(5),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  blurRadius: 10,
-                  offset: const Offset(2, 5),
-                ),
-              ],
-            ),
-            // height: 100,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 160,
-                        child: Text(
-                          item['label'],
-                          style: GoogleFonts.montserrat(
-                              fontSize: 16,
-                              color: appblueColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Container(
-                        width: 160,
-                        child: Text(
-                          'India\'s largest home health care company',
-                          style: GoogleFonts.montserrat(
-                            fontSize: 12,
-                            color: Color(0xff161616),
-                          ),
-                        ),
-                      ),
-                      commonBtn(
-                        s: 'Consult Now',
-                        bgcolor: appblueColor,
-                        textColor: Colors.white,
-                        onPressed: () {
-                          (item['Screen'] == 'null')
-                              ? print('nooooooo')
-                              : Push(context, item['Screen']);
-                        },
-                        width: 120,
-                        height: 30,
-                        textSize: 12,
-                        borderRadius: 5,
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.asset(
-                    'assets/pngs/${item['profile']}',
-                    fit: BoxFit.fill,
-                  ),
-                )
-              ],
-            ),
-          )))
-      .toList();
-  TextEditingController _search = TextEditingController();
+  @override
+  void initState() {
+    _tabController = TabController(length: 2, vsync: this);
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _tabController.dispose();
+  }
+
   List<Placemark> address = [];
   late Position position;
   Future getcity() async {
@@ -170,258 +63,613 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
-  void initState() {
-    // TODO: implement initState
-    determinePosition().then((value) {
-      setState(() {
-        position = value;
-        getcity();
-        print(position);
-      });
-    });
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          centerTitle: true,
-          title: commonAppBarTitle(),
-          backgroundColor: Colors.white,
-          elevation: 0,
-          leading: Builder(
-            builder: (context) => commonAppBarLeading(
-                iconData: Icons.menu,
-                onPressed: () {
-                  setState(() {
-                    Scaffold.of(context).openDrawer();
-                  });
-                }),
-          )),
-      drawer: commonDrawer(),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        appBar: AppBar(
+            centerTitle: true,
+            title: commonAppBarTitle(),
+            backgroundColor: Colors.white,
+            elevation: 0,
+            leading: Builder(
+              builder: (context) => commonAppBarLeading(
+                  iconData: Icons.menu,
+                  onPressed: () {
+                    setState(() {
+                      Scaffold.of(context).openDrawer();
+                    });
+                  }),
+            )),
+        drawer: commonDrawer(),
+        body: ListView(
+          controller: _controller,
           children: [
-            Container(
-              width: double.infinity,
-              color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: commonBtn(
-                    height: 46,
-                    textSize: 12,
-                    s: (address.length == 0)
-                        ? ''
-                        : address[0].administrativeArea! +
-                            ' ' +
-                            address[0].subAdministrativeArea!,
-                    bgcolor: Colors.white,
-                    borderRadius: 5,
-                    borderColor: appblueColor,
-                    borderWidth: 2,
-                    textColor: apptealColor,
-                    onPressed: () {}),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                Push(context, SearchScreen());
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Container(
-                  height: 40,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(5),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        blurRadius: 10,
-                        offset: const Offset(2, 5),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+              child: Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.25,
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                ),
+                child: Column(
+                  children: [
+                    Expanded(
+                        child: Container(
+                      width: double.infinity,
+                      child: Center(
+                        child: Text(
+                          'Revenue',
+                          style: GoogleFonts.montserrat(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
                       ),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.search,
-                        color: Color(0xff161616).withOpacity(0.6),
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Text(
-                        'Search',
-                        style: GoogleFonts.montserrat(
-                            fontSize: 16,
-                            color: Color(0xff161616).withOpacity(0.6)),
-                      ),
-                    ],
-                  ),
+                      decoration: BoxDecoration(
+                          color: appblueColor,
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10),
+                              topLeft: Radius.circular(10))),
+                    )),
+                    Expanded(
+                        flex: 5,
+                        child: Container(
+                          width: double.infinity,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text('data'),
+                              Text(
+                                'data',
+                                style: GoogleFonts.montserrat(
+                                    color: appblueColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 35),
+                              ),
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(10),
+                                  bottomLeft: Radius.circular(10))),
+                        ))
+                  ],
                 ),
               ),
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+              child: commonBtn(
+                s: 'Bookings',
+                bgcolor: appblueColor,
+                textColor: Colors.white,
+                onPressed: () {},
+                height: 40,
+                textSize: 14,
+                borderRadius: 10,
+              ),
+            ),
+            Container(
+              color: Colors.white,
+              child: TabBar(
+                labelPadding: EdgeInsets.only(right: 4, left: 0),
+                labelStyle:
+                    TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                indicatorSize: TabBarIndicatorSize.label,
+                indicator: UnderlineTabIndicator(
+                    borderSide: BorderSide(width: 2.0, color: appblueColor),
+                    insets: EdgeInsets.all(-1)),
+                controller: _tabController,
+                labelColor: appblueColor,
+                unselectedLabelColor: Colors.grey,
+                tabs: [
+                  Tab(
+                    text: 'Completed',
+                  ),
+                  Tab(
+                    text: 'Upcoming',
+                  ),
+                  // Tab(
+                  //   text: 'Lifestyle',
+                  // ),
+                ],
+              ),
+            ),
+            Divider(
+              thickness: 1,
+              height: 0,
+              color: Colors.grey.withOpacity(0.5),
             ),
             SizedBox(
-              height: 20,
+              height: 10,
+            ),
+            // tab bar view here
+            Container(
+              height: MediaQuery.of(context).size.height * 0.7,
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  // first tab bar view widget
+                  completed(),
+                  Upcoming(),
+                  // Lifestyle()
+                  // second tab bar view widget
+                ],
+              ),
+            ),
+
+            Center(
+              child: Wrap(children: [
+                commonBtn(
+                  s: 'View All',
+                  bgcolor: appblueColor,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    _tabController.index == 0
+                        ? Push(context, CompletedAssignment())
+                        : Push(context, MyOnlineConsultants());
+                  },
+                  height: 30,
+                  width: 90,
+                  textSize: 11,
+                  borderRadius: 4,
+                ),
+              ]),
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+              child: commonBtn(
+                s: 'Reviews',
+                bgcolor: appblueColor,
+                textColor: Colors.white,
+                onPressed: () {},
+                height: 40,
+                textSize: 14,
+                borderRadius: 10,
+              ),
             ),
             Container(
-              height: 200,
-              width: double.infinity,
-              child: Column(children: [
-                Expanded(
-                  child: Container(
-                    color: Colors.white,
-                    child: CarouselSlider(
-                      items: widgetSliders(context),
-                      carouselController: _controller,
-                      options: CarouselOptions(
-                          autoPlay: true,
-                          enlargeCenterPage: true,
-                          aspectRatio: 2.5,
-                          onPageChanged: (index, reason) {
-                            setState(() {
-                              _current = index;
-                            });
-                          }),
-                    ),
-                  ),
+                height: MediaQuery.of(context).size.height * 0.5,
+                child: DocReview()),
+            SizedBox(
+              height: 10,
+            ),
+            Center(
+              child: Wrap(children: [
+                commonBtn(
+                  s: 'View All',
+                  bgcolor: appblueColor,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    Push(context, MyReviewRatingsScreen());
+                  },
+                  height: 30,
+                  width: 90,
+                  textSize: 11,
+                  borderRadius: 4,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: hometile.asMap().entries.map((entry) {
-                    return GestureDetector(
-                        onTap: () => _controller.animateToPage(entry.key),
-                        child: Container(
-                          width: 8.0,
-                          height: 8.0,
-                          margin: EdgeInsets.symmetric(
-                              vertical: 8.0, horizontal: 4.0),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: _current == entry.key
-                                ? appblueColor.withOpacity(0.9)
-                                : appblueColor.withOpacity(0.4),
+              ]),
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+              child: commonBtn(
+                s: 'Question And Answer',
+                bgcolor: appblueColor,
+                textColor: Colors.white,
+                onPressed: () {},
+                height: 40,
+                textSize: 14,
+                borderRadius: 10,
+              ),
+            ),
+            Container(
+              height: MediaQuery.of(context).size.height * 0.5,
+              child: ListView.builder(
+                  controller: _controller,
+                  itemCount: 5,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Card(
+                        elevation: 5,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Lorem ipsum dolor sit amet, consetetur. ?',
+                                    style: GoogleFonts.lato(
+                                        color: Color(0xff252525),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    '  27/09/2021',
+                                    style: GoogleFonts.lato(
+                                        color: apptealColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text(
+                                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea.',
+                                style: GoogleFonts.lato(fontSize: 12),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                            ],
                           ),
-                        ));
-                  }).toList(),
+                        ),
+                      ),
+                    );
+                  }),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Center(
+              child: Wrap(children: [
+                commonBtn(
+                  s: 'View All',
+                  bgcolor: appblueColor,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    Push(context, MyQuestionsScreen());
+                  },
+                  height: 30,
+                  width: 90,
+                  textSize: 11,
+                  borderRadius: 4,
                 ),
               ]),
             ),
             SizedBox(
-              height: 20,
-            ),
-            Container(
-              color: Colors.white,
-              width: double.infinity,
-              height: 300,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Expanded(
-                    child: GridView.builder(
-                      scrollDirection: Axis.horizontal,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          // maxCrossAxisExtent: 100,
-                          childAspectRatio: 1.45 / 1,
-                          // crossAxisSpacing: 10,
-                          // mainAxisSpacing: 10,
-                          crossAxisCount: 2),
-                      itemCount: hometile.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(5),
-                          child: GestureDetector(
-                            onTap: () {
-                              (hometile[index]['Screen'].toString() == 'null')
-                                  ? {print('blablabla')}
-                                  : Push(context, hometile[index]['Screen']);
-                            },
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 80,
-                                  width: 80,
-                                  decoration: BoxDecoration(
-                                    color: appblueColor,
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: Image.asset(
-                                      'assets/pngs/${hometile[index]['profile']}'),
-                                ),
-                                SizedBox(width: 10),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      hometile[index]['label'].toString(),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              height: 100,
+              height: 70,
             ),
           ],
-        ),
-      ),
-    );
+        ));
+  }
+}
+
+class completed extends StatefulWidget {
+  const completed({Key? key}) : super(key: key);
+
+  @override
+  _completedState createState() => _completedState();
+}
+
+class _completedState extends State<completed> {
+  late CompletedAssignmentModel completedAssignment;
+  bool loading = true;
+
+  Future<CompletedAssignmentModel> getcompleted() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    late Map<String, dynamic> response;
+    await PostData(PARAM_URL: 'completed_assignment.php', params: {
+      'token': Token,
+      'doctor_id': preferences.getString('user_id')
+    }).then((value) {
+      response = value;
+    });
+    return CompletedAssignmentModel.fromJson(response);
   }
 
-  Future<Position> determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getcompleted().then((value) {
+      setState(() {
+        completedAssignment = value;
+        loading = false;
+      });
+    });
+  }
 
-    // Test if location services are enabled.
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      // Location services are not enabled don't continue
-      // accessing the position and request users of the
-      // App to enable the location services.
-      return Future.error('Location services are disabled.');
-    }
+  @override
+  Widget build(BuildContext context) {
+    return (loading)
+        ? Center(
+            child: CircularProgressIndicator(),
+          )
+        : Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: completedAssignment.data.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Material(
+                      elevation: 4,
+                      borderRadius: BorderRadius.circular(8),
+                      child: Container(
+                        height: 105,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 18.0,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Expanded(
+                                  child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  titleColumn(
+                                      title: 'Booking ID',
+                                      value: completedAssignment
+                                          .data[index].bookingId),
+                                  titleColumn(
+                                      title: 'Booking of', value: 'value'),
+                                ],
+                              )),
+                              Expanded(
+                                  child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  titleColumn(
+                                      title: 'Order Date',
+                                      value: completedAssignment
+                                          .data[index].appointmentDate),
+                                  titleColumn(
+                                      title: 'Booking Time',
+                                      value: completedAssignment
+                                          .data[index].appointment_time),
+                                ],
+                              )),
+                              Expanded(
+                                  child: Center(
+                                      child: commonBtn(
+                                s: 'View',
+                                bgcolor: appblueColor,
+                                textColor: Colors.white,
+                                onPressed: () {
+                                  Push(
+                                      context,
+                                      PatientBookingDetails(
+                                          booking_id: completedAssignment
+                                              .data[index].bookingId));
+                                },
+                                width: 85,
+                                height: 30,
+                                textSize: 11,
+                                borderRadius: 4,
+                              ))),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+          );
+  }
+}
 
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        // Permissions are denied, next time you could try
-        // requesting permissions again (this is also where
-        // Android's shouldShowRequestPermissionRationale
-        // returned true. According to Android guidelines
-        // your App should show an explanatory UI now.
-        return Future.error('Location permissions are denied');
-      }
-    }
+class Upcoming extends StatefulWidget {
+  const Upcoming({Key? key}) : super(key: key);
 
-    if (permission == LocationPermission.deniedForever) {
-      // Permissions are denied forever, handle appropriately.
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
+  @override
+  _UpcomingState createState() => _UpcomingState();
+}
 
-    // When we reach here, permissions are granted and we can
-    // continue accessing the position of the device.
-    return await Geolocator.getCurrentPosition();
+class _UpcomingState extends State<Upcoming> {
+  Future<UpcomingAppointments> getupcoming() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    late Map<String, dynamic> response;
+    await PostData(PARAM_URL: 'get_upcoming_booking.php', params: {
+      'token': Token,
+      'doctor_id': preferences.getString('user_id')
+    }).then((value) {
+      response = value;
+    });
+    return UpcomingAppointments.fromJson(response);
+  }
+
+  late UpcomingAppointments upcomingAppointments;
+  bool upcomingloading = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getupcoming().then((value) {
+      setState(() {
+        upcomingAppointments = value;
+        upcomingloading = false;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return (upcomingloading)
+        ? Center(
+            child: CircularProgressIndicator(),
+          )
+        : Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: upcomingAppointments.data.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Material(
+                      elevation: 4,
+                      borderRadius: BorderRadius.circular(8),
+                      child: Container(
+                        height: 105,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 18.0,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Expanded(
+                                  child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  titleColumn(
+                                      title: 'Booking ID',
+                                      value: upcomingAppointments
+                                          .data[index].bookingId),
+                                  titleColumn(
+                                      title: 'Booking of', value: 'value'),
+                                ],
+                              )),
+                              Expanded(
+                                  child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  titleColumn(
+                                      title: 'Order Date',
+                                      value: upcomingAppointments
+                                          .data[index].appointmentDate),
+                                  titleColumn(
+                                      title: 'Booking Time',
+                                      value: upcomingAppointments
+                                          .data[index].appointmentTime),
+                                ],
+                              )),
+                              Expanded(
+                                  child: Center(
+                                      child: commonBtn(
+                                s: 'View',
+                                bgcolor: appblueColor,
+                                textColor: Colors.white,
+                                onPressed: () {
+                                  Push(
+                                      context,
+                                      PatientBookingDetails(
+                                        booking_id: upcomingAppointments
+                                            .data[index].bookingId,
+                                      ));
+                                },
+                                width: 85,
+                                height: 30,
+                                textSize: 11,
+                                borderRadius: 4,
+                              ))),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+          );
+  }
+}
+
+class DocReview extends StatefulWidget {
+  const DocReview({Key? key}) : super(key: key);
+
+  @override
+  _DocReviewState createState() => _DocReviewState();
+}
+
+class _DocReviewState extends State<DocReview> {
+  bool loading = true;
+  late DoctorRatings doctorRatings;
+  Future<DoctorRatings> getdocReview() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    late Map<String, dynamic> response;
+    await PostData(PARAM_URL: 'get_rating_reviews.php', params: {
+      'token': Token,
+      'doctor_id': preferences.getString('user_id')
+    }).then((value) {
+      response = value;
+    });
+    return DoctorRatings.fromJson(response);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getdocReview().then((value) {
+      setState(() {
+        doctorRatings = value;
+        loading = false;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return (loading)
+        ? Center(child: CircularProgressIndicator())
+        : (doctorRatings.data.length == 0)
+            ? Text('No Reviews Yet')
+            : ListView.builder(
+                itemCount: doctorRatings.data.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      elevation: 5,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ListTile(
+                              leading: CircleAvatar(),
+                              title: Text(doctorRatings.data[index].userName),
+                              subtitle: RatingBarIndicator(
+                                rating: double.parse(
+                                    doctorRatings.data[index].rating),
+                                itemCount: 5,
+                                itemSize: 15.0,
+                                physics: BouncingScrollPhysics(),
+                                itemBuilder: (context, _) => Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
+                              ),
+                              trailing: Text(
+                                doctorRatings.data[index].date,
+                                style: GoogleFonts.lato(
+                                    color: apptealColor,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              doctorRatings.data[index].review,
+                              style: GoogleFonts.lato(fontSize: 12),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                });
   }
 }

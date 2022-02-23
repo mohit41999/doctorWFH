@@ -41,6 +41,7 @@ class CompletedAssignmentModelData {
   CompletedAssignmentModelData({
     required this.bookingId,
     required this.appointmentDate,
+    required this.appointment_time,
     required this.ammountPaid,
     required this.patientId,
     required this.patientDocument,
@@ -49,6 +50,7 @@ class CompletedAssignmentModelData {
 
   String bookingId;
   String appointmentDate;
+  String appointment_time;
   String ammountPaid;
   String patientId;
   String patientDocument;
@@ -57,6 +59,7 @@ class CompletedAssignmentModelData {
   factory CompletedAssignmentModelData.fromJson(Map<String, dynamic> json) =>
       CompletedAssignmentModelData(
         bookingId: json["booking_id"],
+        appointment_time: json["appointment_time"],
         appointmentDate: json["appointment_date"],
         ammountPaid: json["ammount_paid"],
         patientId: json["patient_id"],
@@ -67,6 +70,7 @@ class CompletedAssignmentModelData {
   Map<String, dynamic> toJson() => {
         "booking_id": bookingId,
         "appointment_date": appointmentDate,
+        "appointment_time": appointment_time,
         "ammount_paid": ammountPaid,
         "patient_id": patientId,
         "patient_document": patientDocument,

@@ -1,3 +1,5 @@
+import 'package:doctor/API/api_constants.dart';
+import 'package:doctor/model/doctor_rating_model.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,6 +7,7 @@ import 'package:doctor/Utils/colorsandstyles.dart';
 import 'package:doctor/widgets/commonAppBarLeading.dart';
 import 'package:doctor/widgets/common_app_bar_title.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyReviewRatingsScreen extends StatefulWidget {
   const MyReviewRatingsScreen({Key? key}) : super(key: key);
@@ -14,6 +17,32 @@ class MyReviewRatingsScreen extends StatefulWidget {
 }
 
 class _MyReviewRatingsScreenState extends State<MyReviewRatingsScreen> {
+  bool loading = true;
+  late DoctorRatings doctorRatings;
+  Future<DoctorRatings> getdocReview() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    late Map<String, dynamic> response;
+    await PostData(PARAM_URL: 'get_rating_reviews.php', params: {
+      'token': Token,
+      'doctor_id': preferences.getString('user_id')
+    }).then((value) {
+      response = value;
+    });
+    return DoctorRatings.fromJson(response);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getdocReview().then((value) {
+      setState(() {
+        doctorRatings = value;
+        loading = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,58 +58,60 @@ class _MyReviewRatingsScreenState extends State<MyReviewRatingsScreen> {
                     Navigator.pop(context);
                   })),
         ),
-        body: ListView.builder(
-            itemCount: 5,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Card(
-                      elevation: 5,
-                      child: Padding(
+        body: (loading)
+            ? Center(child: CircularProgressIndicator())
+            : (doctorRatings.data.length == 0)
+                ? Text('No Reviews Yet')
+                : ListView.builder(
+                    itemCount: doctorRatings.data.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ListTile(
-                              leading: CircleAvatar(),
-                              title: Text('Doctor Name'),
-                              subtitle: RatingBarIndicator(
-                                rating: 5,
-                                itemCount: 5,
-                                itemSize: 15.0,
-                                physics: BouncingScrollPhysics(),
-                                itemBuilder: (context, _) => Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
+                        child: Card(
+                          elevation: 5,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ListTile(
+                                  leading: CircleAvatar(),
+                                  title:
+                                      Text(doctorRatings.data[index].userName),
+                                  subtitle: RatingBarIndicator(
+                                    rating: double.parse(
+                                        doctorRatings.data[index].rating),
+                                    itemCount: 5,
+                                    itemSize: 15.0,
+                                    physics: BouncingScrollPhysics(),
+                                    itemBuilder: (context, _) => Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                    ),
+                                  ),
+                                  trailing: Text(
+                                    doctorRatings.data[index].date,
+                                    style: GoogleFonts.lato(
+                                        color: apptealColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                              ),
-                              trailing: Text(
-                                '27/09/2021',
-                                style: GoogleFonts.lato(
-                                    color: apptealColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text(
+                                  doctorRatings.data[index].review,
+                                  style: GoogleFonts.lato(fontSize: 12),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                              ],
                             ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea.',
-                              style: GoogleFonts.lato(fontSize: 12),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }));
+                      );
+                    }));
   }
 }

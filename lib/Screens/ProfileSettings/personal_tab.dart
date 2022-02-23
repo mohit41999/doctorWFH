@@ -249,6 +249,7 @@ class _PersonalState extends State<Personal> {
         });
   }
 
+
   Future _imgFromCamera() async {
     var image = await ImagePicker()
         .pickImage(source: ImageSource.camera, imageQuality: 50);

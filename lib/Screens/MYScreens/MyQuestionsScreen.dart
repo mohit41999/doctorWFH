@@ -34,49 +34,45 @@ class _MyQuestionsScreenState extends State<MyQuestionsScreen> {
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Card(
-                      elevation: 5,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                child: Card(
+                  elevation: 5,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Lorem ipsum dolor sit amet, consetetur. ?',
-                                  style: GoogleFonts.lato(
-                                      color: Color(0xff252525),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  '  27/09/2021',
-                                  style: GoogleFonts.lato(
-                                      color: apptealColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 8,
+                            Text(
+                              'Lorem ipsum dolor sit amet, consetetur. ?',
+                              style: GoogleFonts.lato(
+                                  color: Color(0xff252525),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea.',
-                              style: GoogleFonts.lato(fontSize: 12),
-                            ),
-                            SizedBox(
-                              height: 5,
+                              '  27/09/2021',
+                              style: GoogleFonts.lato(
+                                  color: apptealColor,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
-                      ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea.',
+                          style: GoogleFonts.lato(fontSize: 12),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               );
             }));
