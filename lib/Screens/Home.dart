@@ -1,10 +1,9 @@
 import 'package:doctor/API/api_constants.dart';
 import 'package:doctor/Screens/MYScreens/MyQuestionsScreen.dart';
 import 'package:doctor/Screens/MYScreens/MyReviewRating.dart';
-import 'package:doctor/Screens/MYScreens/my_online_consultants.dart';
+import 'package:doctor/Screens/MYScreens/upcoming_assignments.dart';
 import 'package:doctor/Screens/completed_assignment.dart';
 import 'package:doctor/Screens/patient_booking_details.dart';
-
 import 'package:doctor/Utils/colorsandstyles.dart';
 import 'package:doctor/controller/NavigationController.dart';
 import 'package:doctor/model/Upcoming%20Appointments.dart';
@@ -17,9 +16,9 @@ import 'package:doctor/widgets/navigation_drawer.dart';
 import 'package:doctor/widgets/title_column.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -208,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen>
                   onPressed: () {
                     _tabController.index == 0
                         ? Push(context, CompletedAssignment())
-                        : Push(context, MyOnlineConsultants());
+                        : Push(context, UpcomingAssignments());
                   },
                   height: 30,
                   width: 90,

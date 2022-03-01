@@ -25,6 +25,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
@@ -922,7 +923,7 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
                                 ),
                           Container(
                             color: Colors.white,
-                            height: reportList.isEmpty ? 200 : 350,
+                            height: reportList.isEmpty ? 270 : 420,
                             child: Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 20.0),
@@ -937,12 +938,14 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
                                     bgcolor: Colors.white,
                                     textColor: apptealColor,
                                     onPressed: () {
-                                      pickFile();
+                                      _showPicker(context);
                                     },
                                     borderRadius: 10,
                                   ),
                                   (reportList.length == 0)
-                                      ? Container()
+                                      ? Container(
+                                          height: 0,
+                                        )
                                       : Column(
                                           children: [
                                             Container(
@@ -952,8 +955,18 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
                                                   shrinkWrap: true,
                                                   itemBuilder:
                                                       (context, index) {
-                                                    return Text('Report ' +
-                                                        index.toString());
+                                                    return Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          vertical: 3.0),
+                                                      child: Text(reportList[
+                                                              index]!
+                                                          .path
+                                                          .toString()
+                                                          .replaceAll(
+                                                              '/data/user/0/com.ciamdoc.doctor/cache/',
+                                                              '')),
+                                                    );
                                                   }),
                                             ),
                                             commonBtn(
@@ -1020,7 +1033,19 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
                                     },
                                     height: 45,
                                     borderRadius: 8,
-                                  )
+                                  ),
+
+                                  commonBtn(
+                                    borderColor: appblueColor,
+                                    borderWidth: 2,
+                                    s: 'Video Consultancy Completed!!!',
+                                    bgcolor: Colors.white,
+                                    textColor: appblueColor,
+                                    onPressed: () {
+                                      videoCompleted();
+                                    },
+                                    borderRadius: 10,
+                                  ),
                                   // : commonBtn(
                                   //     s: 'Join Call',
                                   //     bgcolor: appblueColor,
@@ -1083,6 +1108,31 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
     );
   }
 
+  Future videoCompleted() async {
+    var loader = ProgressView(context);
+    loader.show();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var response =
+        await PostData(PARAM_URL: 'send_consultancy_completed.php', params: {
+      'token': Token,
+      'doctor_id': prefs.getString('user_id'),
+      'booking_id': widget.booking_id
+    }).then((value) {
+      loader.dismiss();
+      value['status']
+          ? ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('Video Consultancy Completed'),
+              backgroundColor: apptealColor,
+            ))
+          : ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('Error, try again later'),
+              backgroundColor: Colors.red,
+            ));
+    });
+
+    return response;
+  }
+
   Future<ViewBookingDetails> getDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var response = await PostData(
@@ -1127,7 +1177,7 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
               'patient_id': patientdetails.data.patientPersonal.patientId,
               'booking_id': widget.booking_id,
             },
-            imagePath: reportList[i].path.toString(),
+            imagePath: reportList[i]!.path.toString(),
             imageparamName: 'doctor_report')
         .then((value) {
       loader.dismiss();
@@ -1143,19 +1193,71 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
     });
   }
 
-  List<File> reportList = [];
+  Future _imgFromCamera() async {
+    XFile? image = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 50);
+
+    setState(() {
+      reportList.add(image!);
+    });
+  }
+
+  Future<void> _showPicker(context) async {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: Wrap(
+                children: <Widget>[
+                  ListTile(
+                      leading: Icon(
+                        Icons.photo_library,
+                        color: Colors.red,
+                      ),
+                      title: Text('Internal Storage'),
+                      onTap: () {
+                        setState(() {
+                          pickFile();
+                        });
+
+                        Navigator.of(context).pop();
+                      }),
+                  ListTile(
+                    leading: Icon(
+                      Icons.photo_camera,
+                      color: Colors.red,
+                    ),
+                    title: Text('Camera'),
+                    onTap: () {
+                      setState(() {
+                        _imgFromCamera();
+                      });
+
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  List<XFile?> reportList = [];
+
+  List<XFile?> tempList = [];
   Future pickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-        allowMultiple: true,
-        type: FileType.custom,
-        allowedExtensions: [
-          'pdf',
-        ]);
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(allowMultiple: true);
     if (result == null) {
       return;
     } else {
       setState(() {
-        reportList = result.paths.map((path) => File(path!)).toList();
+        tempList = result.paths.map((path) => XFile(path!)).toList();
+        tempList.forEach((element) {
+          reportList.add(element);
+        });
       });
     }
     // ng then do nothing just return.

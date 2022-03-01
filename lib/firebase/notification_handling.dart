@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:doctor/API/api_constants.dart';
 import 'package:doctor/Screens/AGORA/video_call.dart';
-import 'package:doctor/Screens/accept_reject_call.dart';
-import 'package:doctor/Utils/APIIDS.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,8 +27,9 @@ class FirebaseNotificationHandling {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  AcceptReject(channel_name: event.data['chanel_name'])));
+              builder: (context) => VideoCallPage(
+                    channelName: event.data['chanel_name'],
+                  )));
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
@@ -40,8 +39,9 @@ class FirebaseNotificationHandling {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  AcceptReject(channel_name: event.data['chanel_name'])));
+              builder: (context) => VideoCallPage(
+                    channelName: event.data['chanel_name'],
+                  )));
       // Navigator.of(context).push(
       //     context,
       //     );
@@ -52,10 +52,9 @@ class FirebaseNotificationHandling {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  AcceptReject(channel_name: message.data['chanel_name'])));
+              builder: (context) => VideoCallPage(
+                    channelName: message.data['chanel_name'],
+                  )));
     });
-
-    // notificationhandler(context);
   }
 }
