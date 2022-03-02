@@ -9,6 +9,7 @@ import 'package:doctor/controller/NavigationController.dart';
 import 'package:doctor/model/Upcoming%20Appointments.dart';
 import 'package:doctor/model/completed_assignment_model.dart';
 import 'package:doctor/model/doctor_rating_model.dart';
+import 'package:doctor/model/upcoming_assignmentsmodel.dart';
 import 'package:doctor/widgets/commonAppBarLeading.dart';
 import 'package:doctor/widgets/common_app_bar_title.dart';
 import 'package:doctor/widgets/common_button.dart';
@@ -32,12 +33,32 @@ class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   ScrollController _controller = ScrollController();
+  Future<UpcomingAssignmentsModel> getupcoming() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    late Map<String, dynamic> response;
+    await PostData(PARAM_URL: 'get_upcoming_booking.php', params: {
+      'token': Token,
+      'doctor_id': preferences.getString('user_id')
+    }).then((value) {
+      response = value;
+    });
+    return UpcomingAssignmentsModel.fromJson(response);
+  }
+
+  late UpcomingAssignmentsModel upcomingAppointments;
+  bool upcomingloading = true;
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
-
+    // TODO: implement initState
     super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+    getupcoming().then((value) {
+      setState(() {
+        upcomingAppointments = value;
+        upcomingloading = false;
+      });
+    });
   }
 
   @override
@@ -116,9 +137,9 @@ class _HomeScreenState extends State<HomeScreen>
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Text('data'),
+                              Text('Net Worth'),
                               Text(
-                                'data',
+                                '₹ ' + upcomingAppointments.data[0].revanue,
                                 style: GoogleFonts.montserrat(
                                     color: appblueColor,
                                     fontWeight: FontWeight.bold,
