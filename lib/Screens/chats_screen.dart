@@ -10,7 +10,8 @@ import '../widgets/commonAppBarLeading.dart';
 import '../widgets/common_app_bar_title.dart';
 
 class ChatsScreen extends StatefulWidget {
-  const ChatsScreen({Key? key}) : super(key: key);
+  final bool fromhome;
+  const ChatsScreen({Key? key, required this.fromhome}) : super(key: key);
 
   @override
   State<ChatsScreen> createState() => _ChatsScreenState();
@@ -58,11 +59,18 @@ class _ChatsScreenState extends State<ChatsScreen> {
           ? Center(child: CircularProgressIndicator())
           : Messsages(context),
       appBar: AppBar(
-        title: commonAppBarTitleText(appbarText: 'MyChats'),
-        centerTitle: true,
-        backgroundColor: appAppBarColor,
-        elevation: 0,
-      ),
+          title: commonAppBarTitleText(appbarText: 'MyChats'),
+          centerTitle: true,
+          backgroundColor: appAppBarColor,
+          elevation: 0,
+          leading: (widget.fromhome)
+              ? Container()
+              : Builder(
+                  builder: (context) => commonAppBarLeading(
+                      iconData: Icons.arrow_back_ios_new,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      }))),
     );
   }
 

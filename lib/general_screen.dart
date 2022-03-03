@@ -32,7 +32,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
       HomeScreen(),
       MyRevenue(),
       MyBookingRequest(),
-      ChatsScreen(),
+      ChatsScreen(fromhome: true,),
       ProfileSetting(
         fromhome: true,
       )

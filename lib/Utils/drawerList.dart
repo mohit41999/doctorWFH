@@ -11,7 +11,9 @@ import 'package:doctor/Screens/completed_assignment.dart';
 List<Map<dynamic, dynamic>> drawerList = [
   {
     'label': 'Profile Setting',
-    'Screen': ProfileSetting(fromhome: false,),
+    'Screen': ProfileSetting(
+      fromhome: false,
+    ),
   },
   {
     'label': 'Manage Calendar',
@@ -19,7 +21,9 @@ List<Map<dynamic, dynamic>> drawerList = [
   },
   {
     'label': 'My Chats',
-    'Screen': ChatsScreen(),
+    'Screen': ChatsScreen(
+      fromhome: false,
+    ),
   },
   // {
   //   'label': 'My Booking Request',

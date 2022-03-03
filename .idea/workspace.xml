@@ -4,43 +4,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5df1842f-62ef-4e5c-92f9-ac8abe19c301" name="Default Changelist" comment="iOS">
-      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
+    <list default="true" id="5df1842f-62ef-4e5c-92f9-ac8abe19c301" name="Default Changelist" comment="bottom">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/AGORA/video_call.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/AGORA/video_call.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/Home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Home.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/MYScreens/MyQuestionsScreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/MYScreens/MyQuestionsScreen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/MYScreens/MyReviewRating.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/MYScreens/MyReviewRating.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/MYScreens/MyWalletTabs/wallet_transaction_history.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/MYScreens/MyWalletTabs/wallet_transaction_history.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/MYScreens/manage_calendar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/MYScreens/manage_calendar.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/MYScreens/my_revenue.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/MYScreens/my_revenue.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/MYScreens/upcoming_assignments.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/MYScreens/upcoming_assignments.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/ProfileSettings/clinical_tab.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/ProfileSettings/clinical_tab.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/ProfileSettings/personal_tab.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/ProfileSettings/personal_tab.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/ProfileSettings/profile_setting.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/ProfileSettings/profile_setting.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/account_settings.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/account_settings.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Screens/chats_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/chats_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/completed_assignment.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/completed_assignment.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/my_booking_request.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/my_booking_request.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/patient_booking_details.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/patient_booking_details.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Utils/colorsandstyles.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Utils/colorsandstyles.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Utils/drawerList.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Utils/drawerList.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/controller/NavigationController.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/controller/NavigationController.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/controller/doctor_profile_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/controller/doctor_profile_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/firebase/AuthenticatioHelper.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/firebase/AuthenticatioHelper.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/firebase/notification_handling.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/firebase/notification_handling.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/general_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/general_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/helper/authenticate.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/completed_assignment_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/completed_assignment_model.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/services/auth.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/services/database.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/views/chat.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/views/chatrooms.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/views/forgot_password.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/views/search.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/views/signin.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/views/signup.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/widget/widget.dart" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +42,7 @@
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/firebase" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -224,7 +192,14 @@
       <option name="project" value="LOCAL" />
       <updated>1646230888954</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="bottom">
+      <created>1646315523276</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1646315523276</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -249,6 +224,7 @@
     <MESSAGE value="nn" />
     <MESSAGE value="chat" />
     <MESSAGE value="iOS" />
-    <option name="LAST_COMMIT_MESSAGE" value="iOS" />
+    <MESSAGE value="bottom" />
+    <option name="LAST_COMMIT_MESSAGE" value="bottom" />
   </component>
 </project>
