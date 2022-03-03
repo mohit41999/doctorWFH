@@ -80,300 +80,286 @@ class _CompletedAssignmentState extends State<CompletedAssignment> {
                 )
               : Stack(
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Expanded(
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: completedAssignments.data.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Container(
-                                    height: 170,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(15),
-                                          bottomRight: Radius.circular(15)),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.5),
-                                          blurRadius: 10,
-                                          offset: const Offset(2, 5),
-                                        ),
-                                      ],
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          height: 130,
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 18.0),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                Row(
+                    ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: completedAssignments.data.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: EdgeInsets.only(
+                                top: 10.0,
+                                left: 10,
+                                right: 10,
+                                bottom: (index + 1 ==
+                                        completedAssignments.data.length)
+                                    ? navbarht + 20
+                                    : 10),
+                            child: Container(
+                              height: 170,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(15),
+                                    bottomRight: Radius.circular(15)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    blurRadius: 10,
+                                    offset: const Offset(2, 5),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 130,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 18.0),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                flex: 3,
+                                                child: titleColumn(
+                                                    title: 'Booking Id',
+                                                    value: completedAssignments
+                                                        .data[index].bookingId),
+                                              ),
+                                              Expanded(
+                                                flex: 2,
+                                                child: Text(
+                                                  'Prescription',
+                                                  style: valueStyle,
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 2,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
-                                                    Expanded(
-                                                      flex: 3,
-                                                      child: titleColumn(
-                                                          title: 'Booking Id',
-                                                          value:
-                                                              completedAssignments
-                                                                  .data[index]
-                                                                  .bookingId),
+                                                    Icon(
+                                                      FontAwesomeIcons.eye,
+                                                      size: 15,
+                                                      color: appblueColor,
                                                     ),
-                                                    Expanded(
-                                                      flex: 2,
-                                                      child: Text(
-                                                        'Prescription',
-                                                        style: valueStyle,
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 2,
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Icon(
-                                                            FontAwesomeIcons
-                                                                .eye,
-                                                            size: 15,
-                                                            color: appblueColor,
-                                                          ),
-                                                          Image.asset(
-                                                              'assets/pngs/Icon feather-download.png')
-                                                        ],
-                                                      ),
-                                                    ),
+                                                    Image.asset(
+                                                        'assets/pngs/Icon feather-download.png')
                                                   ],
                                                 ),
-                                                Row(
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                flex: 3,
+                                                child: titleColumn(
+                                                    title: 'Assignment Date',
+                                                    value: completedAssignments
+                                                        .data[index]
+                                                        .appointmentDate),
+                                              ),
+                                              Expanded(
+                                                flex: 2,
+                                                child: Text('Invoice',
+                                                    style: valueStyle),
+                                              ),
+                                              Expanded(
+                                                flex: 2,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
-                                                    Expanded(
-                                                      flex: 3,
-                                                      child: titleColumn(
-                                                          title:
-                                                              'Assignment Date',
-                                                          value: completedAssignments
-                                                              .data[index]
-                                                              .appointmentDate),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 2,
-                                                      child: Text('Invoice',
-                                                          style: valueStyle),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 2,
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          GestureDetector(
-                                                            onTap: () {
-                                                              Push(
-                                                                  context,
-                                                                  OpenPdf(
-                                                                    url: completedAssignments
-                                                                        .data[
-                                                                            index]
-                                                                        .invoice,
-                                                                    isnetwork:
-                                                                        true,
-                                                                  ));
-                                                            },
-                                                            child: Icon(
-                                                              FontAwesomeIcons
-                                                                  .eye,
-                                                              size: 15,
-                                                              color:
-                                                                  appblueColor,
-                                                            ),
-                                                          ),
-                                                          GestureDetector(
-                                                            onTap: () {
-                                                              downloadFile(
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        Push(
+                                                            context,
+                                                            OpenPdf(
+                                                              url:
                                                                   completedAssignments
                                                                       .data[
                                                                           index]
                                                                       .invoice,
-                                                                  isInvoice:
-                                                                      true);
-                                                            },
-                                                            child: Image.asset(
-                                                                'assets/pngs/Icon feather-download.png'),
-                                                          )
-                                                        ],
+                                                              isnetwork: true,
+                                                            ));
+                                                      },
+                                                      child: Icon(
+                                                        FontAwesomeIcons.eye,
+                                                        size: 15,
+                                                        color: appblueColor,
                                                       ),
                                                     ),
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        downloadFile(
+                                                            completedAssignments
+                                                                .data[index]
+                                                                .invoice,
+                                                            isInvoice: true);
+                                                      },
+                                                      child: Image.asset(
+                                                          'assets/pngs/Icon feather-download.png'),
+                                                    )
                                                   ],
                                                 ),
-                                                Row(
-                                                  children: [
-                                                    Expanded(
-                                                      flex: 3,
-                                                      child: titleColumn(
-                                                          title: 'Amount paid',
-                                                          value: '₹ ' +
-                                                              completedAssignments
-                                                                  .data[index]
-                                                                  .ammountPaid),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 2,
-                                                      child: Text('Document',
-                                                          style: valueStyle),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 2,
-                                                      child: GestureDetector(
-                                                        onTap: () {
-                                                          getPatientReports(
-                                                                  index)
-                                                              .then((value) {
-                                                            setState(() {
-                                                              patientReports =
-                                                                  value['data'];
-                                                              showDialog(
-                                                                  context:
-                                                                      context,
-                                                                  builder:
-                                                                      (context) =>
-                                                                          AlertDialog(
-                                                                            content:
-                                                                                Container(
-                                                                              height: 250.0, // Change as per your requirement
-                                                                              width: 300.0,
-                                                                              child: ListView.builder(
-                                                                                  itemCount: patientReports.length,
-                                                                                  shrinkWrap: true,
-                                                                                  itemBuilder: (context, ind) {
-                                                                                    return (patientReports[ind]['reportfile'].toString() == '')
-                                                                                        ? Container()
-                                                                                        : Padding(
-                                                                                            padding: const EdgeInsets.all(8.0),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                flex: 3,
+                                                child: titleColumn(
+                                                    title: 'Amount paid',
+                                                    value: '₹ ' +
+                                                        completedAssignments
+                                                            .data[index]
+                                                            .ammountPaid),
+                                              ),
+                                              Expanded(
+                                                flex: 2,
+                                                child: Text('Document',
+                                                    style: valueStyle),
+                                              ),
+                                              Expanded(
+                                                flex: 2,
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    getPatientReports(index)
+                                                        .then((value) {
+                                                      setState(() {
+                                                        patientReports =
+                                                            value['data'];
+                                                        showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                (context) =>
+                                                                    AlertDialog(
+                                                                      content:
+                                                                          Container(
+                                                                        height:
+                                                                            250.0, // Change as per your requirement
+                                                                        width:
+                                                                            300.0,
+                                                                        child: ListView.builder(
+                                                                            itemCount: patientReports.length,
+                                                                            shrinkWrap: true,
+                                                                            itemBuilder: (context, ind) {
+                                                                              return (patientReports[ind]['reportfile'].toString() == '')
+                                                                                  ? Container()
+                                                                                  : Padding(
+                                                                                      padding: const EdgeInsets.all(8.0),
+                                                                                      child: Row(
+                                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                        children: [
+                                                                                          Expanded(
+                                                                                            child: Text(
+                                                                                              'Report' + ind.toString(),
+                                                                                              style: GoogleFonts.montserrat(fontSize: 10),
+                                                                                            ),
+                                                                                          ),
+                                                                                          Expanded(
                                                                                             child: Row(
                                                                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                               children: [
-                                                                                                Expanded(
-                                                                                                  child: Text(
-                                                                                                    'Report' + ind.toString(),
-                                                                                                    style: GoogleFonts.montserrat(fontSize: 10),
-                                                                                                  ),
-                                                                                                ),
-                                                                                                Expanded(
-                                                                                                  child: Row(
-                                                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                                    children: [
-                                                                                                      GestureDetector(
-                                                                                                          onTap: () {
-                                                                                                            Push(
-                                                                                                                context,
-                                                                                                                OpenPdf(
-                                                                                                                  url: patientReports[ind]['reportfile'].toString(),
-                                                                                                                  isnetwork: true,
-                                                                                                                ));
-                                                                                                          },
-                                                                                                          child: Icon(
-                                                                                                            FontAwesomeIcons.eye,
-                                                                                                            size: 20,
-                                                                                                            color: appblueColor,
-                                                                                                          )),
-                                                                                                    ],
-                                                                                                  ),
-                                                                                                ),
                                                                                                 GestureDetector(
                                                                                                     onTap: () {
-                                                                                                      Pop(context);
-                                                                                                      downloadFile(patientReports[index]['reportfile']);
+                                                                                                      Push(
+                                                                                                          context,
+                                                                                                          OpenPdf(
+                                                                                                            url: patientReports[ind]['reportfile'].toString(),
+                                                                                                            isnetwork: true,
+                                                                                                          ));
                                                                                                     },
-                                                                                                    child: Image.asset('assets/pngs/Icon feather-download.png'))
+                                                                                                    child: Icon(
+                                                                                                      FontAwesomeIcons.eye,
+                                                                                                      size: 20,
+                                                                                                      color: appblueColor,
+                                                                                                    )),
                                                                                               ],
                                                                                             ),
-                                                                                          );
-                                                                                  }),
-                                                                            ),
-                                                                          ));
-                                                            });
-                                                          });
-                                                        },
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Icon(
-                                                              FontAwesomeIcons
-                                                                  .eye,
-                                                              size: 15,
-                                                              color:
-                                                                  appblueColor,
-                                                            ),
-                                                            Image.asset(
-                                                                'assets/pngs/Icon feather-download.png')
-                                                          ],
-                                                        ),
+                                                                                          ),
+                                                                                          GestureDetector(
+                                                                                              onTap: () {
+                                                                                                Pop(context);
+                                                                                                downloadFile(patientReports[index]['reportfile']);
+                                                                                              },
+                                                                                              child: Image.asset('assets/pngs/Icon feather-download.png'))
+                                                                                        ],
+                                                                                      ),
+                                                                                    );
+                                                                            }),
+                                                                      ),
+                                                                    ));
+                                                      });
+                                                    });
+                                                  },
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Icon(
+                                                        FontAwesomeIcons.eye,
+                                                        size: 15,
+                                                        color: appblueColor,
                                                       ),
-                                                    ),
-                                                  ],
+                                                      Image.asset(
+                                                          'assets/pngs/Icon feather-download.png')
+                                                    ],
+                                                  ),
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
-                                        ),
-                                        SizedBox(
-                                          height: 40,
-                                          width: double.infinity,
-                                          child: TextButton(
-                                            style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty.all<
-                                                        Color>(appblueColor),
-                                                shape: MaterialStateProperty.all<
-                                                        RoundedRectangleBorder>(
-                                                    RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                          bottomLeft:
-                                                              Radius.circular(
-                                                                  15),
-                                                          bottomRight:
-                                                              Radius.circular(
-                                                                  15)),
-                                                ))),
-                                            onPressed: () {
-                                              // Navigator.push(
-                                              //     context,
-                                              //     MaterialPageRoute(
-                                              //         builder: (context) =>
-                                              //             MyMedicineOrders()));
-                                            },
-                                            child: Text(
-                                              'Chat With Patient',
-                                              style: GoogleFonts.montserrat(
-                                                  fontSize: 12,
-                                                  color: Colors.white,
-                                                  letterSpacing: 1,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                        )
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                );
-                              }),
-                        )
-                      ],
-                    ),
+                                  SizedBox(
+                                    height: 40,
+                                    width: double.infinity,
+                                    child: TextButton(
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all<Color>(
+                                                  appblueColor),
+                                          shape: MaterialStateProperty.all<
+                                                  RoundedRectangleBorder>(
+                                              RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                                bottomLeft: Radius.circular(15),
+                                                bottomRight:
+                                                    Radius.circular(15)),
+                                          ))),
+                                      onPressed: () {
+                                        // Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //         builder: (context) =>
+                                        //             MyMedicineOrders()));
+                                      },
+                                      child: Text(
+                                        'Chat With Patient',
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 12,
+                                            color: Colors.white,
+                                            letterSpacing: 1,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                        }),
                     (downloading)
                         ? Container(
                             height: double.infinity,

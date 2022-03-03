@@ -10,6 +10,9 @@ import 'clinical_tab.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfileSetting extends StatefulWidget {
+  final bool fromhome;
+
+  const ProfileSetting({Key? key, required this.fromhome}) : super(key: key);
   @override
   _ProfileSettingState createState() => _ProfileSettingState();
 }
@@ -38,12 +41,14 @@ class _ProfileSettingState extends State<ProfileSetting>
         title: commonAppBarTitleText(appbarText: 'Profile Setting'),
         backgroundColor: appAppBarColor,
         elevation: 0,
-        leading: Builder(
-            builder: (context) => commonAppBarLeading(
-                iconData: Icons.arrow_back_ios_new,
-                onPressed: () {
-                  Navigator.pop(context);
-                })),
+        leading: (widget.fromhome)
+            ? Container()
+            : Builder(
+                builder: (context) => commonAppBarLeading(
+                    iconData: Icons.arrow_back_ios_new,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    })),
       ),
       body: SafeArea(
         child: Column(

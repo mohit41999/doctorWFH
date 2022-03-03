@@ -1,3 +1,4 @@
+import 'package:doctor/Utils/colorsandstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor/widgets/title_column.dart';
 
@@ -16,7 +17,11 @@ class _WalletTransactionHistoryState extends State<WalletTransactionHistory> {
       body: ListView.builder(
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.only(
+                top: 8.0,
+                left: 8,
+                right: 8,
+                bottom: (index + 1 == 15) ? navbarht + 20 : 8),
             child: Material(
               elevation: 5,
               borderRadius: BorderRadius.circular(8),

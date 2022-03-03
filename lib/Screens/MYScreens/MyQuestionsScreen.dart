@@ -33,7 +33,11 @@ class _MyQuestionsScreenState extends State<MyQuestionsScreen> {
             itemCount: 5,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.only(
+                    top: 8.0,
+                    left: 8,
+                    right: 8,
+                    bottom: (index + 1 == 5) ? navbarht + 20 : 8),
                 child: Card(
                   elevation: 5,
                   child: Padding(

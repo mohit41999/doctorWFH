@@ -33,32 +33,55 @@ class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   ScrollController _controller = ScrollController();
-  Future<UpcomingAssignmentsModel> getupcoming() async {
+  late CompletedAssignmentModel completedAssignment;
+  bool loading = true;
+  String revenue = '';
+  late DoctorRatings doctorRatings;
+  Future<DoctorRatings> getdocReview() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     late Map<String, dynamic> response;
-    await PostData(PARAM_URL: 'get_upcoming_booking.php', params: {
+    await PostData(PARAM_URL: 'get_rating_reviews.php', params: {
       'token': Token,
       'doctor_id': preferences.getString('user_id')
     }).then((value) {
       response = value;
     });
-    return UpcomingAssignmentsModel.fromJson(response);
+    return DoctorRatings.fromJson(response);
   }
 
-  late UpcomingAssignmentsModel upcomingAppointments;
-  bool upcomingloading = true;
+  Future getrevenue() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    var response = await PostData(
+        PARAM_URL: 'get_completed_revenue.php',
+        params: {
+          'token': Token,
+          'doctor_id': preferences.getString('user_id')
+        }).then((value) {
+      revenue = value['data']['revenue'];
+    });
+    return response;
+  }
+
+  Future initialize() async {
+    await getdocReview().then((value) {
+      setState(() {
+        doctorRatings = value;
+      });
+    });
+    getrevenue().then((value) {
+      setState(() {
+        loading = false;
+      });
+    });
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    getupcoming().then((value) {
-      setState(() {
-        upcomingAppointments = value;
-        upcomingloading = false;
-      });
-    });
+    initialize();
   }
 
   @override
@@ -101,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen>
             )),
         drawer: commonDrawer(),
         body: ListView(
-          controller: _controller,
+          shrinkWrap: true,
           children: [
             Padding(
               padding:
@@ -139,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen>
                             children: [
                               Text('Net Worth'),
                               Text(
-                                '₹ ' + upcomingAppointments.data[0].revanue,
+                                '₹ ' + revenue,
                                 style: GoogleFonts.montserrat(
                                     color: appblueColor,
                                     fontWeight: FontWeight.bold,
@@ -206,13 +229,18 @@ class _HomeScreenState extends State<HomeScreen>
             ),
             // tab bar view here
             Container(
+              width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.7,
               child: TabBarView(
                 controller: _tabController,
                 children: [
                   // first tab bar view widget
-                  completed(),
-                  Upcoming(),
+                  completed(
+                    scrollController: _controller,
+                  ),
+                  Upcoming(
+                    scrollController: _controller,
+                  ),
                   // Lifestyle()
                   // second tab bar view widget
                 ],
@@ -250,9 +278,58 @@ class _HomeScreenState extends State<HomeScreen>
                 borderRadius: 10,
               ),
             ),
-            Container(
-                height: MediaQuery.of(context).size.height * 0.5,
-                child: DocReview()),
+            ListView.builder(
+                shrinkWrap: true,
+                physics: ClampingScrollPhysics(),
+                itemCount: doctorRatings.data.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      elevation: 5,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ListTile(
+                              leading: CircleAvatar(),
+                              title: Text(doctorRatings.data[index].userName),
+                              subtitle: RatingBarIndicator(
+                                rating: double.parse(
+                                    doctorRatings.data[index].rating),
+                                itemCount: 5,
+                                itemSize: 15.0,
+                                physics: BouncingScrollPhysics(),
+                                itemBuilder: (context, _) => Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
+                              ),
+                              trailing: Text(
+                                doctorRatings.data[index].date,
+                                style: GoogleFonts.lato(
+                                    color: apptealColor,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              doctorRatings.data[index].review,
+                              style: GoogleFonts.lato(fontSize: 12),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                }),
             SizedBox(
               height: 10,
             ),
@@ -285,58 +362,56 @@ class _HomeScreenState extends State<HomeScreen>
                 borderRadius: 10,
               ),
             ),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.5,
-              child: ListView.builder(
-                  controller: _controller,
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Card(
-                        elevation: 5,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Lorem ipsum dolor sit amet, consetetur. ?',
-                                    style: GoogleFonts.lato(
-                                        color: Color(0xff252525),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    '  27/09/2021',
-                                    style: GoogleFonts.lato(
-                                        color: apptealColor,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text(
-                                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea.',
-                                style: GoogleFonts.lato(fontSize: 12),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                            ],
-                          ),
+            ListView.builder(
+                shrinkWrap: true,
+                physics: ScrollPhysics(),
+                controller: _controller,
+                itemCount: 5,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      elevation: 5,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Lorem ipsum dolor sit amet, consetetur. ?',
+                                  style: GoogleFonts.lato(
+                                      color: Color(0xff252525),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  '  27/09/2021',
+                                  style: GoogleFonts.lato(
+                                      color: apptealColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea.',
+                              style: GoogleFonts.lato(fontSize: 12),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                          ],
                         ),
                       ),
-                    );
-                  }),
-            ),
+                    ),
+                  );
+                }),
             SizedBox(
               height: 10,
             ),
@@ -357,7 +432,7 @@ class _HomeScreenState extends State<HomeScreen>
               ]),
             ),
             SizedBox(
-              height: 70,
+              height: navbarht + 20,
             ),
           ],
         ));
@@ -365,7 +440,8 @@ class _HomeScreenState extends State<HomeScreen>
 }
 
 class completed extends StatefulWidget {
-  const completed({Key? key}) : super(key: key);
+  final ScrollController scrollController;
+  const completed({Key? key, required this.scrollController}) : super(key: key);
 
   @override
   _completedState createState() => _completedState();
@@ -408,7 +484,9 @@ class _completedState extends State<completed> {
         : Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: ListView.builder(
+                // physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
+                controller: widget.scrollController,
                 itemCount: completedAssignment.data.length,
                 itemBuilder: (context, index) {
                   return Padding(
@@ -483,7 +561,8 @@ class _completedState extends State<completed> {
 }
 
 class Upcoming extends StatefulWidget {
-  const Upcoming({Key? key}) : super(key: key);
+  final ScrollController scrollController;
+  const Upcoming({Key? key, required this.scrollController}) : super(key: key);
 
   @override
   _UpcomingState createState() => _UpcomingState();
@@ -525,84 +604,90 @@ class _UpcomingState extends State<Upcoming> {
           )
         : Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: upcomingAppointments.data.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Material(
-                      elevation: 4,
-                      borderRadius: BorderRadius.circular(8),
-                      child: Container(
-                        height: 105,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 18.0,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Expanded(
-                                  child: Column(
+            child: (upcomingAppointments.data.length == 0)
+                ? Center(child: Text('No upcoming appointments'))
+                : ListView.builder(
+                    controller: widget.scrollController,
+                    // physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: upcomingAppointments.data.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Material(
+                          elevation: 4,
+                          borderRadius: BorderRadius.circular(8),
+                          child: Container(
+                            height: 105,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 18.0,
+                              ),
+                              child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  titleColumn(
-                                      title: 'Booking ID',
-                                      value: upcomingAppointments
-                                          .data[index].bookingId),
-                                  titleColumn(
-                                      title: 'Booking of', value: 'value'),
+                                  Expanded(
+                                      child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      titleColumn(
+                                          title: 'Booking ID',
+                                          value: upcomingAppointments
+                                              .data[index].bookingId),
+                                      titleColumn(
+                                          title: 'Booking of', value: 'value'),
+                                    ],
+                                  )),
+                                  Expanded(
+                                      child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      titleColumn(
+                                          title: 'Order Date',
+                                          value: upcomingAppointments
+                                              .data[index].appointmentDate),
+                                      titleColumn(
+                                          title: 'Booking Time',
+                                          value: upcomingAppointments
+                                              .data[index].appointmentTime),
+                                    ],
+                                  )),
+                                  Expanded(
+                                      child: Center(
+                                          child: commonBtn(
+                                    s: 'View',
+                                    bgcolor: appblueColor,
+                                    textColor: Colors.white,
+                                    onPressed: () {
+                                      Push(
+                                          context,
+                                          PatientBookingDetails(
+                                            booking_id: upcomingAppointments
+                                                .data[index].bookingId,
+                                          ));
+                                    },
+                                    width: 85,
+                                    height: 30,
+                                    textSize: 11,
+                                    borderRadius: 4,
+                                  ))),
                                 ],
-                              )),
-                              Expanded(
-                                  child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  titleColumn(
-                                      title: 'Order Date',
-                                      value: upcomingAppointments
-                                          .data[index].appointmentDate),
-                                  titleColumn(
-                                      title: 'Booking Time',
-                                      value: upcomingAppointments
-                                          .data[index].appointmentTime),
-                                ],
-                              )),
-                              Expanded(
-                                  child: Center(
-                                      child: commonBtn(
-                                s: 'View',
-                                bgcolor: appblueColor,
-                                textColor: Colors.white,
-                                onPressed: () {
-                                  Push(
-                                      context,
-                                      PatientBookingDetails(
-                                        booking_id: upcomingAppointments
-                                            .data[index].bookingId,
-                                      ));
-                                },
-                                width: 85,
-                                height: 30,
-                                textSize: 11,
-                                borderRadius: 4,
-                              ))),
-                            ],
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                  );
-                }),
+                      );
+                    }),
           );
   }
 }
 
 class DocReview extends StatefulWidget {
-  const DocReview({Key? key}) : super(key: key);
+  final ScrollController scrollController;
+  const DocReview({Key? key, required this.scrollController}) : super(key: key);
 
   @override
   _DocReviewState createState() => _DocReviewState();
@@ -637,59 +722,6 @@ class _DocReviewState extends State<DocReview> {
 
   @override
   Widget build(BuildContext context) {
-    return (loading)
-        ? Center(child: CircularProgressIndicator())
-        : (doctorRatings.data.length == 0)
-            ? Text('No Reviews Yet')
-            : ListView.builder(
-                itemCount: doctorRatings.data.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Card(
-                      elevation: 5,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ListTile(
-                              leading: CircleAvatar(),
-                              title: Text(doctorRatings.data[index].userName),
-                              subtitle: RatingBarIndicator(
-                                rating: double.parse(
-                                    doctorRatings.data[index].rating),
-                                itemCount: 5,
-                                itemSize: 15.0,
-                                physics: BouncingScrollPhysics(),
-                                itemBuilder: (context, _) => Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
-                                ),
-                              ),
-                              trailing: Text(
-                                doctorRatings.data[index].date,
-                                style: GoogleFonts.lato(
-                                    color: apptealColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              doctorRatings.data[index].review,
-                              style: GoogleFonts.lato(fontSize: 12),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                });
+    return Center(child: CircularProgressIndicator());
   }
 }

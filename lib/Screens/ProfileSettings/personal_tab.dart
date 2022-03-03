@@ -206,7 +206,8 @@ class _PersonalState extends State<Personal> {
                       borderRadius: 8,
                       textSize: 20,
                     ),
-                  )
+                  ),
+                  SizedBox(height: navbarht + 20),
                 ],
               ),
       ),
@@ -248,7 +249,6 @@ class _PersonalState extends State<Personal> {
           );
         });
   }
-
 
   Future _imgFromCamera() async {
     var image = await ImagePicker()

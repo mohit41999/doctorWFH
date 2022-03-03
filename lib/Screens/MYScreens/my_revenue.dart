@@ -25,11 +25,6 @@ class _MyRevenueState extends State<MyRevenue> {
         ),
         centerTitle: true,
         backgroundColor: appAppBarColor,
-        leading: commonAppBarLeading(
-            iconData: Icons.arrow_back_ios_new,
-            onPressed: () {
-              Pop(context);
-            }),
       ),
       body: Column(
         children: [
@@ -51,8 +46,11 @@ class _MyRevenueState extends State<MyRevenue> {
             child: ListView.builder(
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 18.0, vertical: 10.0),
+                  padding: EdgeInsets.only(
+                      left: 18.0,
+                      right: 18.0,
+                      bottom: (index + 1 == 15) ? navbarht + 20 : 10,
+                      top: 10.0),
                   child: Material(
                     elevation: 5,
                     borderRadius: BorderRadius.circular(8),

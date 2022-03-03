@@ -178,41 +178,38 @@ class _VideoCallPageState extends State<VideoCallPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: SafeArea(
-          child: Stack(
-            children: [
-              AgoraVideoViewer(
-                disabledVideoWidget: Center(
-                    child: CircleAvatar(
-                  radius: 150,
-                )),
-                layoutType: Layout.floating,
-                client: client,
-                showAVState: true,
-              ),
-              AgoraVideoButtons(
-                client: client,
-                disconnectButtonChild: MaterialButton(
-                  onPressed: () {
-                    setState(() {
-                      client.sessionController.endCall();
-                      client.sessionController.dispose();
+    return Scaffold(
+      body: SafeArea(
+        child: Stack(
+          children: [
+            AgoraVideoViewer(
+              disabledVideoWidget: Center(
+                  child: CircleAvatar(
+                radius: 150,
+              )),
+              layoutType: Layout.floating,
+              client: client,
+              showAVState: true,
+            ),
+            AgoraVideoButtons(
+              client: client,
+              disconnectButtonChild: MaterialButton(
+                onPressed: () {
+                  setState(() {
+                    client.sessionController.endCall();
+                    client.sessionController.dispose();
 
-                      Navigator.pop(context);
-                    });
-                  },
-                  child: Icon(Icons.call_end, color: Colors.white, size: 35),
-                  shape: CircleBorder(),
-                  elevation: 2.0,
-                  color: Colors.redAccent,
-                  padding: const EdgeInsets.all(15.0),
-                ),
+                    Navigator.pop(context);
+                  });
+                },
+                child: Icon(Icons.call_end, color: Colors.white, size: 35),
+                shape: CircleBorder(),
+                elevation: 2.0,
+                color: Colors.redAccent,
+                padding: const EdgeInsets.all(15.0),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

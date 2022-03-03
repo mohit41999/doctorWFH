@@ -4,7 +4,6 @@ import 'package:doctor/controller/NavigationController.dart';
 import 'package:doctor/helper/helperfunctions.dart';
 import 'package:doctor/model/doctor_clinic_profile.dart';
 import 'package:doctor/model/doctor_personal_profile_model.dart';
-import 'package:doctor/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';

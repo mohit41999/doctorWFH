@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:doctor/helper/helperfunctions.dart';
-import 'package:doctor/services/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthenticationHelper {
@@ -13,7 +11,6 @@ class AuthenticationHelper {
       {required String email,
       required String password,
       required username}) async {
-    DatabaseMethods databaseMethods = new DatabaseMethods();
     try {
       await _auth
           .createUserWithEmailAndPassword(
@@ -26,12 +23,6 @@ class AuthenticationHelper {
             "userName": username,
             "userEmail": email
           };
-
-          databaseMethods.addUserInfo(userDataMap);
-
-          HelperFunctions.saveUserLoggedInSharedPreference(true);
-          HelperFunctions.saveUserNameSharedPreference(username);
-          HelperFunctions.saveUserEmailSharedPreference(email);
 
           // Navigator.pushReplacement(context, MaterialPageRoute(
           //     builder: (context) => ChatRoom()
@@ -50,22 +41,10 @@ class AuthenticationHelper {
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((result) async {
-        if (result != null) {
-          QuerySnapshot userInfoSnapshot =
-              await DatabaseMethods().getUserInfo(email);
-          print(userInfoSnapshot.docs[0].id);
-          print(userInfoSnapshot.docs[0]["userName"]);
-
-          HelperFunctions.saveUserLoggedInSharedPreference(true);
-          HelperFunctions.saveUserNameSharedPreference(
-              userInfoSnapshot.docs[0]["userName"]);
-          HelperFunctions.saveUserEmailSharedPreference(
-              userInfoSnapshot.docs[0]["userEmail"]);
-        }
+        if (result != null) {}
       });
       return null;
     } on FirebaseAuthException catch (e) {
-      print('lalala');
       return e.message;
     }
   }

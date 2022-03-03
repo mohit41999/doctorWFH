@@ -337,7 +337,8 @@ class _ClinicalState extends State<Clinical> {
               borderRadius: 8,
               textSize: 20,
             ),
-          )
+          ),
+          SizedBox(height: navbarht + 20),
         ],
       ),
     );

@@ -11,7 +11,7 @@ import 'package:doctor/Screens/completed_assignment.dart';
 List<Map<dynamic, dynamic>> drawerList = [
   {
     'label': 'Profile Setting',
-    'Screen': ProfileSetting(),
+    'Screen': ProfileSetting(fromhome: false,),
   },
   {
     'label': 'Manage Calendar',

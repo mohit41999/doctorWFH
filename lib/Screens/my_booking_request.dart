@@ -19,12 +19,6 @@ class MyBookingRequest extends StatelessWidget {
         centerTitle: true,
         backgroundColor: appAppBarColor,
         elevation: 0,
-        leading: Builder(
-            builder: (context) => commonAppBarLeading(
-                iconData: Icons.arrow_back_ios_new,
-                onPressed: () {
-                  Navigator.pop(context);
-                })),
       ),
     );
   }
@@ -41,7 +35,11 @@ Widget Messsages(BuildContext context) {
             itemCount: 4,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: EdgeInsets.only(
+                    left: 10.0,
+                    right: 10.0,
+                    bottom: (index + 1 == 4) ? navbarht + 20 : 10,
+                    top: 10.0),
                 child: Material(
                   elevation: 4,
                   borderRadius: BorderRadius.circular(8),

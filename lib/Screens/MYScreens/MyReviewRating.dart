@@ -66,7 +66,13 @@ class _MyReviewRatingsScreenState extends State<MyReviewRatingsScreen> {
                     itemCount: doctorRatings.data.length,
                     itemBuilder: (context, index) {
                       return Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.only(
+                            top: 8.0,
+                            left: 8,
+                            right: 8,
+                            bottom: (index + 1 == doctorRatings.data.length)
+                                ? navbarht + 20
+                                : 8),
                         child: Card(
                           elevation: 5,
                           child: Padding(
@@ -75,7 +81,10 @@ class _MyReviewRatingsScreenState extends State<MyReviewRatingsScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 ListTile(
-                                  leading: CircleAvatar(),
+                                  leading: CircleAvatar(
+                                      backgroundImage: NetworkImage(
+                                    doctorRatings.data[index].profileImage,
+                                  )),
                                   title:
                                       Text(doctorRatings.data[index].userName),
                                   subtitle: RatingBarIndicator(

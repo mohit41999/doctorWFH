@@ -51,7 +51,11 @@ class _ManageCalendarState extends State<ManageCalendar> {
                 itemCount: 10,
                 itemBuilder: (context, int) {
                   return Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: EdgeInsets.only(
+                        top: 10.0,
+                        left: 10,
+                        right: 10,
+                        bottom: (int + 1 == 10) ? navbarht + 20 : 10),
                     child: Container(
                       height: 170,
                       decoration: BoxDecoration(

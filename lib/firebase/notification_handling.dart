@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:doctor/API/api_constants.dart';
 import 'package:doctor/Screens/AGORA/video_call.dart';
+import 'package:doctor/controller/NavigationController.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,24 +25,24 @@ class FirebaseNotificationHandling {
       String? channel_name = event.notification!.title.toString();
       print('onMessage ' + event.toString());
       print(event.data);
-      Navigator.push(
+      Push(
           context,
-          MaterialPageRoute(
-              builder: (context) => VideoCallPage(
-                    channelName: event.data['chanel_name'],
-                  )));
+          VideoCallPage(
+            channelName: event.data['chanel_name'],
+          ),
+          withnav: false);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
       // String? channel_name = event.notification!.title.toString();
 
       print('onMessageOpenedApp');
-      Navigator.push(
+      Push(
           context,
-          MaterialPageRoute(
-              builder: (context) => VideoCallPage(
-                    channelName: event.data['chanel_name'],
-                  )));
+          VideoCallPage(
+            channelName: event.data['chanel_name'],
+          ),
+          withnav: false);
       // Navigator.of(context).push(
       //     context,
       //     );
@@ -49,12 +50,12 @@ class FirebaseNotificationHandling {
     });
     FirebaseMessaging.onBackgroundMessage((message) async {
       print(message.data);
-      Navigator.push(
+      Push(
           context,
-          MaterialPageRoute(
-              builder: (context) => VideoCallPage(
-                    channelName: message.data['chanel_name'],
-                  )));
+          VideoCallPage(
+            channelName: message.data['chanel_name'],
+          ),
+          withnav: false);
     });
   }
 }
