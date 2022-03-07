@@ -513,7 +513,8 @@ class _completedState extends State<completed> {
                                       value: completedAssignment
                                           .data[index].bookingId),
                                   titleColumn(
-                                      title: 'Booking of', value: 'value'),
+                                      title: 'Booking of',
+                                      value: 'Video Consult'),
                                 ],
                               )),
                               Expanded(
@@ -637,7 +638,8 @@ class _UpcomingState extends State<Upcoming> {
                                           value: upcomingAppointments
                                               .data[index].bookingId),
                                       titleColumn(
-                                          title: 'Booking of', value: 'value'),
+                                          title: 'Booking of',
+                                          value: 'Video Consult'),
                                     ],
                                   )),
                                   Expanded(
