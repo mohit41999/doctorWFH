@@ -45,6 +45,7 @@ class CompletedAssignmentModelData {
     required this.ammountPaid,
     required this.patientId,
     required this.patientDocument,
+    required this.patient_name,
     required this.invoice,
     required this.coupon_discount,
     required this.consultancy_fees,
@@ -54,6 +55,7 @@ class CompletedAssignmentModelData {
   String appointmentDate;
   String appointment_time;
   String ammountPaid;
+  String patient_name;
   String patientId;
   String patientDocument;
   String invoice;
@@ -64,6 +66,7 @@ class CompletedAssignmentModelData {
       CompletedAssignmentModelData(
         bookingId: json["booking_id"],
         consultancy_fees: json["consultancy_fees"],
+        patient_name: json["patient_name"],
         coupon_discount: json["coupon_discount"],
         appointment_time: json["appointment_time"],
         appointmentDate: json["appointment_date"],
@@ -79,6 +82,7 @@ class CompletedAssignmentModelData {
         "consultancy_fees": consultancy_fees,
         "appointment_date": appointmentDate,
         "appointment_time": appointment_time,
+        "patient_name": patient_name,
         "ammount_paid": ammountPaid,
         "patient_id": patientId,
         "patient_document": patientDocument,

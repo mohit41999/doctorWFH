@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:doctor/API/api_constants.dart';
 import 'package:doctor/Screens/pdf.dart';
+import 'package:doctor/Screens/text_page.dart';
 import 'package:doctor/controller/NavigationController.dart';
 import 'package:doctor/model/completed_assignment_model.dart';
 import 'package:doctor/widgets/common_button.dart';
@@ -339,11 +340,15 @@ class _CompletedAssignmentState extends State<CompletedAssignment> {
                                                     Radius.circular(15)),
                                           ))),
                                       onPressed: () {
-                                        // Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //         builder: (context) =>
-                                        //             MyMedicineOrders()));
+                                        Push(
+                                          context,
+                                          TextPage(
+                                              patientid: completedAssignments
+                                                  .data[index].patientId,
+                                              patientName: completedAssignments
+                                                  .data[index].patient_name),
+                                          withnav: false,
+                                        );
                                       },
                                       child: Text(
                                         'Chat With Patient',
