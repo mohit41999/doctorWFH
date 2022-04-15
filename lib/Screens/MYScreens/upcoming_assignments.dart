@@ -33,25 +33,12 @@ class _UpcomingAssignmentsState extends State<UpcomingAssignments> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const commonAppBarTitleText(appbarText: 'Upcoming Appointments'),
-        backgroundColor: appAppBarColor,
-        elevation: 0,
-        leading: Builder(
-            builder: (context) => commonAppBarLeading(
-                iconData: Icons.arrow_back_ios_new,
-                onPressed: () {
-                  Navigator.pop(context);
-                })),
-      ),
       body: (loading)
           ? const Center(
               child: CircularProgressIndicator(),
             )
           : (_con.data.data.isEmpty)
-              ? const Expanded(
-                  child: Center(child: Text('No Online Consulants ')))
+              ? Center(child: Text('No Upcoming Appointments'))
               : ListView.builder(
                   shrinkWrap: true,
                   itemCount: _con.data.data.length,

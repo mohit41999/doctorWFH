@@ -5,7 +5,7 @@
         <entry key="agora_rtc_engine">
           <value>
             <list>
-              <option value="$USER_HOME$/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/agora_rtc_engine-4.2.1/lib" />
+              <option value="$USER_HOME$/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/agora_rtc_engine-4.2.2/lib" />
             </list>
           </value>
         </entry>
@@ -1013,7 +1013,7 @@
       </option>
     </properties>
     <CLASSES>
-      <root url="file://$USER_HOME$/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/agora_rtc_engine-4.2.1/lib" />
+      <root url="file://$USER_HOME$/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/agora_rtc_engine-4.2.2/lib" />
       <root url="file://$USER_HOME$/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/agora_uikit-0.0.4/lib" />
       <root url="file://$USER_HOME$/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/args-2.3.0/lib" />
       <root url="file://$USER_HOME$/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.8.2/lib" />

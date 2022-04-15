@@ -61,18 +61,6 @@ class _CompletedAssignmentState extends State<CompletedAssignment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: commonAppBarTitleText(appbarText: 'Completed Assignment'),
-        backgroundColor: appAppBarColor,
-        elevation: 0,
-        leading: Builder(
-            builder: (context) => commonAppBarLeading(
-                iconData: Icons.arrow_back_ios_new,
-                onPressed: () {
-                  Navigator.pop(context);
-                })),
-      ),
       body: (loading)
           ? Center(child: CircularProgressIndicator())
           : (completedAssignments.data.length == 0)
