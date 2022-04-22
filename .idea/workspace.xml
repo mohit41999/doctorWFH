@@ -5,16 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5df1842f-62ef-4e5c-92f9-ac8abe19c301" name="Default Changelist" comment="home">
-      <change beforePath="$PROJECT_DIR$/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Screens/KnowledgeForum/add_knowledge_forum.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Screens/KnowledgeForum/knowledge_description_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Screens/KnowledgeForum/my_knowledge_forum.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/knowledge_description_model.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/my_knowledge_forum_model.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/MYScreens/my_booked_appointment.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/MYScreens/my_booked_appointment.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/MYScreens/upcoming_assignments.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/MYScreens/upcoming_assignments.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/completed_assignment.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/completed_assignment.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Utils/drawerList.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Utils/drawerList.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/widgets/title_enter_field.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/title_enter_field.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,6 +63,7 @@
       <recent name="C:\Users\user\Desktop\Github Projects\doctorWFH\android\app\src\main\res" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\user\Desktop\Github Projects\doctorWFH\lib\Screens\KnowledgeForum" />
       <recent name="C:\Users\user\Desktop\Github Projects\doctorWFH\lib\Screens" />
       <recent name="C:\Users\user\Desktop\Github Projects\doctorWFH\android\app" />
     </key>
@@ -233,7 +233,14 @@
       <option name="project" value="LOCAL" />
       <updated>1649839258497</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="home">
+      <created>1650030218163</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1650030218163</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

@@ -8,6 +8,7 @@ import 'package:doctor/Screens/ProfileSettings/profile_setting.dart';
 import 'package:doctor/Screens/account_settings.dart';
 import 'package:doctor/Screens/chats_screen.dart';
 import 'package:doctor/Screens/completed_assignment.dart';
+import 'package:doctor/Screens/KnowledgeForum/my_knowledge_forum.dart';
 
 List<Map<dynamic, dynamic>> drawerList = [
   {
@@ -45,6 +46,10 @@ List<Map<dynamic, dynamic>> drawerList = [
   {
     'label': 'Booking Appointments',
     'Screen': MyBookedAppointment(),
+  },
+  {
+    'label': 'My Knowledge Forum',
+    'Screen': MyKnowledgeForum(),
   },
   {
     'label': 'My Reviews',
