@@ -3,10 +3,12 @@ import 'package:doctor/Screens/MYScreens/MyQuestionsScreen.dart';
 import 'package:doctor/Screens/MYScreens/MyReviewRating.dart';
 import 'package:doctor/Screens/MYScreens/upcoming_assignments.dart';
 import 'package:doctor/Screens/completed_assignment.dart';
+import 'package:doctor/Screens/give_answer_answer.dart';
 import 'package:doctor/Screens/patient_booking_details.dart';
 import 'package:doctor/Utils/colorsandstyles.dart';
 import 'package:doctor/controller/NavigationController.dart';
 import 'package:doctor/model/Upcoming%20Appointments.dart';
+import 'package:doctor/model/ask_question_list_model.dart';
 import 'package:doctor/model/completed_assignment_model.dart';
 import 'package:doctor/model/doctor_rating_model.dart';
 import 'package:doctor/model/upcoming_assignmentsmodel.dart';
@@ -34,9 +36,22 @@ class _HomeScreenState extends State<HomeScreen>
   late TabController _tabController;
   ScrollController _controller = ScrollController();
   late CompletedAssignmentModel completedAssignment;
-  bool loading = true;
+
+  bool docReview = true;
+  bool revenueBool = true;
   String revenue = '';
+  bool questionLoading = true;
   late DoctorRatings doctorRatings;
+  late AskQuestionModel patientQuestions;
+  Future<AskQuestionModel> getPatientQuestions() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var response = await PostData(PARAM_URL: 'get_ask_question.php', params: {
+      'token': Token,
+      'doctor_id': preferences.getString('user_id'),
+    });
+    return AskQuestionModel.fromJson(response);
+  }
+
   Future<DoctorRatings> getdocReview() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     late Map<String, dynamic> response;
@@ -63,15 +78,36 @@ class _HomeScreenState extends State<HomeScreen>
     return response;
   }
 
+  Future getQuestions() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    var response = await PostData(
+        PARAM_URL: 'get_completed_revenue.php',
+        params: {
+          'token': Token,
+          'doctor_id': preferences.getString('user_id')
+        }).then((value) {
+      revenue = value['data']['revenue'];
+    });
+    return response;
+  }
+
   Future initialize() async {
     await getdocReview().then((value) {
       setState(() {
         doctorRatings = value;
+        docReview = false;
       });
     });
     getrevenue().then((value) {
       setState(() {
-        loading = false;
+        revenueBool = false;
+      });
+    });
+    getPatientQuestions().then((value) {
+      setState(() {
+        patientQuestions = value;
+        questionLoading = false;
       });
     });
   }
@@ -126,60 +162,64 @@ class _HomeScreenState extends State<HomeScreen>
         body: ListView(
           shrinkWrap: true,
           children: [
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
-              child: Container(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height * 0.25,
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                ),
-                child: Column(
-                  children: [
-                    Expanded(
-                        child: Container(
+            (revenueBool)
+                ? Center(child: CircularProgressIndicator())
+                : Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 10),
+                    child: Container(
                       width: double.infinity,
-                      child: Center(
-                        child: Text(
-                          'Revenue',
-                          style: GoogleFonts.montserrat(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-                      ),
+                      height: MediaQuery.of(context).size.height * 0.25,
                       decoration: BoxDecoration(
-                          color: appblueColor,
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              topLeft: Radius.circular(10))),
-                    )),
-                    Expanded(
-                        flex: 5,
-                        child: Container(
-                          width: double.infinity,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text('Net Worth'),
-                              Text(
-                                '₹ ' + revenue,
+                        color: Colors.transparent,
+                      ),
+                      child: Column(
+                        children: [
+                          Expanded(
+                              child: Container(
+                            width: double.infinity,
+                            child: Center(
+                              child: Text(
+                                'Revenue',
                                 style: GoogleFonts.montserrat(
-                                    color: appblueColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 35),
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
                               ),
-                            ],
-                          ),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                  bottomRight: Radius.circular(10),
-                                  bottomLeft: Radius.circular(10))),
-                        ))
-                  ],
-                ),
-              ),
-            ),
+                            ),
+                            decoration: BoxDecoration(
+                                color: appblueColor,
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(10),
+                                    topLeft: Radius.circular(10))),
+                          )),
+                          Expanded(
+                              flex: 5,
+                              child: Container(
+                                width: double.infinity,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text('Net Worth'),
+                                    Text(
+                                      '₹ ' + revenue,
+                                      style: GoogleFonts.montserrat(
+                                          color: appblueColor,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 35),
+                                    ),
+                                  ],
+                                ),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.only(
+                                        bottomRight: Radius.circular(10),
+                                        bottomLeft: Radius.circular(10))),
+                              ))
+                        ],
+                      ),
+                    ),
+                  ),
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
@@ -230,17 +270,13 @@ class _HomeScreenState extends State<HomeScreen>
             // tab bar view here
             Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.7,
+              height: 550,
               child: TabBarView(
                 controller: _tabController,
                 children: [
                   // first tab bar view widget
-                  completed(
-                    scrollController: _controller,
-                  ),
-                  Upcoming(
-                    scrollController: _controller,
-                  ),
+                  completed(),
+                  Upcoming(),
                   // Lifestyle()
                   // second tab bar view widget
                 ],
@@ -255,8 +291,16 @@ class _HomeScreenState extends State<HomeScreen>
                   textColor: Colors.white,
                   onPressed: () {
                     _tabController.index == 0
-                        ? Push(context, CompletedAssignment())
-                        : Push(context, UpcomingAssignments());
+                        ? Push(
+                            context,
+                            CompletedAssignment(
+                              fromHome: true,
+                            ))
+                        : Push(
+                            context,
+                            UpcomingAssignments(
+                              fromHome: true,
+                            ));
                   },
                   height: 30,
                   width: 90,
@@ -278,58 +322,61 @@ class _HomeScreenState extends State<HomeScreen>
                 borderRadius: 10,
               ),
             ),
-            ListView.builder(
-                shrinkWrap: true,
-                physics: ClampingScrollPhysics(),
-                itemCount: doctorRatings.data.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Card(
-                      elevation: 5,
-                      child: Padding(
+            (docReview)
+                ? Center(child: CircularProgressIndicator())
+                : ListView.builder(
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    itemCount: doctorRatings.data.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ListTile(
-                              leading: CircleAvatar(),
-                              title: Text(doctorRatings.data[index].userName),
-                              subtitle: RatingBarIndicator(
-                                rating: double.parse(
-                                    doctorRatings.data[index].rating),
-                                itemCount: 5,
-                                itemSize: 15.0,
-                                physics: BouncingScrollPhysics(),
-                                itemBuilder: (context, _) => Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
+                        child: Card(
+                          elevation: 5,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ListTile(
+                                  leading: CircleAvatar(),
+                                  title:
+                                      Text(doctorRatings.data[index].userName),
+                                  subtitle: RatingBarIndicator(
+                                    rating: double.parse(
+                                        doctorRatings.data[index].rating),
+                                    itemCount: 5,
+                                    itemSize: 15.0,
+                                    physics: BouncingScrollPhysics(),
+                                    itemBuilder: (context, _) => Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                    ),
+                                  ),
+                                  trailing: Text(
+                                    doctorRatings.data[index].date,
+                                    style: GoogleFonts.lato(
+                                        color: apptealColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                              ),
-                              trailing: Text(
-                                doctorRatings.data[index].date,
-                                style: GoogleFonts.lato(
-                                    color: apptealColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text(
+                                  doctorRatings.data[index].review,
+                                  style: GoogleFonts.lato(fontSize: 12),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                              ],
                             ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              doctorRatings.data[index].review,
-                              style: GoogleFonts.lato(fontSize: 12),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
-                  );
-                }),
+                      );
+                    }),
             SizedBox(
               height: 10,
             ),
@@ -362,56 +409,78 @@ class _HomeScreenState extends State<HomeScreen>
                 borderRadius: 10,
               ),
             ),
-            ListView.builder(
-                shrinkWrap: true,
-                physics: ScrollPhysics(),
-                controller: _controller,
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Card(
-                      elevation: 5,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Lorem ipsum dolor sit amet, consetetur. ?',
-                                  style: GoogleFonts.lato(
-                                      color: Color(0xff252525),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  '  27/09/2021',
-                                  style: GoogleFonts.lato(
-                                      color: apptealColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
+            (questionLoading)
+                ? Center(child: CircularProgressIndicator())
+                : ListView.builder(
+                    shrinkWrap: true,
+                    physics: ScrollPhysics(),
+                    controller: _controller,
+                    itemCount: patientQuestions.data.length >= 5
+                        ? 5
+                        : patientQuestions.data.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => GiveAnswerScreen(
+                                      question_id: patientQuestions
+                                          .data[index].questionId)));
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              top: 8.0,
+                              left: 8,
+                              right: 8,
+                              bottom:
+                                  (index + 1 == patientQuestions.data.length)
+                                      ? navbarht + 20
+                                      : 8),
+                          child: Card(
+                            elevation: 5,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        patientQuestions.data[index].question,
+                                        style: GoogleFonts.lato(
+                                            color: Color(0xff252525),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        '  ${patientQuestions.data[index].createdDate.day}/${patientQuestions.data[index].createdDate.month}/${patientQuestions.data[index].createdDate.year}',
+                                        style: GoogleFonts.lato(
+                                            color: apptealColor,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(
+                                    patientQuestions.data[index].description,
+                                    style: GoogleFonts.lato(fontSize: 12),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                ],
+                              ),
                             ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea.',
-                              style: GoogleFonts.lato(fontSize: 12),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
-                  );
-                }),
+                      );
+                    }),
             SizedBox(
               height: 10,
             ),
@@ -422,7 +491,7 @@ class _HomeScreenState extends State<HomeScreen>
                   bgcolor: appblueColor,
                   textColor: Colors.white,
                   onPressed: () {
-                    Push(context, MyQuestionsScreen());
+                    Push(context, PatientQuestionsScreen());
                   },
                   height: 30,
                   width: 90,
@@ -440,8 +509,9 @@ class _HomeScreenState extends State<HomeScreen>
 }
 
 class completed extends StatefulWidget {
-  final ScrollController scrollController;
-  const completed({Key? key, required this.scrollController}) : super(key: key);
+  const completed({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _completedState createState() => _completedState();
@@ -484,10 +554,11 @@ class _completedState extends State<completed> {
         : Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: ListView.builder(
-                // physics: NeverScrollableScrollPhysics(),
+                physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                controller: widget.scrollController,
-                itemCount: completedAssignment.data.length,
+                itemCount: completedAssignment.data.length >= 4
+                    ? 4
+                    : completedAssignment.data.length,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(10.0),
@@ -562,8 +633,9 @@ class _completedState extends State<completed> {
 }
 
 class Upcoming extends StatefulWidget {
-  final ScrollController scrollController;
-  const Upcoming({Key? key, required this.scrollController}) : super(key: key);
+  const Upcoming({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _UpcomingState createState() => _UpcomingState();
@@ -608,10 +680,11 @@ class _UpcomingState extends State<Upcoming> {
             child: (upcomingAppointments.data.length == 0)
                 ? Center(child: Text('No upcoming appointments'))
                 : ListView.builder(
-                    controller: widget.scrollController,
-                    // physics: NeverScrollableScrollPhysics(),
+                    physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: upcomingAppointments.data.length,
+                    itemCount: upcomingAppointments.data.length >= 4
+                        ? 4
+                        : upcomingAppointments.data.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(10.0),
@@ -684,46 +757,5 @@ class _UpcomingState extends State<Upcoming> {
                       );
                     }),
           );
-  }
-}
-
-class DocReview extends StatefulWidget {
-  final ScrollController scrollController;
-  const DocReview({Key? key, required this.scrollController}) : super(key: key);
-
-  @override
-  _DocReviewState createState() => _DocReviewState();
-}
-
-class _DocReviewState extends State<DocReview> {
-  bool loading = true;
-  late DoctorRatings doctorRatings;
-  Future<DoctorRatings> getdocReview() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    late Map<String, dynamic> response;
-    await PostData(PARAM_URL: 'get_rating_reviews.php', params: {
-      'token': Token,
-      'doctor_id': preferences.getString('user_id')
-    }).then((value) {
-      response = value;
-    });
-    return DoctorRatings.fromJson(response);
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getdocReview().then((value) {
-      setState(() {
-        doctorRatings = value;
-        loading = false;
-      });
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: CircularProgressIndicator());
   }
 }

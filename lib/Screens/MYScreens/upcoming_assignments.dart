@@ -9,7 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class UpcomingAssignments extends StatefulWidget {
-  const UpcomingAssignments({Key? key}) : super(key: key);
+  final bool fromHome;
+  const UpcomingAssignments({Key? key, this.fromHome = false})
+      : super(key: key);
 
   @override
   _UpcomingAssignmentsState createState() => _UpcomingAssignmentsState();
@@ -33,6 +35,21 @@ class _UpcomingAssignmentsState extends State<UpcomingAssignments> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: (widget.fromHome)
+          ? AppBar(
+              title: commonAppBarTitleText(
+                appbarText: 'Upcoming Appointments',
+              ),
+              centerTitle: true,
+              leading: commonAppBarLeading(
+                  iconData: Icons.arrow_back_ios_new,
+                  onPressed: () {
+                    Pop(context);
+                  }),
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+            )
+          : null,
       body: (loading)
           ? const Center(
               child: CircularProgressIndicator(),

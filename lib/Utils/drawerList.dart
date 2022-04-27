@@ -56,8 +56,8 @@ List<Map<dynamic, dynamic>> drawerList = [
     'Screen': MyReviewRatingsScreen(),
   },
   {
-    'label': 'My Questions',
-    'Screen': MyQuestionsScreen(),
+    'label': 'Patient Questions',
+    'Screen': PatientQuestionsScreen(),
   },
   {
     'label': 'Billing Segment',

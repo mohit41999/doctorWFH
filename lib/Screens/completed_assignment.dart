@@ -26,7 +26,9 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CompletedAssignment extends StatefulWidget {
-  const CompletedAssignment({Key? key}) : super(key: key);
+  final bool fromHome;
+  const CompletedAssignment({Key? key, this.fromHome = false})
+      : super(key: key);
 
   @override
   _CompletedAssignmentState createState() => _CompletedAssignmentState();
@@ -61,6 +63,21 @@ class _CompletedAssignmentState extends State<CompletedAssignment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: (widget.fromHome)
+          ? AppBar(
+              title: commonAppBarTitleText(
+                appbarText: 'Completed Appointments',
+              ),
+              centerTitle: true,
+              leading: commonAppBarLeading(
+                  iconData: Icons.arrow_back_ios_new,
+                  onPressed: () {
+                    Pop(context);
+                  }),
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+            )
+          : null,
       body: (loading)
           ? Center(child: CircularProgressIndicator())
           : (completedAssignments.data.length == 0)
