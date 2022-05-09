@@ -23,7 +23,8 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+        centerTitle: false,
+        titleSpacing: 0,
         backgroundColor: appAppBarColor,
         elevation: 0,
         title: commonAppBarTitle(),

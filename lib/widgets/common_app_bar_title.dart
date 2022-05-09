@@ -12,7 +12,7 @@ class commonAppBarTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: MediaQuery.of(context).size.height * 0.1,
+        height: MediaQuery.of(context).size.height * 0.05,
         child: Image(image: AssetImage('assets/pngs/logo.png')));
   }
 }

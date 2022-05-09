@@ -25,7 +25,8 @@ class _OrderProductState extends State<OrderProduct> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          centerTitle: true,
+          centerTitle: false,
+          titleSpacing: 0,
           title: commonAppBarTitle(),
           backgroundColor: appAppBarColor,
           elevation: 0,

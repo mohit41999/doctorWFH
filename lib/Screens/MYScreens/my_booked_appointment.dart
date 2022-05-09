@@ -48,7 +48,8 @@ class _MyBookedAppointmentState extends State<MyBookedAppointment>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            centerTitle: true,
+            centerTitle: false,
+            titleSpacing: 0,
             title: commonAppBarTitle(),
             backgroundColor: Colors.white,
             elevation: 0,

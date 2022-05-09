@@ -100,7 +100,8 @@ class _GiveAnswerScreenState extends State<GiveAnswerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+        centerTitle: false,
+        titleSpacing: 0,
         title: commonAppBarTitleText(appbarText: 'Patient Questions'),
         backgroundColor: appAppBarColor,
         elevation: 0,

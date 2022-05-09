@@ -81,7 +81,8 @@ class _AddKnowledgeForumState extends State<AddKnowledgeForum> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+        centerTitle: false,
+        titleSpacing: 0,
         title: commonAppBarTitleText(appbarText: 'Add Knowledge Forum'),
         backgroundColor: appAppBarColor,
         elevation: 0,

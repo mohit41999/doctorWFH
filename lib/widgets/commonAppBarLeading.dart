@@ -28,19 +28,11 @@ class _commonAppBarLeadingState extends State<commonAppBarLeading> {
               child: Icon(
                 widget.iconData,
                 color: appblueColor,
-                size: 20,
+                size: 30,
               ),
             ),
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  blurRadius: 10,
-                  offset: const Offset(2, 5),
-                ),
-              ],
+              color: Colors.transparent,
             ),
           ),
           onTap: widget.onPressed),

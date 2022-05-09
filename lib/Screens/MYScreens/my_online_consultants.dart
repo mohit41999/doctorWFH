@@ -35,7 +35,8 @@ class _MyOnlineConsultantsState extends State<MyOnlineConsultants> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+        centerTitle: false,
+        titleSpacing: 0,
         title: const commonAppBarTitleText(appbarText: 'My Online Consultants'),
         backgroundColor: appAppBarColor,
         elevation: 0,

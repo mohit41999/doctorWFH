@@ -23,8 +23,9 @@ class _DoctorProfile3State extends State<DoctorProfile3> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+        centerTitle: false,
         title: commonAppBarTitle(),
+        titleSpacing: 0,
         backgroundColor: appAppBarColor,
         elevation: 0,
         leading: Padding(

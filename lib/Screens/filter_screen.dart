@@ -33,7 +33,8 @@ class _FilterScreenState extends State<FilterScreen> {
             ),
             preferredSize: Size.fromHeight(1.0)),
         title: commonAppBarTitleText(appbarText: 'Filter'),
-        centerTitle: true,
+        centerTitle: false,
+        titleSpacing: 0,
         backgroundColor: appAppBarColor,
         elevation: 0,
         leading: Builder(

@@ -31,7 +31,8 @@ class _PatientHomePage4State extends State<PatientHomePage4> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+        centerTitle: false,
+        titleSpacing: 0,
         title: commonAppBarTitle(),
         backgroundColor: appAppBarColor,
         elevation: 0,

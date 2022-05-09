@@ -31,7 +31,8 @@ class _ManageCalendarState extends State<ManageCalendar> {
       //   splashColor: apptealColor,
       // ),
       appBar: AppBar(
-        centerTitle: true,
+        centerTitle: false,
+        titleSpacing: 0,
         title: commonAppBarTitleText(appbarText: 'Manage Calendar'),
         backgroundColor: appAppBarColor,
         elevation: 0,

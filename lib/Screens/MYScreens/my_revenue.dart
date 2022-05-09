@@ -23,7 +23,8 @@ class _MyRevenueState extends State<MyRevenue> {
         title: commonAppBarTitleText(
           appbarText: 'My Revenue',
         ),
-        centerTitle: true,
+        centerTitle: false,
+        titleSpacing: 0,
         backgroundColor: appAppBarColor,
       ),
       body: Column(

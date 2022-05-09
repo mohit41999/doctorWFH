@@ -39,7 +39,8 @@ class _ProductDetailsState extends State<ProductDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          centerTitle: true,
+          centerTitle: false,
+          titleSpacing: 0,
           title: commonAppBarTitle(),
           backgroundColor: appAppBarColor,
           elevation: 0,

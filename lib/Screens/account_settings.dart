@@ -21,7 +21,8 @@ class _AccountSettingState extends State<AccountSetting> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+        centerTitle: false,
+        titleSpacing: 0,
         title: commonAppBarTitleText(appbarText: 'Account Setting'),
         backgroundColor: appAppBarColor,
         elevation: 0,

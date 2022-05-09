@@ -51,7 +51,8 @@ class _MyKnowledgeForumState extends State<MyKnowledgeForum> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          centerTitle: true,
+          centerTitle: false,
+          titleSpacing: 0,
           title: commonAppBarTitleText(appbarText: 'My Knowledge Forum'),
           backgroundColor: appAppBarColor,
           elevation: 0,

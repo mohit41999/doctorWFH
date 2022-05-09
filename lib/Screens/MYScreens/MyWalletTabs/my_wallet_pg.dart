@@ -40,7 +40,8 @@ class _MyWalletPageState extends State<MyWalletPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+        centerTitle: false,
+        titleSpacing: 0,
         title: commonAppBarTitleText(appbarText: 'My Wallet'),
         backgroundColor: appAppBarColor,
         elevation: 0,

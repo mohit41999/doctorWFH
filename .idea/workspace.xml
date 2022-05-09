@@ -5,18 +5,53 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5df1842f-62ef-4e5c-92f9-ac8abe19c301" name="Default Changelist" comment="home">
-      <change afterPath="$PROJECT_DIR$/lib/Screens/give_answer_answer.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/ask_question_list_model.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/question_description_model.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-hdpi/ic_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-mdpi/ic_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/pngs/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/pngs/logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/DoctorScreens/doctor_profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/DoctorScreens/doctor_profile.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/DoctorScreens/doctor_profile_3.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/DoctorScreens/doctor_profile_3.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/DoctorScreens/doctor_profile_4.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/DoctorScreens/doctor_profile_4.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Screens/Home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Home.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/KnowledgeForum/add_knowledge_forum.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/KnowledgeForum/add_knowledge_forum.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/KnowledgeForum/knowledge_description_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/KnowledgeForum/knowledge_description_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Screens/KnowledgeForum/my_knowledge_forum.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/KnowledgeForum/my_knowledge_forum.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/LabProfile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/LabProfile.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/MYScreens/MyPrescriprions.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/MYScreens/MyPrescriprions.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Screens/MYScreens/MyQuestionsScreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/MYScreens/MyQuestionsScreen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/MYScreens/MyReviewRating.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/MYScreens/MyReviewRating.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/MYScreens/MyWalletTabs/my_wallet_pg.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/MYScreens/MyWalletTabs/my_wallet_pg.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/MYScreens/manage_calendar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/MYScreens/manage_calendar.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/MYScreens/my_booked_appointment.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/MYScreens/my_booked_appointment.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/MYScreens/my_online_consultants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/MYScreens/my_online_consultants.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/MYScreens/my_revenue.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/MYScreens/my_revenue.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Screens/MYScreens/upcoming_assignments.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/MYScreens/upcoming_assignments.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/MedicineProfile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/MedicineProfile.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/ProductDetails.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/ProductDetails.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/Products.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Products.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/ProfileSettings/profile_setting.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/ProfileSettings/profile_setting.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/accept_reject_call.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/accept_reject_call.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/account_settings.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/account_settings.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/biometric_authenticate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/biometric_authenticate.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/biometric_authenticate2.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/biometric_authenticate2.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/chats_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/chats_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Screens/completed_assignment.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/completed_assignment.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Utils/drawerList.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Utils/drawerList.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/widgets/enter_field.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/enter_field.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/filter_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/filter_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/give_answer_answer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/give_answer_answer.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/my_booking_request.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/my_booking_request.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/order_medicine.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/order_medicine.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/order_product.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/order_product.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/patient_home_page_4.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/patient_home_page_4.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/pdf.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/pdf.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/sign_in_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/sign_in_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/sign_up.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/sign_up.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/text_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/text_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/widgets/commonAppBarLeading.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/commonAppBarLeading.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/widgets/common_app_bar_title.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/common_app_bar_title.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +85,7 @@
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../tripster" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/assets/pngs" />
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -59,11 +94,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\user\Desktop\Github Projects\doctorWFH\assets\pngs" />
+      <recent name="C:\Users\user\Desktop\Github Projects\doctorWFH\android\app\src\main" />
       <recent name="C:\Users\user\Desktop\Github Projects\doctorWFH\android\app" />
       <recent name="C:\Users\user\Desktop\Github Projects\doctorWFH\lib\firebase" />
       <recent name="D:\doctorWFH-main\lib\model" />
-      <recent name="D:\doctorWFH-main\lib\Screens" />
-      <recent name="C:\Users\user\Desktop\Github Projects\doctorWFH\android\app\src\main\res" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\user\Desktop\Github Projects\doctorWFH\lib\Screens\KnowledgeForum" />
@@ -250,7 +285,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650637901278</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="home">
+      <created>1651068461939</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1651068461939</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

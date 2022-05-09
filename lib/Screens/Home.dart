@@ -145,8 +145,9 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            centerTitle: true,
+            centerTitle: false,
             title: commonAppBarTitle(),
+            titleSpacing: 0,
             backgroundColor: Colors.white,
             elevation: 0,
             leading: Builder(

@@ -37,7 +37,8 @@ class _ProfileSettingState extends State<ProfileSetting>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+        centerTitle: false,
+        titleSpacing: 0,
         title: commonAppBarTitleText(appbarText: 'Profile Setting'),
         backgroundColor: appAppBarColor,
         elevation: 0,

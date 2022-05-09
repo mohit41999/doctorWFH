@@ -25,7 +25,8 @@ class _LabProfileState extends State<LabProfile> {
         title: commonAppBarTitleText(appbarText: 'Lab Profile'),
         elevation: 0,
         backgroundColor: appAppBarColor,
-        centerTitle: true,
+        centerTitle: false,
+        titleSpacing: 0,
         leading: Builder(
             builder: (context) => commonAppBarLeading(
                 iconData: Icons.arrow_back_ios_new,

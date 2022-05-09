@@ -33,8 +33,9 @@ class _DoctorProfile4State extends State<DoctorProfile4> {
         splashColor: apptealColor,
       ),
       appBar: AppBar(
-        centerTitle: true,
+        centerTitle: false,
         title: commonAppBarTitle(),
+        titleSpacing: 0,
         backgroundColor: appAppBarColor,
         elevation: 0,
         leading: Padding(
