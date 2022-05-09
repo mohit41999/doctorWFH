@@ -2,6 +2,7 @@ import 'package:doctor/API/api_constants.dart';
 import 'package:doctor/Utils/progress_view.dart';
 import 'package:doctor/controller/NavigationController.dart';
 import 'package:doctor/helper/helperfunctions.dart';
+import 'package:doctor/model/diseaseTreatedModel.dart';
 import 'package:doctor/model/doctor_clinic_profile.dart';
 import 'package:doctor/model/doctor_personal_profile_model.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class DoctorProfileController {
   TextEditingController firstname = TextEditingController();
   TextEditingController lastname = TextEditingController();
   var speciality_id;
+  var diseaseid;
   TextEditingController education = TextEditingController();
   TextEditingController languageSpoken = TextEditingController();
   TextEditingController totalexp = TextEditingController();
@@ -23,7 +25,7 @@ class DoctorProfileController {
   TextEditingController about_me = TextEditingController();
   // late PickedFile mediafile;\
 
-  Future submit(BuildContext context) async {
+  Future submit(BuildContext context, List<String> diseaseTreated) async {
     var loader = await ProgressView(context);
     loader.show();
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -40,6 +42,9 @@ class DoctorProfileController {
       'address': address.text,
       "about_me": about_me.text,
     };
+    for (int i = 0; i < diseaseTreated.length; i++) {
+      bodyparams.addAll({'disease_id[$i]': diseaseTreated[i]});
+    }
 
     HelperFunctions.saveUserNameSharedPreference(
         firstname.text + ' ' + lastname.text);
@@ -80,6 +85,15 @@ class DoctorProfileController {
         params: {'token': Token, 'doctor_id': prefs.getString('user_id')});
 
     return DoctorPersonalProfile.fromJson(response);
+  }
+
+  Future<DiseaseTreated> getDiseaseTreated() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var response = await PostData(
+        PARAM_URL: 'get_disease_treated.php',
+        params: {'token': Token, 'doctor_id': prefs.getString('user_id')});
+
+    return DiseaseTreated.fromJson(response);
   }
 
   Future<DoctorClinicProfile> getDocClinicProfile() async {

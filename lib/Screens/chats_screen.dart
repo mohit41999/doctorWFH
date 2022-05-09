@@ -60,8 +60,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
           : Messsages(context),
       appBar: AppBar(
           title: commonAppBarTitleText(appbarText: 'MyChats'),
-          centerTitle: false,
-          titleSpacing: 0,
+          centerTitle: true,
           backgroundColor: appAppBarColor,
           elevation: 0,
           leading: (widget.fromhome)

@@ -18,8 +18,7 @@ class _MyPrescriptionsScreenState extends State<MyPrescriptionsScreen> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          centerTitle: false,
-          titleSpacing: 0,
+          centerTitle: true,
           title: commonAppBarTitleText(appbarText: 'My Prescriptions'),
           backgroundColor: appAppBarColor,
           elevation: 0,

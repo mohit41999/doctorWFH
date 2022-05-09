@@ -1,9 +1,13 @@
 import 'dart:convert';
+
 import 'dart:io';
 
 import 'package:doctor/API/api_constants.dart';
 import 'package:doctor/Utils/colorsandstyles.dart';
 import 'package:doctor/controller/doctor_profile_controller.dart';
+import 'package:doctor/model/diseaseTreatedModel.dart';
+import 'package:doctor/model/diseaseTreatedModel.dart';
+import 'package:doctor/model/diseaseTreatedModel.dart';
 import 'package:doctor/model/specialist_model.dart';
 import 'package:doctor/widgets/common_button.dart';
 import 'package:doctor/widgets/title_enter_field.dart';
@@ -22,8 +26,10 @@ class Personal extends StatefulWidget {
 class _PersonalState extends State<Personal> {
   DoctorProfileController _con = DoctorProfileController();
   bool loading = true;
+  bool diseaseLoading = true;
 
   late SpecialistModel Data;
+  late DiseaseTreated diseaseTreated;
   initialize() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     PostData(
@@ -32,6 +38,12 @@ class _PersonalState extends State<Personal> {
         .then((value) {
       setState(() {
         Data = SpecialistModel.fromJson(value);
+      });
+    });
+    await _con.getDiseaseTreated().then((value) {
+      setState(() {
+        diseaseTreated = value;
+        diseaseLoading = false;
       });
     });
 
@@ -46,8 +58,18 @@ class _PersonalState extends State<Personal> {
         _con.totalexp.text = value.data.experience;
         _con.address.text = value.data.address;
         _con.profileImage = value.data.profileImage;
-        _con.about_me.text = value.data.About_me;
-        // _con.speciality_id = null;
+        _con.about_me.text = value.data.aboutMe;
+        for (int i = 0; i < diseaseTreated.data.length; i++) {
+          for (int j = 0; j < value.data.diseaseArray.length; j++) {
+            if (value.data.diseaseArray[j].diseaseId ==
+                diseaseTreated.data[i].id) {
+              setState(() {
+                diseaseTreated.data[i].isSelected = true;
+              });
+            }
+          }
+        }
+        _con.speciality_id = null;
         (value.data.specialistid) == '0'
             ? _con.speciality_id = null
             : _con.speciality_id = value.data.specialistid;
@@ -60,6 +82,7 @@ class _PersonalState extends State<Personal> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     initialize();
   }
 
@@ -126,6 +149,66 @@ class _PersonalState extends State<Personal> {
                       'Language Spoken', _con.languageSpoken),
                   TitleEnterField('Total years of experience',
                       'Total years of experience', _con.totalexp),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('Disease Treated',
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black.withOpacity(0.6))),
+                  ),
+                  (diseaseLoading)
+                      ? Center(child: CircularProgressIndicator())
+                      : Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Material(
+                            elevation: 5,
+                            borderRadius: BorderRadius.circular(10),
+                            child: ExpansionTile(
+                                collapsedIconColor: Colors.black,
+                                iconColor: Colors.black,
+                                title: Text(
+                                  'Select Disease Treated',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                                children: [
+                                  ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: diseaseTreated.data.length,
+                                      itemBuilder: (context, index) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              diseaseTreated
+                                                      .data[index].isSelected =
+                                                  !diseaseTreated
+                                                      .data[index].isSelected;
+                                            });
+                                          },
+                                          child: Container(
+                                            color: Colors.transparent,
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Checkbox(
+                                                    value: diseaseTreated
+                                                        .data[index].isSelected,
+                                                    onChanged: (v) {
+                                                      setState(() {
+                                                        diseaseTreated
+                                                            .data[index]
+                                                            .isSelected = v!;
+                                                      });
+                                                    }),
+                                                Text(diseaseTreated
+                                                    .data[index].diseaseName)
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      }),
+                                ]),
+                          ),
+                        ),
                   TitleEnterField(
                     'Address',
                     'Address',
@@ -201,7 +284,13 @@ class _PersonalState extends State<Personal> {
                       bgcolor: appblueColor,
                       textColor: Colors.white,
                       onPressed: () {
-                        _con.submit(context);
+                        List<String> selectedData = [];
+                        diseaseTreated.data.forEach((element) {
+                          if (element.isSelected) {
+                            selectedData.add(element.id);
+                          }
+                        });
+                        _con.submit(context, selectedData);
                       },
                       borderRadius: 8,
                       textSize: 20,

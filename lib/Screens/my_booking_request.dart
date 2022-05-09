@@ -16,8 +16,7 @@ class MyBookingRequest extends StatelessWidget {
       body: Messsages(context),
       appBar: AppBar(
         title: commonAppBarTitleText(appbarText: 'My Booking Request'),
-        centerTitle: false,
-        titleSpacing: 0,
+        centerTitle: true,
         backgroundColor: appAppBarColor,
         elevation: 0,
       ),

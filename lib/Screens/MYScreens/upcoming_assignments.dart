@@ -40,8 +40,7 @@ class _UpcomingAssignmentsState extends State<UpcomingAssignments> {
               title: commonAppBarTitleText(
                 appbarText: 'Upcoming Appointments',
               ),
-              centerTitle: false,
-        titleSpacing: 0,
+              centerTitle: true,
               leading: commonAppBarLeading(
                   iconData: Icons.arrow_back_ios_new,
                   onPressed: () {

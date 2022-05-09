@@ -35,7 +35,7 @@ class _BiometricAuthenticate2State extends State<BiometricAuthenticate2> {
       appBar: AppBar(
         title: commonAppBarTitle(),
         centerTitle: false,
-        titleSpacing: 0,
+
         backgroundColor: appAppBarColor,
         elevation: 0,
       ),

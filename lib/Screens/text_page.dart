@@ -171,8 +171,7 @@ class _TextPageState extends State<TextPage> {
             ),
             preferredSize: Size.fromHeight(1.0)),
         title: commonAppBarTitleText(appbarText: widget.patientName),
-        centerTitle: false,
-        titleSpacing: 0,
+        centerTitle: true,
         backgroundColor: appAppBarColor,
         elevation: 0,
         leading: Builder(

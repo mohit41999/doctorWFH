@@ -24,7 +24,6 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        titleSpacing: 0,
         backgroundColor: appAppBarColor,
         elevation: 0,
         title: commonAppBarTitle(),

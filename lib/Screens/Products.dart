@@ -18,8 +18,7 @@ class ProductPage extends StatelessWidget {
         title: commonAppBarTitleText(appbarText: 'Products'),
         elevation: 0,
         backgroundColor: appAppBarColor,
-        centerTitle: false,
-        titleSpacing: 0,
+        centerTitle: true,
         leading: Builder(
             builder: (context) => commonAppBarLeading(
                 iconData: Icons.arrow_back_ios_new,

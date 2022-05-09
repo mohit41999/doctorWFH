@@ -28,7 +28,7 @@ class _SignUpPageState extends State<SignUpPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: false,
-        titleSpacing: 0,
+
         title: commonAppBarTitle(),
       ),
       body: SingleChildScrollView(

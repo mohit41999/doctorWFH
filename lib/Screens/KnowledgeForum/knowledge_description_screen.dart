@@ -49,8 +49,7 @@ class _KnowledgeDescriptionState extends State<KnowledgeDescription> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          centerTitle: false,
-          titleSpacing: 0,
+          centerTitle: true,
           title: commonAppBarTitleText(appbarText: 'Knowledge Forum'),
           backgroundColor: appAppBarColor,
           elevation: 0,

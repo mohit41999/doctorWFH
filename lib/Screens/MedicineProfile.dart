@@ -23,8 +23,7 @@ class _MedicineProfileState extends State<MedicineProfile> {
     return Scaffold(
       appBar: AppBar(
         title: commonAppBarTitleText(appbarText: 'Medicine Profile'),
-        centerTitle: false,
-        titleSpacing: 0,
+        centerTitle: true,
         elevation: 0,
         backgroundColor: appAppBarColor,
       ),

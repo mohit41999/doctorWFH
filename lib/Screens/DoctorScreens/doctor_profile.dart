@@ -39,7 +39,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
       appBar: AppBar(
         title: commonAppBarTitle(),
         centerTitle: false,
-        titleSpacing: 0,
+
         backgroundColor: appAppBarColor,
         elevation: 0,
       ),

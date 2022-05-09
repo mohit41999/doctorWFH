@@ -68,8 +68,7 @@ class _CompletedAssignmentState extends State<CompletedAssignment> {
               title: commonAppBarTitleText(
                 appbarText: 'Completed Appointments',
               ),
-              centerTitle: false,
-        titleSpacing: 0,
+              centerTitle: true,
               leading: commonAppBarLeading(
                   iconData: Icons.arrow_back_ios_new,
                   onPressed: () {

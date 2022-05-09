@@ -47,8 +47,7 @@ class _MyReviewRatingsScreenState extends State<MyReviewRatingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          centerTitle: false,
-          titleSpacing: 0,
+          centerTitle: true,
           title: commonAppBarTitleText(appbarText: 'My Reviews And Ratings'),
           backgroundColor: appAppBarColor,
           elevation: 0,
