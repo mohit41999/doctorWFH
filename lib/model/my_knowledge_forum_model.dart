@@ -40,18 +40,21 @@ class Datum {
   Datum({
     required this.doctorId,
     required this.forumId,
+    required this.category_name,
     required this.knowledgeTitle,
     required this.date,
   });
 
   final String doctorId;
   final String forumId;
+  final String category_name;
   final String knowledgeTitle;
   final DateTime date;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         doctorId: json["doctor_id"],
         forumId: json["forum_id"],
+        category_name: json["category_name"],
         knowledgeTitle: json["knowledge_title"],
         date: DateTime.parse(json["date"]),
       );
@@ -59,6 +62,7 @@ class Datum {
   Map<String, dynamic> toJson() => {
         "doctor_id": doctorId,
         "forum_id": forumId,
+        "category_name": category_name,
         "knowledge_title": knowledgeTitle,
         "date": date.toIso8601String(),
       };

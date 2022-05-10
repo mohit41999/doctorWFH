@@ -41,16 +41,19 @@ class Datum {
     required this.questionId,
     required this.question,
     required this.description,
+    required this.category_name,
     required this.createdDate,
   });
 
   final String questionId;
   final String question;
+  final String? category_name;
   final String description;
   final DateTime createdDate;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         questionId: json["question_id"],
+        category_name: json["category_name"],
         question: json["question"],
         description: json["description"],
         createdDate: DateTime.parse(json["created_date"]),
@@ -60,6 +63,7 @@ class Datum {
         "question_id": questionId,
         "question": question,
         "description": description,
+        "category_name": category_name,
         "created_date": createdDate.toIso8601String(),
       };
 }

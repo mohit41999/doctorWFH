@@ -116,32 +116,32 @@ class _MyKnowledgeForumState extends State<MyKnowledgeForum> {
                 ),
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: commonBtn(
+                  s: 'Add Knowledge Forum',
+                  bgcolor: appblueColor,
+                  textColor: Colors.white,
+                  borderRadius: 5,
+                  onPressed: () {
+                    Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddKnowledgeForum()))
+                        .then((value) {
+                      getMyForums().then((value) {
+                        setState(() {
+                          data = value;
+                          print('hello');
+                        });
+                      });
+                    });
+                  }),
+            ),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: commonBtn(
-                          s: 'Add Knowledge Forum',
-                          bgcolor: appblueColor,
-                          textColor: Colors.white,
-                          borderRadius: 5,
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        AddKnowledgeForum())).then((value) {
-                              getMyForums().then((value) {
-                                setState(() {
-                                  data = value;
-                                  print('hello');
-                                });
-                              });
-                            });
-                          }),
-                    ),
                     (loading)
                         ? Center(child: CircularProgressIndicator())
                         : ListView.builder(
@@ -163,16 +163,16 @@ class _MyKnowledgeForumState extends State<MyKnowledgeForum> {
                                             top: 8.0,
                                             left: 8,
                                             right: 8,
-                                            bottom:
-                                                (index + 1 == data.data.length)
-                                                    ? navbarht + 20
-                                                    : 8),
+                                            bottom: 8),
                                         child: Card(
                                           elevation: 5,
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 8.0, vertical: 16),
                                             child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
@@ -213,6 +213,36 @@ class _MyKnowledgeForumState extends State<MyKnowledgeForum> {
                                                 SizedBox(
                                                   height: 8,
                                                 ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      'Category:-',
+                                                      style: GoogleFonts.lato(
+                                                          color:
+                                                              Color(0xff252525),
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    Text(
+                                                      data.data[index]
+                                                          .category_name
+                                                          .toString(),
+                                                      style: GoogleFonts.lato(
+                                                          color:
+                                                              Color(0xff252525),
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 8,
+                                                ),
                                               ],
                                             ),
                                           ),
@@ -238,10 +268,7 @@ class _MyKnowledgeForumState extends State<MyKnowledgeForum> {
                                                 top: 8.0,
                                                 left: 8,
                                                 right: 8,
-                                                bottom: (index + 1 ==
-                                                        data.data.length)
-                                                    ? navbarht + 20
-                                                    : 8),
+                                                bottom: 8),
                                             child: Card(
                                               elevation: 5,
                                               child: Padding(
@@ -250,6 +277,9 @@ class _MyKnowledgeForumState extends State<MyKnowledgeForum> {
                                                         horizontal: 8.0,
                                                         vertical: 16),
                                                 child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
@@ -294,6 +324,38 @@ class _MyKnowledgeForumState extends State<MyKnowledgeForum> {
                                                     SizedBox(
                                                       height: 8,
                                                     ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          'Category:-',
+                                                          style: GoogleFonts.lato(
+                                                              color: Color(
+                                                                  0xff252525),
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        Text(
+                                                          data.data[index]
+                                                              .category_name
+                                                              .toString(),
+                                                          style: GoogleFonts.lato(
+                                                              color: Color(
+                                                                  0xff252525),
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: 8,
+                                                    ),
                                                   ],
                                                 ),
                                               ),
@@ -302,6 +364,9 @@ class _MyKnowledgeForumState extends State<MyKnowledgeForum> {
                                         )
                                       : Container();
                             }),
+                    SizedBox(
+                      height: navbarht + 20,
+                    ),
                   ],
                 ),
               ),

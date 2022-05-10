@@ -468,6 +468,31 @@ class _HomeScreenState extends State<HomeScreen>
                                   SizedBox(
                                     height: 8,
                                   ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Category:-',
+                                        style: GoogleFonts.lato(
+                                            color: Color(0xff252525),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        patientQuestions
+                                            .data[index].category_name
+                                            .toString(),
+                                        style: GoogleFonts.lato(
+                                            color: Color(0xff252525),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
                                   Text(
                                     patientQuestions.data[index].description,
                                     style: GoogleFonts.lato(fontSize: 12),
