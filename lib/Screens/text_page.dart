@@ -290,10 +290,12 @@ class _TextPageState extends State<TextPage> {
   Future<void> _showPicker(context) async {
     showModalBottomSheet(
         context: context,
+        useRootNavigator: false,
         builder: (BuildContext bc) {
           return SafeArea(
             child: Container(
-              child: Wrap(
+              height: double.maxFinite,
+              child: ListView(
                 children: <Widget>[
                   ListTile(
                       leading: Icon(
@@ -322,6 +324,9 @@ class _TextPageState extends State<TextPage> {
                       Navigator.of(context).pop();
                     },
                   ),
+                  SizedBox(
+                    height: navbarht + 20,
+                  )
                 ],
               ),
             ),
@@ -332,10 +337,12 @@ class _TextPageState extends State<TextPage> {
   Future<void> _showoptionPicker(context) async {
     showModalBottomSheet(
         context: context,
+        useRootNavigator: false,
         builder: (BuildContext bc) {
           return SafeArea(
             child: Container(
-              child: Wrap(
+              height: double.maxFinite,
+              child: ListView(
                 children: <Widget>[
                   ListTile(
                       leading: Icon(
@@ -362,6 +369,9 @@ class _TextPageState extends State<TextPage> {
                       });
                     },
                   ),
+                  SizedBox(
+                    height: navbarht + 20,
+                  )
                 ],
               ),
             ),
@@ -401,10 +411,12 @@ class _TextPageState extends State<TextPage> {
   Future<void> _showVideoPicker(context) async {
     showModalBottomSheet(
         context: context,
+        useRootNavigator: false,
         builder: (BuildContext bc) {
           return SafeArea(
             child: Container(
-              child: Wrap(
+              height: double.maxFinite,
+              child: ListView(
                 children: <Widget>[
                   ListTile(
                       leading: Icon(
@@ -433,6 +445,9 @@ class _TextPageState extends State<TextPage> {
                       Navigator.of(context).pop();
                     },
                   ),
+                  SizedBox(
+                    height: navbarht + 20,
+                  )
                 ],
               ),
             ),

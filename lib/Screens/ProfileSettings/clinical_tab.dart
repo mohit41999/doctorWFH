@@ -69,10 +69,12 @@ class _ClinicalState extends State<Clinical> {
   Future<void> _showPicker(context) async {
     showModalBottomSheet(
         context: context,
+        useRootNavigator: false,
         builder: (BuildContext bc) {
           return SafeArea(
             child: Container(
-              child: Wrap(
+              height: double.maxFinite,
+              child: ListView(
                 children: <Widget>[
                   ListTile(
                       leading: Icon(Icons.photo_library),
@@ -95,6 +97,9 @@ class _ClinicalState extends State<Clinical> {
                       Navigator.of(context).pop();
                     },
                   ),
+                  SizedBox(
+                    height: navbarht + 20,
+                  )
                 ],
               ),
             ),

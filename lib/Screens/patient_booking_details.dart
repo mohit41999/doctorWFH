@@ -963,10 +963,9 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
                                           TextPage(
                                               patientid: patientdetails.data
                                                   .patientPersonal.patientId,
-                                              patientName: patientdetails
-                                                  .data
-                                                  .patientPersonal
-                                                  .patientName));
+                                              patientName: patientdetails.data
+                                                  .patientPersonal.patientName),
+                                          withnav: false);
                                     },
                                     height: 45,
                                     borderRadius: 8,
@@ -1173,10 +1172,12 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
   Future<void> _showPicker(context) async {
     showModalBottomSheet(
         context: context,
+        useRootNavigator: false,
         builder: (BuildContext bc) {
           return SafeArea(
             child: Container(
-              child: Wrap(
+              height: double.maxFinite,
+              child: ListView(
                 children: <Widget>[
                   ListTile(
                       leading: Icon(
@@ -1205,6 +1206,9 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
                       Navigator.of(context).pop();
                     },
                   ),
+                  SizedBox(
+                    height: navbarht + 20,
+                  )
                 ],
               ),
             ),
