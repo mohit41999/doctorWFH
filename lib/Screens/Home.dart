@@ -78,20 +78,6 @@ class _HomeScreenState extends State<HomeScreen>
     return response;
   }
 
-  Future getQuestions() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-
-    var response = await PostData(
-        PARAM_URL: 'get_completed_revenue.php',
-        params: {
-          'token': Token,
-          'doctor_id': preferences.getString('user_id')
-        }).then((value) {
-      revenue = value['data']['revenue'];
-    });
-    return response;
-  }
-
   Future initialize() async {
     await getdocReview().then((value) {
       setState(() {
@@ -577,84 +563,89 @@ class _completedState extends State<completed> {
         ? Center(
             child: CircularProgressIndicator(),
           )
-        : Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: completedAssignment.data.length >= 4
-                    ? 4
-                    : completedAssignment.data.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Material(
-                      elevation: 4,
-                      borderRadius: BorderRadius.circular(8),
-                      child: Container(
-                        height: 105,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 18.0,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Expanded(
-                                  child: Column(
+        : (completedAssignment.data.length == 0)
+            ? Center(
+                child: Text('No Assignment completed Yet'),
+              )
+            : Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: completedAssignment.data.length >= 4
+                        ? 4
+                        : completedAssignment.data.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Material(
+                          elevation: 4,
+                          borderRadius: BorderRadius.circular(8),
+                          child: Container(
+                            height: 105,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 18.0,
+                              ),
+                              child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  titleColumn(
-                                      title: 'Booking ID',
-                                      value: completedAssignment
-                                          .data[index].bookingId),
-                                  titleColumn(
-                                      title: 'Booking of',
-                                      value: 'Video Consult'),
+                                  Expanded(
+                                      child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      titleColumn(
+                                          title: 'Booking ID',
+                                          value: completedAssignment
+                                              .data[index].bookingId),
+                                      titleColumn(
+                                          title: 'Booking of',
+                                          value: 'Video Consult'),
+                                    ],
+                                  )),
+                                  Expanded(
+                                      child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      titleColumn(
+                                          title: 'Order Date',
+                                          value: completedAssignment
+                                              .data[index].appointmentDate),
+                                      titleColumn(
+                                          title: 'Booking Time',
+                                          value: completedAssignment
+                                              .data[index].appointment_time),
+                                    ],
+                                  )),
+                                  Expanded(
+                                      child: Center(
+                                          child: commonBtn(
+                                    s: 'View',
+                                    bgcolor: appblueColor,
+                                    textColor: Colors.white,
+                                    onPressed: () {
+                                      Push(
+                                          context,
+                                          PatientBookingDetails(
+                                              booking_id: completedAssignment
+                                                  .data[index].bookingId));
+                                    },
+                                    width: 85,
+                                    height: 30,
+                                    textSize: 11,
+                                    borderRadius: 4,
+                                  ))),
                                 ],
-                              )),
-                              Expanded(
-                                  child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  titleColumn(
-                                      title: 'Order Date',
-                                      value: completedAssignment
-                                          .data[index].appointmentDate),
-                                  titleColumn(
-                                      title: 'Booking Time',
-                                      value: completedAssignment
-                                          .data[index].appointment_time),
-                                ],
-                              )),
-                              Expanded(
-                                  child: Center(
-                                      child: commonBtn(
-                                s: 'View',
-                                bgcolor: appblueColor,
-                                textColor: Colors.white,
-                                onPressed: () {
-                                  Push(
-                                      context,
-                                      PatientBookingDetails(
-                                          booking_id: completedAssignment
-                                              .data[index].bookingId));
-                                },
-                                width: 85,
-                                height: 30,
-                                textSize: 11,
-                                borderRadius: 4,
-                              ))),
-                            ],
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                  );
-                }),
-          );
+                      );
+                    }),
+              );
   }
 }
 

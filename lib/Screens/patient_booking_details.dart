@@ -1092,7 +1092,7 @@ class _PatientBookingDetailsState extends State<PatientBookingDetails> {
               backgroundColor: apptealColor,
             ))
           : ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text('Error, try again later'),
+              content: Text(value['message']),
               backgroundColor: Colors.red,
             ));
     });
