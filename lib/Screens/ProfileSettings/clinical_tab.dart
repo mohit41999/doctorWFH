@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:doctor/API/api_constants.dart';
+import 'package:doctor/Screens/ProfileSettings/myclinicphotos.dart';
 import 'package:doctor/Utils/colorsandstyles.dart';
 import 'package:doctor/Utils/progress_view.dart';
+import 'package:doctor/controller/NavigationController.dart';
 import 'package:doctor/controller/doctor_profile_controller.dart';
 import 'package:doctor/widgets/common_button.dart';
 import 'package:doctor/widgets/title_enter_field.dart';
@@ -117,11 +119,15 @@ class _ClinicalState extends State<Clinical> {
   }
 
   Future _imgFromGallery() async {
-    var image = await ImagePicker()
-        .pickImage(source: ImageSource.gallery, imageQuality: 50);
+    var image = await ImagePicker().pickMultiImage(
+      imageQuality: 50,
+    );
 
     setState(() {
-      images.add(image!.path);
+      image!.forEach((element) {
+        images.add(element.path);
+      });
+      // images.add(image!.path);
     });
   }
 
@@ -130,8 +136,7 @@ class _ClinicalState extends State<Clinical> {
     var response = await PostDataWithImage(
         PARAM_URL: 'upload_clinic_images.php',
         params: {
-          ''
-              'token': Token,
+          'token': Token,
           'doctor_id': prefs.getString('user_id')!,
         },
         imagePath: imagePath,
@@ -326,6 +331,22 @@ class _ClinicalState extends State<Clinical> {
                           ),
                         );
                       })),
+
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: commonBtn(
+              s: 'My Clinic Photos',
+              bgcolor: Color(0xffB2B1B1),
+              textColor: Colors.black,
+              onPressed: () {
+                Push(context, MyClinicPhotos());
+              },
+              width: 187,
+              height: 50,
+              borderRadius: 4,
+              textSize: 12,
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: commonBtn(

@@ -5,11 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5df1842f-62ef-4e5c-92f9-ac8abe19c301" name="Default Changelist" comment="knowledge">
+      <change afterPath="$PROJECT_DIR$/lib/Screens/ProfileSettings/myclinicphotos.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/clinicImages.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/Home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Home.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/patient_booking_details.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/patient_booking_details.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/video/splash.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/assets/video/splash.mp4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/ProfileSettings/clinical_tab.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/ProfileSettings/clinical_tab.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/splash_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/splash_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Utils/drawerList.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Utils/drawerList.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/widgets/navigation_drawer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/navigation_drawer.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +47,7 @@
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="D:/Nohung/Foodie_new" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/assets/video" />
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -52,11 +56,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\user\Desktop\Github Projects\doctorWFH\assets\video" />
       <recent name="C:\Users\user\Desktop\Github Projects\doctorWFH\android\app\src\main\res" />
       <recent name="C:\Users\user\Desktop\Github Projects\doctorWFH\assets\pngs" />
       <recent name="C:\Users\user\Desktop\Github Projects\doctorWFH\assets" />
       <recent name="C:\Users\user\Desktop\Github Projects\doctorWFH\android\app\src\main" />
-      <recent name="C:\Users\user\Desktop\Github Projects\doctorWFH\android\app" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\user\Desktop\Github Projects\doctorWFH\lib\Screens\KnowledgeForum" />
@@ -278,7 +282,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652277392050</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="knowledge">
+      <created>1652362320968</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1652362320968</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

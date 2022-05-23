@@ -117,7 +117,8 @@ class _commonDrawerState extends State<commonDrawer> {
                                     _ackAlert(context);
                                   } else {
                                     Navigator.pop(context);
-                                    Push(context, drawerList[index]['Screen']);
+                                    Push(context, drawerList[index]['Screen'],
+                                        withnav: drawerList[index]['withnav']);
                                   }
                                 },
                               ),

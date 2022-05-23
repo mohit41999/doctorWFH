@@ -16,16 +16,19 @@ List<Map<dynamic, dynamic>> drawerList = [
     'Screen': ProfileSetting(
       fromhome: false,
     ),
+    'withnav': false,
   },
   {
     'label': 'Manage Calendar',
     'Screen': ManageCalendar(),
+    'withnav': true,
   },
   {
     'label': 'My Chats',
     'Screen': ChatsScreen(
       fromhome: false,
     ),
+    'withnav': true,
   },
   // {
   //   'label': 'My Booking Request',
@@ -46,29 +49,36 @@ List<Map<dynamic, dynamic>> drawerList = [
   {
     'label': 'Booking Appointments',
     'Screen': MyBookedAppointment(),
+    'withnav': true,
   },
   {
     'label': 'My Knowledge Forum',
     'Screen': MyKnowledgeForum(),
+    'withnav': true,
   },
   {
     'label': 'My Reviews',
     'Screen': MyReviewRatingsScreen(),
+    'withnav': true,
   },
   {
     'label': 'Patient Questions',
     'Screen': PatientQuestionsScreen(),
+    'withnav': true,
   },
   {
     'label': 'Billing Segment',
     'Screen': MyWalletPage(),
+    'withnav': true,
   },
   {
     'label': 'Account Setting',
     'Screen': AccountSetting(),
+    'withnav': true,
   },
   {
     'label': 'Logout',
     'Screen': 'null',
+    'withnav': true,
   },
 ];
