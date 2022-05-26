@@ -1,6 +1,6 @@
-import 'package:doctor/Screens/MYScreens/MyQuestionsScreen.dart';
 import 'package:doctor/Screens/MYScreens/MyReviewRating.dart';
 import 'package:doctor/Screens/MYScreens/MyWalletTabs/my_wallet_pg.dart';
+import 'package:doctor/Screens/MYScreens/PatientQuestion.dart';
 import 'package:doctor/Screens/MYScreens/manage_calendar.dart';
 import 'package:doctor/Screens/MYScreens/my_booked_appointment.dart';
 import 'package:doctor/Screens/MYScreens/upcoming_assignments.dart';

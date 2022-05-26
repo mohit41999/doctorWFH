@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:doctor/API/api_constants.dart';
+import 'package:doctor/Utils/colorsandstyles.dart';
 import 'package:doctor/model/clinicImages.dart';
 import 'package:doctor/widgets/commonAppBarLeading.dart';
 import 'package:doctor/widgets/common_app_bar_title.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyClinicPhotos extends StatefulWidget {
@@ -31,16 +33,48 @@ class _MyClinicPhotosState extends State<MyClinicPhotos> {
     return ClinicImagesModel.fromJson(response);
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
+  Future editPhoto(String image_id, String image) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    var response = await PostDataWithImage(
+        PARAM_URL: 'update_doctor_clinic_image.php',
+        params: {
+          'doctor_id': preferences.getString('user_id')!,
+          'token': Token,
+          'image_id': image_id
+        },
+        imagePath: image,
+        imageparamName: 'image');
+
+    initialize();
+    return response;
+  }
+
+  Future deletePhoto(String image_id) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    var response =
+        await PostData(PARAM_URL: 'remove_clinic_image.php', params: {
+      'image_id': image_id,
+      'doctor_id': preferences.getString('user_id'),
+      'token': Token
+    });
+    initialize();
+  }
+
+  Future initialize() async {
     getClinicImages().then((value) {
       setState(() {
         clinicImages = value;
         loading = false;
       });
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
   }
 
   @override
@@ -84,13 +118,25 @@ class _MyClinicPhotosState extends State<MyClinicPhotos> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Icon(
-                                    Icons.edit,
-                                    color: Colors.blue,
+                                  GestureDetector(
+                                    onTap: () {
+                                      _showPicker(context,
+                                          clinicImages.data[index].imageId);
+                                    },
+                                    child: Icon(
+                                      Icons.edit,
+                                      color: Colors.blue,
+                                    ),
                                   ),
-                                  Icon(
-                                    Icons.delete,
-                                    color: Colors.red,
+                                  GestureDetector(
+                                    onTap: () {
+                                      deletePhoto(
+                                          clinicImages.data[index].imageId);
+                                    },
+                                    child: Icon(
+                                      Icons.delete,
+                                      color: Colors.red,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -114,5 +160,62 @@ class _MyClinicPhotosState extends State<MyClinicPhotos> {
               itemCount: clinicImages.data.length,
             ),
     );
+  }
+
+  Future<void> _showPicker(context, String ImageId) async {
+    showModalBottomSheet(
+        context: context,
+        useRootNavigator: false,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              height: double.maxFinite,
+              child: ListView(
+                children: <Widget>[
+                  ListTile(
+                      leading: Icon(Icons.photo_library),
+                      title: Text('Photo Library'),
+                      onTap: () {
+                        setState(() {
+                          _imgFromGallery(ImageId);
+                        });
+
+                        Navigator.of(context).pop();
+                      }),
+                  ListTile(
+                    leading: Icon(Icons.photo_camera),
+                    title: Text('Camera'),
+                    onTap: () {
+                      setState(() {
+                        _imgFromCamera(ImageId);
+                      });
+
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  SizedBox(
+                    height: navbarht + 20,
+                  )
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  Future _imgFromCamera(String image_id) async {
+    var image = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 50);
+
+    setState(() {
+      editPhoto(image_id, image!.path);
+    });
+  }
+
+  Future _imgFromGallery(String image_id) async {
+    var image = await ImagePicker()
+        .pickImage(source: ImageSource.gallery, imageQuality: 50);
+
+    editPhoto(image_id, image!.path);
   }
 }

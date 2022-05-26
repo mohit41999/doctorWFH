@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:doctor/Screens/MYScreens/MyQuestionsScreen.dart';
+import 'package:doctor/Screens/MYScreens/PatientQuestion.dart';
 import 'package:doctor/Utils/colorsandstyles.dart';
 import 'package:doctor/widgets/commonAppBarLeading.dart';
 import 'package:doctor/widgets/common_app_bar_title.dart';

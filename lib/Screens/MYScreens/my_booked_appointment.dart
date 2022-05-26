@@ -1,5 +1,4 @@
 import 'package:doctor/API/api_constants.dart';
-import 'package:doctor/Screens/MYScreens/MyQuestionsScreen.dart';
 import 'package:doctor/Screens/MYScreens/MyReviewRating.dart';
 import 'package:doctor/Screens/MYScreens/upcoming_assignments.dart';
 import 'package:doctor/Screens/completed_assignment.dart';
