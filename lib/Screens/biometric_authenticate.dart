@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../general_screen.dart';
+import 'general_screen.dart';
 import 'DoctorScreens/doctor_profile.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 

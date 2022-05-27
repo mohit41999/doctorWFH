@@ -1,3 +1,4 @@
+import 'package:doctor/widgets/navigation_drawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor/Screens/ProfileSettings/personal_tab.dart';
@@ -37,19 +38,24 @@ class _ProfileSettingState extends State<ProfileSetting>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: commonAppBarTitleText(appbarText: 'Profile Setting'),
-        backgroundColor: appAppBarColor,
-        elevation: 0,
-        leading: (widget.fromhome)
-            ? Container()
-            : Builder(
-                builder: (context) => commonAppBarLeading(
-                    iconData: Icons.arrow_back_ios_new,
-                    onPressed: () {
-                      Navigator.pop(context);
-                    })),
-      ),
+          title: commonAppBarTitleText(appbarText: 'Profile Setting'),
+          centerTitle: true,
+          backgroundColor: appAppBarColor,
+          elevation: 0,
+          leading: (widget.fromhome)
+              ? Builder(
+                  builder: (context) => commonAppBarLeading(
+                      iconData: Icons.menu,
+                      onPressed: () {
+                        Scaffold.of(context).openDrawer();
+                      }))
+              : Builder(
+                  builder: (context) => commonAppBarLeading(
+                      iconData: Icons.arrow_back_ios_new,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      }))),
+      drawer: commonDrawer(),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:doctor/API/local_auth_api.dart';
 import 'package:doctor/Utils/colorsandstyles.dart';
 import 'package:doctor/controller/NavigationController.dart';
-import 'package:doctor/general_screen.dart';
+import 'package:doctor/Screens/general_screen.dart';
 import 'package:doctor/widgets/common_app_bar_title.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

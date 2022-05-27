@@ -75,6 +75,7 @@ class _MyClinicPhotosState extends State<MyClinicPhotos> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    initialize();
   }
 
   @override

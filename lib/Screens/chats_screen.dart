@@ -2,6 +2,7 @@ import 'package:doctor/API/api_constants.dart';
 import 'package:doctor/Screens/text_page.dart';
 import 'package:doctor/controller/NavigationController.dart';
 import 'package:doctor/model/chatRooms.dart';
+import 'package:doctor/widgets/navigation_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -64,13 +65,19 @@ class _ChatsScreenState extends State<ChatsScreen> {
           backgroundColor: appAppBarColor,
           elevation: 0,
           leading: (widget.fromhome)
-              ? Container()
+              ? Builder(
+                  builder: (context) => commonAppBarLeading(
+                      iconData: Icons.menu,
+                      onPressed: () {
+                        Scaffold.of(context).openDrawer();
+                      }))
               : Builder(
                   builder: (context) => commonAppBarLeading(
                       iconData: Icons.arrow_back_ios_new,
                       onPressed: () {
                         Navigator.pop(context);
                       }))),
+      drawer: commonDrawer(),
     );
   }
 

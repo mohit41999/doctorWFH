@@ -6,7 +6,7 @@ import 'package:doctor/Screens/biometric_authenticate2.dart';
 import 'package:doctor/Screens/sign_in_screen.dart';
 import 'package:doctor/controller/NavigationController.dart';
 import 'package:doctor/firebase/fcm.dart';
-import 'package:doctor/general_screen.dart';
+import 'package:doctor/Screens/general_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';

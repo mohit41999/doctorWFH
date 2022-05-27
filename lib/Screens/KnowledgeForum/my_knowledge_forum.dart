@@ -4,6 +4,7 @@ import 'package:doctor/Screens/KnowledgeForum/knowledge_description_screen.dart'
 import 'package:doctor/controller/NavigationController.dart';
 import 'package:doctor/model/my_knowledge_forum_model.dart';
 import 'package:doctor/widgets/common_button.dart';
+import 'package:doctor/widgets/navigation_drawer.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,7 +15,8 @@ import 'package:doctor/widgets/common_app_bar_title.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyKnowledgeForum extends StatefulWidget {
-  const MyKnowledgeForum({Key? key}) : super(key: key);
+  final bool fromhome;
+  const MyKnowledgeForum({Key? key, this.fromhome = false}) : super(key: key);
 
   @override
   _MyKnowledgeForumState createState() => _MyKnowledgeForumState();
@@ -51,17 +53,24 @@ class _MyKnowledgeForumState extends State<MyKnowledgeForum> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          centerTitle: true,
-          title: commonAppBarTitleText(appbarText: 'My Knowledge Forum'),
-          backgroundColor: appAppBarColor,
-          elevation: 0,
-          leading: Builder(
-              builder: (context) => commonAppBarLeading(
-                  iconData: Icons.arrow_back_ios_new,
-                  onPressed: () {
-                    Navigator.pop(context);
-                  })),
-        ),
+            title: commonAppBarTitle(),
+            centerTitle: true,
+            backgroundColor: appAppBarColor,
+            elevation: 0,
+            leading: (widget.fromhome)
+                ? Builder(
+                    builder: (context) => commonAppBarLeading(
+                        iconData: Icons.menu,
+                        onPressed: () {
+                          Scaffold.of(context).openDrawer();
+                        }))
+                : Builder(
+                    builder: (context) => commonAppBarLeading(
+                        iconData: Icons.arrow_back_ios_new,
+                        onPressed: () {
+                          Navigator.pop(context);
+                        }))),
+        drawer: commonDrawer(),
         body: Column(
           children: [
             Padding(
@@ -152,11 +161,21 @@ class _MyKnowledgeForumState extends State<MyKnowledgeForum> {
                               return (searchController.text.isEmpty)
                                   ? GestureDetector(
                                       onTap: () {
-                                        Push(
-                                            context,
-                                            KnowledgeDescription(
-                                                forum_id:
-                                                    data.data[index].forumId));
+                                        Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        KnowledgeDescription(
+                                                            forum_id: data
+                                                                .data[index]
+                                                                .forumId)))
+                                            .then((value) {
+                                          getMyForums().then((value) {
+                                            setState(() {
+                                              data = value;
+                                            });
+                                          });
+                                        });
                                       },
                                       child: Padding(
                                         padding: EdgeInsets.only(
@@ -257,11 +276,21 @@ class _MyKnowledgeForumState extends State<MyKnowledgeForum> {
                                               .replaceAll(' ', '')))
                                       ? GestureDetector(
                                           onTap: () {
-                                            Push(
-                                                context,
-                                                KnowledgeDescription(
-                                                    forum_id: data
-                                                        .data[index].forumId));
+                                            Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            KnowledgeDescription(
+                                                                forum_id: data
+                                                                    .data[index]
+                                                                    .forumId)))
+                                                .then((value) {
+                                              getMyForums().then((value) {
+                                                setState(() {
+                                                  data = value;
+                                                });
+                                              });
+                                            });
                                           },
                                           child: Padding(
                                             padding: EdgeInsets.only(

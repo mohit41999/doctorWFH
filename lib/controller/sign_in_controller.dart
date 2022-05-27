@@ -4,7 +4,7 @@ import 'package:doctor/Screens/sign_in_screen.dart';
 import 'package:doctor/Utils/progress_view.dart';
 import 'package:doctor/controller/NavigationController.dart';
 import 'package:doctor/firebase/fcm.dart';
-import 'package:doctor/general_screen.dart';
+import 'package:doctor/Screens/general_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

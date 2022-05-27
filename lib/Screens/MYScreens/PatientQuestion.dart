@@ -287,15 +287,27 @@ class _PatientQuestionsScreenState extends State<PatientQuestionsScreen> {
                                                                     .data[index]
                                                                     .questionId);
                                                           },
-                                                          child: Text(
-                                                            'Report',
-                                                            style: GoogleFonts.lato(
-                                                                fontSize: 12,
-                                                                color:
-                                                                    Colors.red,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                          child: Container(
+                                                            decoration: BoxDecoration(
+                                                                border: Border.all(
+                                                                    color: Colors
+                                                                        .red)),
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(4.0),
+                                                              child: Text(
+                                                                'Report',
+                                                                style: GoogleFonts.lato(
+                                                                    fontSize:
+                                                                        12,
+                                                                    color: Colors
+                                                                        .red,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ),
                                                           ),
                                                         ),
                                                       ],
@@ -448,16 +460,27 @@ class _PatientQuestionsScreenState extends State<PatientQuestionsScreen> {
                                                                             index]
                                                                         .questionId);
                                                               },
-                                                              child: Text(
-                                                                'Report',
-                                                                style: GoogleFonts.lato(
-                                                                    fontSize:
-                                                                        12,
-                                                                    color: Colors
-                                                                        .red,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
+                                                              child: Container(
+                                                                decoration: BoxDecoration(
+                                                                    border: Border.all(
+                                                                        color: Colors
+                                                                            .red)),
+                                                                child: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .all(
+                                                                          8.0),
+                                                                  child: Text(
+                                                                    'Report',
+                                                                    style: GoogleFonts.lato(
+                                                                        fontSize:
+                                                                            12,
+                                                                        color: Colors
+                                                                            .red,
+                                                                        fontWeight:
+                                                                            FontWeight.bold),
+                                                                  ),
+                                                                ),
                                                               ),
                                                             ),
                                                           ],

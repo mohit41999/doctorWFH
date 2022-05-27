@@ -17,7 +17,9 @@ import 'package:doctor/widgets/title_column.dart';
 import 'package:flutter/material.dart';
 
 class MyBookedAppointment extends StatefulWidget {
-  const MyBookedAppointment({Key? key}) : super(key: key);
+  final bool fromhome;
+  const MyBookedAppointment({Key? key, this.fromhome = false})
+      : super(key: key);
 
   @override
   _MyBookedAppointmentState createState() => _MyBookedAppointmentState();
@@ -47,20 +49,23 @@ class _MyBookedAppointmentState extends State<MyBookedAppointment>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            centerTitle: false,
-            titleSpacing: 0,
             title: commonAppBarTitle(),
-            backgroundColor: Colors.white,
+            centerTitle: true,
+            backgroundColor: appAppBarColor,
             elevation: 0,
-            leading: Builder(
-              builder: (context) => commonAppBarLeading(
-                  iconData: Icons.menu,
-                  onPressed: () {
-                    setState(() {
-                      Scaffold.of(context).openDrawer();
-                    });
-                  }),
-            )),
+            leading: (widget.fromhome)
+                ? Builder(
+                    builder: (context) => commonAppBarLeading(
+                        iconData: Icons.menu,
+                        onPressed: () {
+                          Scaffold.of(context).openDrawer();
+                        }))
+                : Builder(
+                    builder: (context) => commonAppBarLeading(
+                        iconData: Icons.arrow_back_ios_new,
+                        onPressed: () {
+                          Navigator.pop(context);
+                        }))),
         drawer: commonDrawer(),
         body: Column(
           children: [

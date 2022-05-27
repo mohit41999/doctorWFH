@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:doctor/Screens/KnowledgeForum/my_knowledge_forum.dart';
+import 'package:doctor/Screens/MYScreens/my_booked_appointment.dart';
 import 'package:doctor/Screens/MYScreens/my_revenue.dart';
 import 'package:doctor/Screens/ProfileSettings/profile_setting.dart';
 import 'package:doctor/Screens/chats_screen.dart';
@@ -12,12 +14,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:flutter/cupertino.dart';
-import 'Screens/DoctorScreens/doctor_profile.dart';
-import 'Screens/Home.dart';
-import 'Screens/LabProfile.dart';
-import 'Screens/MedicineProfile.dart';
-import 'Utils/colorsandstyles.dart';
-import 'controller/NavigationController.dart';
+import 'DoctorScreens/doctor_profile.dart';
+import 'Home.dart';
+import 'LabProfile.dart';
+import 'MedicineProfile.dart';
+import '../Utils/colorsandstyles.dart';
+import '../controller/NavigationController.dart';
 
 class GeneralScreen extends StatefulWidget {
   const GeneralScreen({Key? key}) : super(key: key);
@@ -30,9 +32,15 @@ class _GeneralScreenState extends State<GeneralScreen> {
   List<Widget> _buildScreens() {
     return [
       HomeScreen(),
-      MyRevenue(),
-      MyBookingRequest(),
-      ChatsScreen(fromhome: true,),
+      MyKnowledgeForum(
+        fromhome: true,
+      ),
+      MyBookedAppointment(
+        fromhome: true,
+      ),
+      ChatsScreen(
+        fromhome: true,
+      ),
       ProfileSetting(
         fromhome: true,
       )
@@ -64,7 +72,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
       PersistentBottomNavBarItem(
         opacity: 0.8,
         icon: Icon(FontAwesomeIcons.calendarCheck),
-        title: ("Revenue"),
+        title: ("Knowledge"),
         activeColorPrimary: appblueColor,
         inactiveColorPrimary: Colors.black,
       ),
