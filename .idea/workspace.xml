@@ -7,21 +7,6 @@
     <list default="true" id="5df1842f-62ef-4e5c-92f9-ac8abe19c301" name="Default Changelist" comment="knowledge">
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/google-services.json" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/google-services.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/KnowledgeForum/my_knowledge_forum.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/KnowledgeForum/my_knowledge_forum.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/MYScreens/PatientQuestion.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/MYScreens/PatientQuestion.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/MYScreens/my_booked_appointment.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/MYScreens/my_booked_appointment.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/ProfileSettings/myclinicphotos.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/ProfileSettings/myclinicphotos.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/ProfileSettings/profile_setting.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/ProfileSettings/profile_setting.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/biometric_authenticate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/biometric_authenticate.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/biometric_authenticate2.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/biometric_authenticate2.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/chats_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/chats_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/give_answer_answer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/give_answer_answer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/splash_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/splash_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/controller/sign_in_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/controller/sign_in_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/general_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/general_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/question_description_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/question_description_model.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +40,7 @@
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="D:/Nohung/Foodie_new" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../tripster" />
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -311,7 +296,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653573842801</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="knowledge">
+      <created>1653657768936</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1653657768936</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
